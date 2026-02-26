@@ -3,39 +3,52 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Laptop, Smartphone, Brain, Cloud, Database, Container } from "lucide-react";
+import {
+  Laptop,
+  Smartphone,
+  Brain,
+  Cloud,
+  Database,
+  Container,
+} from "lucide-react";
 import Link from "next/link";
 
 const internships = [
-  { 
-    name: "Web Development", 
-    icon: Laptop, 
-    description: "Master modern web technologies like React, Next.js, and Node.js. Build scalable applications."
+  {
+    name: "Web Development",
+    icon: Laptop,
+    description:
+      "Master modern web technologies like React, Next.js, and Node.js. Build scalable applications.",
   },
-  { 
-    name: "App Development", 
-    icon: Smartphone, 
-    description: "Create stunning mobile experiences for iOS and Android using React Native and Flutter."
+  {
+    name: "App Development",
+    icon: Smartphone,
+    description:
+      "Create stunning mobile experiences for iOS and Android using React Native and Flutter.",
   },
-  { 
-    name: "Machine Learning", 
-    icon: Brain, 
-    description: "Dive into AI, neural networks, and predictive modeling with Python and TensorFlow."
+  {
+    name: "Machine Learning",
+    icon: Brain,
+    description:
+      "Dive into AI, neural networks, and predictive modeling with Python and TensorFlow.",
   },
-  { 
-    name: "Data Science", 
-    icon: Database, 
-    description: "Analyze complex data sets to drive decision making using statistical methods and tools."
+  {
+    name: "Data Science",
+    icon: Database,
+    description:
+      "Analyze complex data sets to drive decision making using statistical methods and tools.",
   },
-  { 
-    name: "Cloud Computing", 
-    icon: Cloud, 
-    description: "Learn to deploy and manage scalable infrastructure on AWS, Azure, and Google Cloud."
+  {
+    name: "Cloud Computing",
+    icon: Cloud,
+    description:
+      "Learn to deploy and manage scalable infrastructure on AWS, Azure, and Google Cloud.",
   },
-  { 
-    name: "DevOps", 
-    icon: Container, 
-    description: "Streamline development and operations using tools like Docker, Kubernetes, and CI/CD pipelines."
+  {
+    name: "DevOps",
+    icon: Container,
+    description:
+      "Streamline development and operations using tools like Docker, Kubernetes, and CI/CD pipelines.",
   },
 ];
 
@@ -43,7 +56,9 @@ import InternshipApplicationModal from "@/components/internship/InternshipApplic
 
 export default function InternshipPage() {
   const [darkMode, setDarkMode] = useState(false);
-  const [selectedInternship, setSelectedInternship] = useState<string | null>(null);
+  const [selectedInternship, setSelectedInternship] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const update = () => {
@@ -65,19 +80,19 @@ export default function InternshipPage() {
       <Navbar />
       <main className="min-h-screen pt-20">
         <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-           {/* BACKGROUND BRAND GRADIENT */}
-           <div
+          {/* BACKGROUND BRAND GRADIENT */}
+          <div
             className="
               absolute inset-0 pointer-events-none
               bg-linear-to-br from-[#2596be]/5 to-[#4EA8DE]/10
               blur-3xl opacity-60
             "
           ></div>
-          
+
           <div className="relative max-w-7xl mx-auto text-center mb-16">
             <h1
               className={`
-                text-5xl md:text-6xl font-extrabold mb-6 tracking-tight
+                text-5xl md:text-6xl font-extrabold mb-6 tracking-tight pb-2
                 bg-clip-text text-transparent bg-gradient-to-r from-[#2596be] to-[#4EA8DE]
               `}
             >
@@ -90,8 +105,9 @@ export default function InternshipPage() {
                 ${darkMode ? "text-gray-400" : "text-gray-600"}
               `}
             >
-              Bridge the gap between academic learning and industry requirements. 
-              Get hands-on experience by working on real-world projects.
+              Bridge the gap between academic learning and industry
+              requirements. Get hands-on experience by working on real-world
+              projects.
             </p>
           </div>
 
@@ -135,9 +151,9 @@ export default function InternshipPage() {
                   >
                     {internship.name}
                   </h3>
-                  
+
                   {/* DESCRIPTION */}
-                   <p
+                  <p
                     className={`
                       mb-6 leading-relaxed
                       ${darkMode ? "text-gray-400" : "text-gray-600"}
@@ -146,12 +162,28 @@ export default function InternshipPage() {
                     {internship.description}
                   </p>
 
-                  <div className={`
+                  <div
+                    className={`
                     font-semibold text-sm flex items-center gap-2
                      text-[#2596be] group-hover:translate-x-1 transition-transform
-                  `}>
-                    Learn More 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  `}
+                  >
+                    Learn More
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-arrow-right"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
                   </div>
                 </div>
               );

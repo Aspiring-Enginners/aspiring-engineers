@@ -185,7 +185,7 @@ export default function JEECounsellingPage() {
     return enrollments.some(
       (enrollment) =>
         enrollment.packageSnapshot?.slug === packageSlug &&
-        enrollment.status === "active"
+        enrollment.status === "active",
     );
   };
 
@@ -218,7 +218,7 @@ export default function JEECounsellingPage() {
 
     const fetchEnrollments = async () => {
       if (!isAuthenticated) return;
-      
+
       setLoadingEnrollments(true);
       try {
         const data = await counsellingService.getMyEnrollments();
@@ -252,7 +252,9 @@ export default function JEECounsellingPage() {
           </span>
         </h1>
         <p className="text-base text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-4">
-          Complete guidance for JoSAA, CSAB, and State counselling. Secure your seat in IITs, NITs, IIITs, and top engineering colleges with expert assistance.
+          Complete guidance for JoSAA, CSAB, and State counselling. Secure your
+          seat in IITs, NITs, IIITs, and top engineering colleges with expert
+          assistance.
         </p>
         <Link
           href="#pricing"
@@ -520,22 +522,27 @@ export default function JEECounsellingPage() {
                     <button
                       onClick={() => {
                         // Redirect to test-portal-client counselling page with SSO
-                        const testPortalUrl = process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
+                        const testPortalUrl =
+                          process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                         if (!testPortalUrl) {
-                          console.error("NEXT_PUBLIC_TEST_PORTAL_URL is not configured");
+                          console.error(
+                            "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
+                          );
                           return;
                         }
                         // Import tokenManager dynamically
-                        import("@/lib/utils/tokenManager").then(({ tokenManager }) => {
-                          const token = tokenManager.getAuthToken();
-                          const refreshToken = tokenManager.getRefreshToken();
-                          const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
-                            token || ""
-                          )}&refreshToken=${encodeURIComponent(
-                            refreshToken || ""
-                          )}&redirect=/counselling/enrollments`;
-                          window.location.href = ssoUrl;
-                        });
+                        import("@/lib/utils/tokenManager").then(
+                          ({ tokenManager }) => {
+                            const token = tokenManager.getAuthToken();
+                            const refreshToken = tokenManager.getRefreshToken();
+                            const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
+                              token || "",
+                            )}&refreshToken=${encodeURIComponent(
+                              refreshToken || "",
+                            )}&redirect=/counselling/enrollments`;
+                            window.location.href = ssoUrl;
+                          },
+                        );
                       }}
                       className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors ${
                         pkg.isFeatured
@@ -629,24 +636,32 @@ export default function JEECounsellingPage() {
 
                   {/* Stats - Handle both direct API props and legacy stats object */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
-                    {(counsellor.studentsGuided || counsellor.stats?.studentsHelped) && (
+                    {(counsellor.studentsGuided ||
+                      counsellor.stats?.studentsHelped) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
                         <div className="text-lg font-bold text-[#2596be]">
-                          {(counsellor.studentsGuided || counsellor.stats?.studentsHelped || 0).toLocaleString()}+
+                          {(
+                            counsellor.studentsGuided ||
+                            counsellor.stats?.studentsHelped ||
+                            0
+                          ).toLocaleString()}
+                          +
                         </div>
                         <div className="text-xs text-gray-500">
                           Students Helped
                         </div>
                       </div>
                     )}
-                    {(counsellor.experience || counsellor.stats?.experience) && (
+                    {(counsellor.experience ||
+                      counsellor.stats?.experience) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
                         <div className="text-lg font-bold text-[#2596be]">
-                          {(counsellor.experience || counsellor.stats?.experience || 0)}+
+                          {counsellor.experience ||
+                            counsellor.stats?.experience ||
+                            0}
+                          +
                         </div>
-                        <div className="text-xs text-gray-500">
-                          Years Exp.
-                        </div>
+                        <div className="text-xs text-gray-500">Years Exp.</div>
                       </div>
                     )}
                   </div>
@@ -790,7 +805,7 @@ export default function JEECounsellingPage() {
             </h2>
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
               Don't miss out on your dream IIT/NIT seat. Get expert guidance
-              from our experienced counsellors who have helped 10,000+ students.
+              from our experienced counsellors who have helped 1,000+ students.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

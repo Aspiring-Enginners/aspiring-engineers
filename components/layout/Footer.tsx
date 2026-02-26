@@ -11,7 +11,7 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 import { getSiteSettings, SiteSettings } from "@/services/siteSettings";
 
@@ -33,13 +33,22 @@ export default function Footer() {
 
   const defaultFooterLinks = {
     jee: [
-      { label: "JEE Main PYQ - With Solutions", href: "/exams/jee/mains/pyq/with-solutions" },
+      {
+        label: "JEE Main PYQ - With Solutions",
+        href: "/exams/jee/mains/pyq/with-solutions",
+      },
       { label: "JEE Main PYQ", href: "/exams/jee/mains/pyq/with-solutions" },
-      { label: "JEE Advanced PYQ", href: "/exams/jee/advanced/pyq/with-solutions" },
+      {
+        label: "JEE Advanced PYQ",
+        href: "/exams/jee/advanced/pyq/with-solutions",
+      },
       { label: "JEE Test Series", href: "/test-series" },
     ],
     neet: [
-      { label: "NEET PYQ - With Solutions", href: "/exams/neet/pyq/with-solutions" },
+      {
+        label: "NEET PYQ - With Solutions",
+        href: "/exams/neet/pyq/with-solutions",
+      },
       { label: "NEET PYQ", href: "/exams/neet/pyq/with-solutions" },
       { label: "NEET Test Series", href: "/test-series" },
       { label: "NEET Mock Tests", href: "/test-series" },
@@ -75,10 +84,10 @@ export default function Footer() {
       if (settings) {
         // Patch footer links
         const newLinks = { ...defaultFooterLinks };
-        
+
         // Group API links
         const apiGroups: Record<string, { label: string; href: string }[]> = {};
-        
+
         settings.footerLinks.forEach((link) => {
           const group = link.group.toLowerCase();
           if (!apiGroups[group]) {
@@ -92,7 +101,7 @@ export default function Footer() {
           // Map API group names to our keys if needed, or just use as is if they match
           // We assume 'company' maps to 'company', etc.
           if (group in newLinks) {
-             // @ts-ignore - Dynamic key access
+            // @ts-ignore - Dynamic key access
             newLinks[group as keyof typeof newLinks] = apiGroups[group];
           }
         });
@@ -104,6 +113,10 @@ export default function Footer() {
           setSocialUrls((prev) => ({
             ...prev,
             ...settings.socialLinks,
+            telegram:
+              settings.socialLinks.telegram ||
+              settings.socialLinks.twitter ||
+              prev.telegram,
           }));
         }
       }
@@ -113,13 +126,11 @@ export default function Footer() {
   }, []);
 
   const socialLinks = [
-
     { icon: Facebook, href: socialUrls.facebook, label: "Facebook" },
     { icon: Send, href: socialUrls.telegram, label: "Telegram" },
     { icon: Instagram, href: socialUrls.instagram, label: "Instagram" },
     { icon: Linkedin, href: socialUrls.linkedin, label: "LinkedIn" },
     { icon: Youtube, href: socialUrls.youtube, label: "YouTube" },
-
   ];
 
   return (
@@ -171,8 +182,8 @@ export default function Footer() {
                 darkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Your trusted partner for JEE, NEET, WBJEE & Board exam preparation.
-              Excellence through dedication.
+              Your trusted partner for JEE, NEET, WBJEE & Board exam
+              preparation. Excellence through dedication.
             </p>
 
             {/* Social Links */}
@@ -219,7 +230,7 @@ export default function Footer() {
                     }`}
                   >
                     <span className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-[20px] group-hover:opacity-100 group-hover:mr-1 flex items-center">
-                      <ChevronRight className="w-4 h-4 shrink-0" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </span>
                     <span>{link.label}</span>
                   </Link>
@@ -249,7 +260,7 @@ export default function Footer() {
                     }`}
                   >
                     <span className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-[20px] group-hover:opacity-100 group-hover:mr-1 flex items-center">
-                      <ChevronRight className="w-4 h-4 shrink-0" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </span>
                     <span>{link.label}</span>
                   </Link>
@@ -279,7 +290,7 @@ export default function Footer() {
                     }`}
                   >
                     <span className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-[20px] group-hover:opacity-100 group-hover:mr-1 flex items-center">
-                      <ChevronRight className="w-4 h-4 shrink-0" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </span>
                     <span>{link.label}</span>
                   </Link>
@@ -309,7 +320,7 @@ export default function Footer() {
                     }`}
                   >
                     <span className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-[20px] group-hover:opacity-100 group-hover:mr-1 flex items-center">
-                      <ChevronRight className="w-4 h-4 shrink-0" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </span>
                     <span>{link.label}</span>
                   </Link>
@@ -347,14 +358,14 @@ export default function Footer() {
                   Email
                 </p>
                 <a
-                  href="mailto:support@aspiringengineers.com"
+                  href="mailto:aspiringengineersofficial@gmail.com"
                   className={`text-sm ${
                     darkMode
                       ? "text-gray-300 hover:text-[#60DFFF]"
                       : "text-gray-700 hover:text-[#2596be]"
                   }`}
                 >
-                  support@aspiringengineers.com
+                  aspiringengineersofficial@gmail.com
                 </a>
               </div>
             </div>
@@ -459,7 +470,7 @@ export default function Footer() {
                   }`}
                 >
                   <span className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-[20px] group-hover:opacity-100 group-hover:mr-1 flex items-center">
-                    <ChevronRight className="w-4 h-4 shrink-0" />
+                    <ArrowRight className="w-4 h-4 shrink-0" />
                   </span>
                   <span>{link.label}</span>
                 </Link>

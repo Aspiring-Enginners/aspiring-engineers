@@ -10,6 +10,7 @@ export interface FooterLink {
 export interface SocialLinks {
   facebook?: string;
   twitter?: string;
+  telegram?: string;
   instagram?: string;
   linkedin?: string;
   youtube?: string;

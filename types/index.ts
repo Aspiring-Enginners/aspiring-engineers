@@ -83,6 +83,8 @@ export interface Package {
   validityDays: number;
   totalTests: number;
   totalQuestions: number;
+  enrollments?: number;
+  revenue?: number;
   metadata: PackageMetadata;
   createdAt: string;
 }

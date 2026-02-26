@@ -7,7 +7,7 @@ import { Package, PackagesResponse } from '@/types';
 import Navbar from '@/components/layout/Navbar';
 import { BookOpen, Clock, FileText, Star, Users, ChevronRight, Search, Filter } from 'lucide-react';
 
-const EXAM_FILTERS = ['All', 'JEE', 'NEET', 'WBJEE'];
+const EXAM_FILTERS = ['All', 'JEE', 'NEET', 'WBJEE' , 'COMEDK'];
 
 export default function TestSeriesPage() {
   const [packages, setPackages] = useState<Package[]>([]);
@@ -340,7 +340,7 @@ function TestSeriesCard({ package: pkg, darkMode }: { package: Package; darkMode
           </div>
           <div className={`flex items-center gap-1 text-xs ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
             <Users className="w-4 h-4" />
-            <span>{pkg.metadata?.totalStudents || 0}</span>
+            <span>{pkg.enrollments ?? pkg.metadata?.totalStudents ?? 0}</span>
           </div>
         </div>
 

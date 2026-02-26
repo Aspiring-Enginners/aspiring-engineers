@@ -32,19 +32,24 @@ export default function ContactPage() {
       };
 
       await apiClient.post("/contact", payload);
-      
+
       alert("Message sent successfully!");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
     } catch (error: any) {
       console.error("Failed to send message:", error);
-      alert(error.response?.data?.message || "Failed to send message. Please try again.");
+      alert(
+        error.response?.data?.message ||
+          "Failed to send message. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -52,7 +57,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      
+
       <PageHero
         title="Contact Us"
         description="Have questions? We're here to help. Reach out to us and we'll respond as soon as possible."
@@ -66,14 +71,14 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold mb-6 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
                 Get In Touch
               </h2>
-              
+
               <div className="space-y-6">
                 {[
                   {
                     icon: Mail,
                     title: "Email",
-                    value: "support@aspiringengineers.com",
-                    href: "mailto:support@aspiringengineers.com",
+                    value: "aspiringengineersofficial@gmail.com",
+                    href: "mailto:aspiringengineersofficial@gmail.com",
                   },
                   {
                     icon: Phone,
@@ -84,7 +89,8 @@ export default function ContactPage() {
                   {
                     icon: MapPin,
                     title: "Address",
-                    value: "Hemanti Block, Kshudiram Nagar, Haldia, West Bengal - 721657, P.O: Hatiberia BO, P.S: Haldia, Dist: Purba Medinipur, Ward No. 24",
+                    value:
+                      "Hemanti Block, Kshudiram Nagar, Haldia, West Bengal - 721657, P.O: Hatiberia BO, P.S: Haldia, Dist: Purba Medinipur, Ward No. 24",
                   },
                 ].map((contact, idx) => (
                   <div
@@ -235,10 +241,16 @@ export default function ContactPage() {
                       >
                         <option value="">Select a subject</option>
                         <option value="General Inquiry">General Inquiry</option>
-                        <option value="Direct Admission">Direct Admission</option>
+                        <option value="Direct Admission">
+                          Direct Admission
+                        </option>
                         <option value="Internship">Internship</option>
-                        <option value="Payment Related Queries">Payment Related Queries</option>
-                        <option value="Technical Support">Technical Support</option>
+                        <option value="Payment Related Queries">
+                          Payment Related Queries
+                        </option>
+                        <option value="Technical Support">
+                          Technical Support
+                        </option>
                         <option value="Enrollment">Enrollment</option>
                         <option value="Feedback">Feedback</option>
                         <option value="Other">Other</option>
@@ -278,7 +290,10 @@ export default function ContactPage() {
                     ) : (
                       <>
                         Send Message
-                        <Send size={18} className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <Send
+                          size={18}
+                          className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                        />
                       </>
                     )}
                   </button>

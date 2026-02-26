@@ -362,8 +362,7 @@ export default function PackageDetailPage() {
                         darkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
-                      {packageData.metadata?.totalStudents?.toLocaleString() ||
-                        0}
+                      {(packageData.enrollments ?? packageData.metadata?.totalStudents ?? 0).toLocaleString()}
                     </div>
                     <div
                       className={`text-sm ${
