@@ -1,36 +1,94 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { BookOpen, Target, Users, BarChart } from "lucide-react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import {
+  GraduationCap,
+  BookOpen,
+  Trophy,
+  Briefcase,
+  ArrowRight,
+} from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const features = [
+const journeyStages = [
   {
-    icon: BookOpen,
-    title: "Smart Practice, Real Results",
+    stage: "01",
+    title: "Class 10th Foundation",
+    subtitle: "Building Strong Fundamentals",
     description:
-      "Attempt JEE, NEET & WBJEE mocks that feel like the real exam.",
+      "Start your journey with comprehensive Class 10th board preparation. Master the core concepts that form the foundation for competitive exams.",
+    features: [
+      "CBSE/State Board Prep",
+      "Concept Clarity",
+      "Strong Foundation",
+      "Time Management",
+    ],
+    icon: BookOpen,
+    color: "from-blue-500 to-cyan-500",
+    bgGradient: "from-blue-500/10 to-cyan-500/10",
+    href: "/boards/10/pyq",
   },
   {
-    icon: Target,
-    title: "Learn from Past Exams",
-    description: "Attempt carefully selected PYQs from the last 12 years.",
+    stage: "02",
+    title: "Class 12th & Entrance Prep",
+    subtitle: "Competitive Edge Development",
+    description:
+      "Parallel preparation for Class 12th boards and entrance exams. Master JEE, NEET, WBJEE with targeted practice and expert guidance.",
+    features: [
+      "Board Exam Mastery",
+      "JEE/NEET/WBJEE",
+      "12 Years PYQs",
+      "Mock Test Series",
+    ],
+    icon: Trophy,
+    color: "from-purple-500 to-pink-500",
+    bgGradient: "from-purple-500/10 to-pink-500/10",
+    href: "/exams",
   },
   {
-    icon: Users,
-    title: "Plan Your Path to the Right College",
-    description: "Expert counselling for colleges and branch selection.",
+    stage: "03",
+    title: "College Admission",
+    subtitle: "Strategic College Selection",
+    description:
+      "Navigate the complex admission process with expert counselling. Get personalized guidance for college and branch selection based on your rank.",
+    features: [
+      "Rank-based Counselling",
+      "College Shortlisting",
+      "Branch Selection",
+      "Admission Support",
+    ],
+    icon: GraduationCap,
+    color: "from-emerald-500 to-teal-500",
+    bgGradient: "from-emerald-500/10 to-teal-500/10",
+    href: "/counselling",
   },
   {
-    icon: BarChart,
-    title: "Advanced Performance Analysis",
-    description: "Smart insights to identify and improve weak areas.",
+    stage: "04",
+    title: "Industry Training",
+    subtitle: "Career-Ready Skills",
+    description:
+      "Bridge the gap between academics and industry. Gain hands-on experience through real-world projects and internships to secure your dream job.",
+    features: [
+      "Live Projects",
+      "Industry Mentors",
+      "Skill Development",
+      "Job Placement",
+    ],
+    icon: Briefcase,
+    color: "from-orange-500 to-red-500",
+    bgGradient: "from-orange-500/10 to-red-500/10",
+    href: "/internship",
   },
 ];
 
 export default function Features() {
   const [darkMode, setDarkMode] = useState(false);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
 
   useEffect(() => {
     const update = () => {
@@ -50,7 +108,8 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-visible"
+      ref={containerRef}
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* BACKGROUND GRADIENT */}
       <div
@@ -62,127 +121,208 @@ export default function Features() {
       ></div>
 
       {/* Heading */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
-        className="relative max-w-7xl mx-auto text-center mb-16"
+        className="relative max-w-7xl mx-auto text-center mb-20"
       >
         <h2
           className={`
-            text-4xl font-bold mb-4 tracking-tight
+            text-4xl md:text-5xl font-bold mb-4 tracking-tight
             ${darkMode ? "text-white" : "text-[#2596be]"}
           `}
         >
-          Designed to Help You Ace Engineering and Medical Entrance Exams
+          Your Complete Journey to Success
         </h2>
 
         <p
           className={`
-            text-lg leading-relaxed
+            text-lg md:text-xl leading-relaxed max-w-3xl mx-auto
             ${darkMode ? "text-gray-400" : "text-gray-700"}
           `}
         >
-          Empowering the Next Generation of Engineers and Doctors
+          From Class 10th to Your Dream Job - We're With You Every Step of the
+          Way
         </p>
       </motion.div>
 
-      {/* Grid */}
-      <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {features.map((feature, i) => {
-          const Icon = feature.icon;
+      {/* Journey Cards with Parallax */}
+      <div className="relative max-w-7xl mx-auto space-y-32">
+        {journeyStages.map((stage, index) => {
+          const Icon = stage.icon;
+          const isEven = index % 2 === 0;
+          const cardY = useTransform(
+            scrollYProgress,
+            [0, 1],
+            [index * 30, -index * 30],
+          );
 
           return (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              onMouseEnter={() => setHoveredId(i)}
-              onMouseLeave={() => setHoveredId(null)}
-              className={`
-                relative p-8 rounded-2xl backdrop-blur-2xl border 
-                cursor-pointer transition-all duration-300 group overflow-hidden
-                ${
-                  darkMode
-                    ? "bg-white/5 border-white/10 hover:bg-white/10"
-                    : "bg-white/90 border-gray-200 hover:bg-white"
-                }
-                ${
-                  hoveredId === i
-                    ? "shadow-2xl -translate-y-2"
-                    : "shadow-lg hover:shadow-xl"
-                }
-                ${
-                  hoveredId === i && darkMode
-                    ? "shadow-[#2596be]/30 border-[#2596be]/60 bg-white/10"
-                    : hoveredId === i
-                      ? "shadow-[#2596be]/20 border-[#4EA8DE]/60 bg-white"
-                      : ""
-                }
-              `}
+              key={stage.stage}
+              style={{ y: cardY }}
+              initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className={`relative grid lg:grid-cols-2 gap-12 items-center ${
+                isEven ? "" : "lg:grid-flow-dense"
+              }`}
             >
-              {/* Subtle inner glow when hovered */}
-              {hoveredId === i && (
-                <div
-                  className={`absolute inset-0 rounded-2xl pointer-events-none
-                    ${
-                      darkMode
-                        ? "bg-gradient-to-br from-[#2596be]/5 to-[#4EA8DE]/5"
-                        : "bg-gradient-to-br from-[#2596be]/3 to-[#4EA8DE]/3"
-                    }`}
-                />
-              )}
-
-              {/* Top accent line on hover */}
+              {/* Content Side */}
               <div
-                className={`
-                  absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2596be] to-[#4EA8DE]
-                  transition-opacity duration-300
-                  ${hoveredId === i ? "opacity-100" : "opacity-0"}
-                `}
-              />
-
-              {/* ICON */}
-              <div
-                className="
-                  relative z-10 w-16 h-16 rounded-xl mb-6 flex items-center justify-center
-                  bg-linear-to-br from-[#2596be] to-[#4EA8DE]
-                  shadow-md transition-all group-hover:scale-110
-                "
+                className={`relative z-10 ${isEven ? "" : "lg:col-start-2"}`}
               >
-                <Icon className="w-8 h-8 text-white" />
+                {/* Stage Number */}
+                <div className="flex items-center gap-4 mb-6">
+                  <span
+                    className={`text-6xl font-black bg-linear-to-r ${stage.color} bg-clip-text text-transparent opacity-50`}
+                  >
+                    {stage.stage}
+                  </span>
+                  <div className="h-1 flex-1 bg-linear-to-r ${stage.color} opacity-30 rounded-full" />
+                </div>
+
+                {/* Title */}
+                <h3
+                  className={`text-3xl md:text-4xl font-bold mb-3 ${
+                    darkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {stage.title}
+                </h3>
+
+                {/* Subtitle */}
+                <p
+                  className={`text-lg font-semibold mb-4 bg-linear-to-r ${stage.color} bg-clip-text text-transparent`}
+                >
+                  {stage.subtitle}
+                </p>
+
+                {/* Description */}
+                <p
+                  className={`text-base md:text-lg leading-relaxed mb-6 ${
+                    darkMode ? "text-gray-400" : "text-gray-700"
+                  }`}
+                >
+                  {stage.description}
+                </p>
+
+                {/* Features Grid */}
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {stage.features.map((feature, i) => (
+                    <div
+                      key={i}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
+                        darkMode
+                          ? "bg-white/5 border-white/10"
+                          : "bg-gray-50 border-gray-200"
+                      }`}
+                    >
+                      <div
+                        className={`w-1.5 h-1.5 rounded-full bg-linear-to-r ${stage.color}`}
+                      />
+                      <span
+                        className={`text-sm font-medium ${
+                          darkMode ? "text-gray-300" : "text-gray-700"
+                        }`}
+                      >
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <Link
+                  href={stage.href}
+                  className={`group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all bg-linear-to-r ${stage.color} text-white shadow-lg hover:shadow-xl hover:scale-105`}
+                >
+                  Learn More
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
 
-              {/* TITLE */}
-              <h3
-                className={`
-                  relative z-10 text-xl font-bold mb-3 tracking-tight transition-colors
-                  ${
-                    hoveredId === i && darkMode
-                      ? "text-transparent bg-clip-text bg-gradient-to-r from-[#2596be] to-[#60DFFF]"
-                      : hoveredId === i
-                        ? "text-transparent bg-clip-text bg-gradient-to-r from-[#2596be] to-[#4EA8DE]"
-                        : darkMode
-                          ? "text-white"
-                          : "text-[#2596be]"
-                  }
-                `}
+              {/* Visual Card Side */}
+              <div
+                className={`relative ${isEven ? "lg:col-start-2" : "lg:col-start-1"}`}
               >
-                {feature.title}
-              </h3>
+                <div className="relative">
+                  {/* Decorative Gradient Blob */}
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, 0],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className={`absolute -inset-8 bg-linear-to-r ${stage.color} opacity-20 blur-3xl rounded-full`}
+                  />
 
-              {/* DESCRIPTION */}
-              <p
-                className={`
-                  relative z-10 leading-relaxed
-                  ${darkMode ? "text-gray-400" : "text-gray-700"}
-                `}
-              >
-                {feature.description}
-              </p>
+                  {/* Main Card */}
+                  <div
+                    className={`relative rounded-3xl border backdrop-blur-xl p-8 shadow-2xl ${
+                      darkMode
+                        ? "bg-white/5 border-white/10"
+                        : "bg-white/90 border-gray-200"
+                    }`}
+                  >
+                    {/* Icon */}
+                    <div
+                      className={`w-20 h-20 rounded-2xl mb-6 flex items-center justify-center bg-linear-to-br ${stage.color} shadow-lg`}
+                    >
+                      <Icon className="w-10 h-10 text-white" />
+                    </div>
+
+                    {/* Stage Title */}
+                    <h4
+                      className={`text-2xl font-bold mb-4 ${
+                        darkMode ? "text-white" : "text-gray-900"
+                      }`}
+                    >
+                      {stage.title}
+                    </h4>
+
+                    {/* Visual Elements */}
+                    <div className="space-y-4">
+                      {[...Array(3)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`h-3 rounded-full bg-linear-to-r ${stage.bgGradient} relative overflow-hidden`}
+                          style={{ width: `${100 - i * 15}%` }}
+                        >
+                          <motion.div
+                            initial={{ x: "-100%" }}
+                            whileInView={{ x: "100%" }}
+                            viewport={{ once: true }}
+                            transition={{
+                              duration: 2,
+                              delay: i * 0.2 + index * 0.3,
+                              ease: "easeInOut",
+                            }}
+                            className={`absolute inset-0 bg-linear-to-r ${stage.color} opacity-50`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Decorative Corner */}
+                    <div
+                      className={`absolute -top-4 -right-4 w-24 h-24 bg-linear-to-br ${stage.color} opacity-10 rounded-full blur-2xl`}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Connecting Line for Desktop */}
+              {index < journeyStages.length - 1 && (
+                <div className="hidden lg:block absolute left-1/2 bottom-0 w-0.5 h-32 bg-linear-to-b from-[#2596be]/50 to-transparent transform translate-y-full -translate-x-1/2" />
+              )}
             </motion.div>
           );
         })}
