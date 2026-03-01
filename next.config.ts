@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -13,11 +15,16 @@ const nextConfig: NextConfig = {
         hostname: "aspiringengstorage.blob.core.windows.net",
         pathname: "/**",
       },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        pathname: "/**",
-      },
+      // Only allow localhost images in development
+      ...(isDev
+        ? [
+            {
+              protocol: "http" as const,
+              hostname: "localhost",
+              pathname: "/**",
+            },
+          ]
+        : []),
     ],
   },
 };
