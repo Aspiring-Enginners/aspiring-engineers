@@ -7,6 +7,8 @@ export interface FooterLink {
   openInNewTab?: boolean;
 }
 
+import { logger } from "@/lib/logger";
+
 export interface SocialLinks {
   facebook?: string;
   twitter?: string;
@@ -49,7 +51,7 @@ export const getSiteSettings = async (): Promise<SiteSettings | null> => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     if (!apiUrl) {
-      console.warn("NEXT_PUBLIC_API_URL is not defined");
+      logger.warn("NEXT_PUBLIC_API_URL is not defined");
       return null;
     }
 
@@ -60,7 +62,7 @@ export const getSiteSettings = async (): Promise<SiteSettings | null> => {
 
     return await response.json();
   } catch (error) {
-    console.error("Error fetching site settings:", error);
+    logger.error("Error fetching site settings:", error);
     return null;
   }
 };

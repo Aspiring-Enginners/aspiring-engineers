@@ -1,4 +1,5 @@
 import apiClient from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 
 /**
  * Team Member type returned from the API
@@ -43,15 +44,15 @@ export const teamService = {
     params: GetTeamMembersParams = { isActive: true, sort: "displayOrder" },
   ): Promise<TeamMember[]> => {
     try {
-      console.log("🚀 [teamService] GET /team-members", params);
+      logger.log("[teamService] GET /team-members", params);
       const response = await apiClient.get<TeamMember[]>("/team-members", {
         params,
       });
-      console.log("✅ [teamService] Response:", response.data);
+      logger.log("[teamService] Response:", response.data);
       // API returns array directly
       return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
-      console.error("❌ [teamService] Failed to fetch team members:", error);
+      logger.error("[teamService] Failed to fetch team members:", error);
       throw error;
     }
   },

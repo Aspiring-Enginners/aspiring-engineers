@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import { getBoardsPyq, getSamplePapers, Paper } from "@/services/papers";
+import { logger } from "@/lib/logger";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -93,7 +94,7 @@ export default function BoardsPyqPage({
         );
         setPapers(data);
       } catch (error) {
-        console.error("Failed to load papers", error);
+        logger.error("Failed to load papers", error);
       } finally {
         setLoading(false);
       }

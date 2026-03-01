@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import Link from "next/link";
+import { logger } from "@/lib/logger";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -116,7 +117,7 @@ export default function ExamsPage() {
 
         setPaperCounts(counts);
       } catch (error) {
-        console.error("Failed to fetch paper counts", error);
+        logger.error("Failed to fetch paper counts", error);
       }
     };
 

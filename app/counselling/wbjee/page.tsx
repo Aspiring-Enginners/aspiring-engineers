@@ -29,6 +29,7 @@ import {
   Landmark,
 } from "lucide-react";
 import { counsellingService } from "@/services/counselling.service";
+import { logger } from "@/lib/logger";
 import { useAuth } from "@/contexts/AuthContext";
 import type { CounsellingPackage, Counsellor } from "@/types/counselling";
 import { getExamTheme } from "@/lib/theme/examThemes";
@@ -158,29 +159,29 @@ const faqs = [
 ];
 
 const wbjeeStats = [
-  { 
-    name: "Jadavpur Univ.", 
-    count: "#1", 
+  {
+    name: "Jadavpur Univ.",
+    count: "#1",
     description: "Top Ranked State Govt. University with 100% Placements",
-    icon:  Building2
+    icon: Building2,
   },
   {
     name: "Govt. Colleges",
     count: "10+",
     description: "Including IIEST Shibpur, KGEC, JGEC & Others",
-    icon: Landmark
+    icon: Landmark,
   },
   {
     name: "TFW Seats",
     count: "5%",
     description: "Dedicated Tuition Fee Waiver Seats in Every Institute",
-    icon: Award
+    icon: Award,
   },
   {
     name: "Private Colleges",
     count: "80+",
     description: "IEM, Heritage, Techno India & Many More",
-    icon: BookOpen
+    icon: BookOpen,
   },
 ];
 
@@ -198,7 +199,7 @@ export default function WBJEECounsellingPage() {
     return enrollments.some(
       (enrollment) =>
         enrollment.packageSnapshot?.slug === packageSlug &&
-        enrollment.status === "active"
+        enrollment.status === "active",
     );
   };
 
@@ -208,7 +209,7 @@ export default function WBJEECounsellingPage() {
         const data = await counsellingService.getPackagesByExam("wbjee");
         setPackages(data);
       } catch (error: any) {
-        console.error("Failed to fetch packages:", error);
+        logger.error("Failed to fetch packages:", error);
         setPackages([]);
       } finally {
         setLoadingPackages(false);
@@ -220,7 +221,7 @@ export default function WBJEECounsellingPage() {
         const data = await counsellingService.getCounsellorsByExam("wbjee");
         setCounsellors(data);
       } catch (error: any) {
-        console.error("Failed to fetch counsellors:", error);
+        logger.error("Failed to fetch counsellors:", error);
         setCounsellors([]);
       } finally {
         setLoadingCounsellors(false);
@@ -229,13 +230,13 @@ export default function WBJEECounsellingPage() {
 
     const fetchEnrollments = async () => {
       if (!isAuthenticated) return;
-      
+
       setLoadingEnrollments(true);
       try {
         const data = await counsellingService.getMyEnrollments();
         setEnrollments(data);
       } catch (error: any) {
-        console.error("Failed to fetch enrollments:", error);
+        logger.error("Failed to fetch enrollments:", error);
         setEnrollments([]);
       } finally {
         setLoadingEnrollments(false);
@@ -263,13 +264,17 @@ export default function WBJEECounsellingPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
           <span
             className="bg-clip-text text-transparent"
-            style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            style={{
+              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+            }}
           >
             WBJEE Counselling Guidance
           </span>
         </h1>
         <p className="text-base text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-4">
-          Complete guidance for West Bengal Joint Entrance Examination counselling. Secure your seat in Jadavpur University, Calcutta University, and top Govt. Engineering Colleges.
+          Complete guidance for West Bengal Joint Entrance Examination
+          counselling. Secure your seat in Jadavpur University, Calcutta
+          University, and top Govt. Engineering Colleges.
         </p>
         <Link
           href="#pricing"
@@ -287,7 +292,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               West Bengal Engineering Ecosystem
             </h2>
@@ -323,7 +330,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Counselling Process Overview
             </h2>
@@ -342,7 +351,9 @@ export default function WBJEECounsellingPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div
                     className="w-14 h-14 rounded-xl flex items-center justify-center"
-                    style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                    style={{
+                      backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                    }}
                   >
                     <phase.icon className="w-7 h-7 text-white" />
                   </div>
@@ -386,7 +397,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Our WBJEE Counselling Services
             </h2>
@@ -428,7 +441,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Choose Your Counselling Plan
             </h2>
@@ -451,14 +466,20 @@ export default function WBJEECounsellingPage() {
                 <div
                   key={pkg._id}
                   className="relative p-6 rounded-2xl border bg-white dark:bg-gray-900 hover:shadow-xl transition-all"
-                  style={pkg.isFeatured ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` } : {}}
+                  style={
+                    pkg.isFeatured
+                      ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` }
+                      : {}
+                  }
                 >
                   {/* Featured Badge */}
                   {pkg.isFeatured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <div
                         className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
-                        style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+                        style={{
+                          backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                        }}
                       >
                         <Sparkles className="w-3.5 h-3.5" />
                         Most Popular
@@ -492,7 +513,10 @@ export default function WBJEECounsellingPage() {
                   <div className="mb-6">
                     {pkg.discountPrice ? (
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold" style={{ color: AC }}>
+                        <span
+                          className="text-3xl font-bold"
+                          style={{ color: AC }}
+                        >
                           ₹{pkg.discountPrice.toLocaleString()}
                         </span>
                         <span className="text-lg text-gray-500 line-through decoration-red-500/50">
@@ -506,28 +530,33 @@ export default function WBJEECounsellingPage() {
                         </span>
                       </div>
                     ) : (
-                      <span className="text-3xl font-bold" style={{ color: AC }}>
+                      <span
+                        className="text-3xl font-bold"
+                        style={{ color: AC }}
+                      >
                         ₹{pkg.price.toLocaleString()}
                       </span>
                     )}
-                    
+
                     {/* Session & Duration Info */}
                     <div className="mt-2 text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                       {pkg.maxSessions && (
+                      {pkg.maxSessions && (
                         <div className="flex items-center gap-2 font-medium">
-                           <Users className="w-4 h-4" style={{ color: AC }} />
+                          <Users className="w-4 h-4" style={{ color: AC }} />
                           <span>
-                            {pkg.maxSessions} Live Session{pkg.maxSessions > 1 ? 's' : ''} 
-                            {pkg.sessionDuration && ` (${pkg.sessionDuration} mins each)`}
+                            {pkg.maxSessions} Live Session
+                            {pkg.maxSessions > 1 ? "s" : ""}
+                            {pkg.sessionDuration &&
+                              ` (${pkg.sessionDuration} mins each)`}
                           </span>
                         </div>
-                       )}
-                       {pkg.duration && (
+                      )}
+                      {pkg.duration && (
                         <div className="flex items-center gap-2 font-medium">
-                           <Calendar className="w-4 h-4" style={{ color: AC }} />
+                          <Calendar className="w-4 h-4" style={{ color: AC }} />
                           <span>Duration: {pkg.duration}</span>
                         </div>
-                       )}
+                      )}
                     </div>
                   </div>
 
@@ -538,7 +567,11 @@ export default function WBJEECounsellingPage() {
                         <span
                           key={idx}
                           className="px-3 py-1 rounded-full text-xs font-bold"
-                          style={{ backgroundColor: accentBg10, borderColor: `${AC}33`, color: AC }}
+                          style={{
+                            backgroundColor: accentBg10,
+                            borderColor: `${AC}33`,
+                            color: AC,
+                          }}
                         >
                           {highlight}
                         </span>
@@ -576,21 +609,26 @@ export default function WBJEECounsellingPage() {
                   {hasEnrollmentForPackage(pkg.slug) ? (
                     <button
                       onClick={() => {
-                        const testPortalUrl = process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
+                        const testPortalUrl =
+                          process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                         if (!testPortalUrl) {
-                          console.error("NEXT_PUBLIC_TEST_PORTAL_URL is not configured");
+                          logger.error(
+                            "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
+                          );
                           return;
                         }
-                        import("@/lib/utils/tokenManager").then(({ tokenManager }) => {
-                          const token = tokenManager.getAuthToken();
-                          const refreshToken = tokenManager.getRefreshToken();
-                          const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
-                            token || ""
-                          )}&refreshToken=${encodeURIComponent(
-                            refreshToken || ""
-                          )}&redirect=/counselling/enrollments`;
-                          window.location.href = ssoUrl;
-                        });
+                        import("@/lib/utils/tokenManager").then(
+                          ({ tokenManager }) => {
+                            const token = tokenManager.getAuthToken();
+                            const refreshToken = tokenManager.getRefreshToken();
+                            const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
+                              token || "",
+                            )}&refreshToken=${encodeURIComponent(
+                              refreshToken || "",
+                            )}&redirect=/counselling/enrollments`;
+                            window.location.href = ssoUrl;
+                          },
+                        );
                       }}
                       className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-colors shadow-sm ${
                         pkg.isFeatured
@@ -614,7 +652,13 @@ export default function WBJEECounsellingPage() {
                           ? "text-white hover:opacity-90"
                           : "bg-white dark:bg-white/10 text-gray-900 dark:text-white border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/20"
                       }`}
-                      style={pkg.isFeatured ? { backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` } : {}}
+                      style={
+                        pkg.isFeatured
+                          ? {
+                              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                            }
+                          : {}
+                      }
                     >
                       {isAuthenticated ? "Buy Now" : "Login to Buy"}
                       <ArrowRight className="w-4 h-4" />
@@ -633,7 +677,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Meet Our WBJEE Expert Counsellors
             </h2>
@@ -661,7 +707,9 @@ export default function WBJEECounsellingPage() {
                   <div className="flex items-start gap-4 mb-4">
                     <div
                       className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center text-white text-xl font-bold overflow-hidden shadow-md ring-2 ring-white dark:ring-gray-800"
-                      style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                      style={{
+                        backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                      }}
                     >
                       {counsellor.image ? (
                         <img
@@ -677,67 +725,104 @@ export default function WBJEECounsellingPage() {
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         {counsellor.name}
                         {counsellor.isFeatured && (
-                          <BadgeCheck className="w-5 h-5" style={{ color: AC }} />
+                          <BadgeCheck
+                            className="w-5 h-5"
+                            style={{ color: AC }}
+                          />
                         )}
                       </h3>
                       <p className="text-sm font-bold" style={{ color: AC }}>
                         {counsellor.title}
                       </p>
                       {counsellor.stats?.rating && (
-                         <div className="flex items-center gap-1 mt-1">
-                           <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                           <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                             {counsellor.stats.rating} ({counsellor.stats.totalReviews || 0} reviews)
-                           </span>
-                         </div>
+                        <div className="flex items-center gap-1 mt-1">
+                          <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                            {counsellor.stats.rating} (
+                            {counsellor.stats.totalReviews || 0} reviews)
+                          </span>
+                        </div>
                       )}
                     </div>
                   </div>
 
                   {/* Bio */}
                   <div className="mb-4">
-                     <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
                       {counsellor.shortBio || counsellor.bio}
                     </p>
                   </div>
 
                   {/* Qualifications - Added based on API Response */}
-                  {counsellor.qualifications && counsellor.qualifications.length > 0 && (
-                     <div className="mb-4">
-                       <h4 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Qualifications</h4>
-                       <div className="flex flex-wrap gap-2">
-                         {counsellor.qualifications.slice(0, 2).map((qual, idx) => (
-                           <div key={idx} className="flex items-center gap-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-                             <GraduationCap className="w-3 h-3" style={{ color: AC }} />
-                             {qual}
-                           </div>
-                         ))}
-                       </div>
-                     </div>
-                  )}
+                  {counsellor.qualifications &&
+                    counsellor.qualifications.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                          Qualifications
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {counsellor.qualifications
+                            .slice(0, 2)
+                            .map((qual, idx) => (
+                              <div
+                                key={idx}
+                                className="flex items-center gap-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md"
+                              >
+                                <GraduationCap
+                                  className="w-3 h-3"
+                                  style={{ color: AC }}
+                                />
+                                {qual}
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    )}
 
                   {/* Stats - Handle both direct API props and legacy stats object */}
                   <div className="grid grid-cols-2 gap-3 mb-4 mt-auto">
-                    {(counsellor.studentsGuided || counsellor.stats?.studentsHelped) && (
+                    {(counsellor.studentsGuided ||
+                      counsellor.stats?.studentsHelped) && (
                       <div
                         className="p-2.5 rounded-lg text-center"
-                        style={{ backgroundColor: accentBg5, borderColor: `${AC}1A` }}
+                        style={{
+                          backgroundColor: accentBg5,
+                          borderColor: `${AC}1A`,
+                        }}
                       >
-                        <div className="text-lg font-bold" style={{ color: AC }}>
-                          {(counsellor.studentsGuided || counsellor.stats?.studentsHelped || 0).toLocaleString()}+
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
+                          {(
+                            counsellor.studentsGuided ||
+                            counsellor.stats?.studentsHelped ||
+                            0
+                          ).toLocaleString()}
+                          +
                         </div>
                         <div className="text-xs font-bold text-gray-600 dark:text-gray-400">
                           Students
                         </div>
                       </div>
                     )}
-                    {(counsellor.experience || counsellor.stats?.experience) && (
+                    {(counsellor.experience ||
+                      counsellor.stats?.experience) && (
                       <div
                         className="p-2.5 rounded-lg text-center"
-                        style={{ backgroundColor: accentBg5, borderColor: `${AC}1A` }}
+                        style={{
+                          backgroundColor: accentBg5,
+                          borderColor: `${AC}1A`,
+                        }}
                       >
-                        <div className="text-lg font-bold" style={{ color: AC }}>
-                          {(counsellor.experience || counsellor.stats?.experience || 0)}+
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
+                          {counsellor.experience ||
+                            counsellor.stats?.experience ||
+                            0}
+                          +
                         </div>
                         <div className="text-xs font-bold text-gray-600 dark:text-gray-400">
                           Years Exp.
@@ -748,12 +833,14 @@ export default function WBJEECounsellingPage() {
 
                   {/* Languages - Added based on API Response */}
                   {counsellor.languages && counsellor.languages.length > 0 && (
-                     <div className="mb-4 border-t border-gray-100 dark:border-gray-800 pt-3">
-                       <span className="text-xs text-gray-500 dark:text-gray-500 font-medium mr-2">Speaks:</span>
-                       <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                         {counsellor.languages.join(", ")}
-                       </span>
-                     </div>
+                    <div className="mb-4 border-t border-gray-100 dark:border-gray-800 pt-3">
+                      <span className="text-xs text-gray-500 dark:text-gray-500 font-medium mr-2">
+                        Speaks:
+                      </span>
+                      <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                        {counsellor.languages.join(", ")}
+                      </span>
+                    </div>
                   )}
 
                   {/* Specializations */}
@@ -785,7 +872,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               WBJEE Counselling Timeline 2026
             </h2>
@@ -798,7 +887,9 @@ export default function WBJEECounsellingPage() {
             {/* Timeline Line */}
             <div
               className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5"
-              style={{ backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})`,
+              }}
             />
 
             {/* Timeline Items */}
@@ -823,7 +914,10 @@ export default function WBJEECounsellingPage() {
                     }`}
                   >
                     <div className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 inline-block">
-                      <div className="text-sm font-semibold mb-1" style={{ color: AC }}>
+                      <div
+                        className="text-sm font-semibold mb-1"
+                        style={{ color: AC }}
+                      >
                         {item.date}
                       </div>
                       <div className="font-medium text-gray-900 dark:text-white">
@@ -844,7 +938,9 @@ export default function WBJEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Frequently Asked Questions
             </h2>
@@ -886,14 +982,16 @@ export default function WBJEECounsellingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div
             className="p-8 md:p-12 rounded-3xl text-white"
-            style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+            style={{
+              backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+            }}
           >
             <GraduationCap className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-2">
               Start Your WBJEE Counselling Journey
             </h2>
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Don't miss out on Jadavpur University or other top Govt. colleges. 
+              Don't miss out on Jadavpur University or other top Govt. colleges.
               Get expert guidance from current students and alumni.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

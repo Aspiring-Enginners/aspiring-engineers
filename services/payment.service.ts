@@ -1,15 +1,16 @@
-import apiClient, { handleApiError } from '@/lib/api-client';
+import apiClient, { handleApiError } from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 import {
   CashfreeOrderRequest,
   CashfreeOrderResponse,
   CashfreeVerifyRequest,
   CashfreeVerifyResponse,
   PurchasedContentResponse,
-} from '@/types';
+} from "@/types";
 
 /**
  * Payment Service
- * 
+ *
  * Handles all payment-related API calls with Cashfree integration
  */
 
@@ -19,11 +20,13 @@ export const paymentService = {
    * POST /payments/cashfree-sdk/create-order
    * Requires authentication
    */
-  createOrder: async (data: CashfreeOrderRequest): Promise<CashfreeOrderResponse> => {
+  createOrder: async (
+    data: CashfreeOrderRequest,
+  ): Promise<CashfreeOrderResponse> => {
     try {
       const response = await apiClient.post<CashfreeOrderResponse>(
-        '/payments/cashfree-sdk/create-order',
-        data
+        "/payments/cashfree-sdk/create-order",
+        data,
       );
       return response.data;
     } catch (error) {
@@ -36,11 +39,13 @@ export const paymentService = {
    * POST /payments/cashfree-sdk/verify
    * Requires authentication
    */
-  verifyPayment: async (data: CashfreeVerifyRequest): Promise<CashfreeVerifyResponse> => {
+  verifyPayment: async (
+    data: CashfreeVerifyRequest,
+  ): Promise<CashfreeVerifyResponse> => {
     try {
       const response = await apiClient.post<CashfreeVerifyResponse>(
-        '/payments/cashfree-sdk/verify',
-        data
+        "/payments/cashfree-sdk/verify",
+        data,
       );
       return response.data;
     } catch (error) {
@@ -56,7 +61,7 @@ export const paymentService = {
   getPurchasedContent: async (): Promise<PurchasedContentResponse> => {
     try {
       const response = await apiClient.get<PurchasedContentResponse>(
-        '/payments/purchased/content'
+        "/payments/purchased/content",
       );
       return response.data;
     } catch (error) {
@@ -71,13 +76,14 @@ export const paymentService = {
    */
   checkAccess: async (productId: string): Promise<boolean> => {
     try {
-      const response = await apiClient.get<{ success: boolean; hasAccess: boolean }>(
-        `/payments/access/package/${productId}`
-      );
+      const response = await apiClient.get<{
+        success: boolean;
+        hasAccess: boolean;
+      }>(`/payments/access/package/${productId}`);
       return response.data.hasAccess ?? response.data.success;
     } catch (error) {
       // If error (e.g., 401 unauthorized), user doesn't have access
-      console.error('Access check error:', error);
+      logger.error("Access check error:", error);
       return false;
     }
   },

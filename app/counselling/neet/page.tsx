@@ -29,6 +29,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { counsellingService } from "@/services/counselling.service";
+import { logger } from "@/lib/logger";
 import { useAuth } from "@/contexts/AuthContext";
 import type { CounsellingPackage, Counsellor } from "@/types/counselling";
 import { getExamTheme } from "@/lib/theme/examThemes";
@@ -205,7 +206,7 @@ export default function NEETCounsellingPage() {
     return enrollments.some(
       (enrollment) =>
         enrollment.packageSnapshot?.slug === packageSlug &&
-        enrollment.status === "active"
+        enrollment.status === "active",
     );
   };
 
@@ -215,7 +216,7 @@ export default function NEETCounsellingPage() {
         const data = await counsellingService.getPackagesByExam("neet");
         setPackages(data);
       } catch (error) {
-        console.error("Failed to fetch packages:", error);
+        logger.error("Failed to fetch packages:", error);
       } finally {
         setLoadingPackages(false);
       }
@@ -226,7 +227,7 @@ export default function NEETCounsellingPage() {
         const data = await counsellingService.getCounsellorsByExam("neet");
         setCounsellors(data);
       } catch (error) {
-        console.error("Failed to fetch counsellors:", error);
+        logger.error("Failed to fetch counsellors:", error);
       } finally {
         setLoadingCounsellors(false);
       }
@@ -234,13 +235,13 @@ export default function NEETCounsellingPage() {
 
     const fetchEnrollments = async () => {
       if (!isAuthenticated) return;
-      
+
       setLoadingEnrollments(true);
       try {
         const data = await counsellingService.getMyEnrollments();
         setEnrollments(data);
       } catch (error: any) {
-        console.error("Failed to fetch enrollments:", error);
+        logger.error("Failed to fetch enrollments:", error);
         setEnrollments([]);
       } finally {
         setLoadingEnrollments(false);
@@ -268,16 +269,20 @@ export default function NEETCounsellingPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
           <span
             className="bg-clip-text text-transparent"
-            style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            style={{
+              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+            }}
           >
             NEET Counselling Guidance
           </span>
         </h1>
         <p className="text-base text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-4">
-          Navigate MCC, State, and Deemed University counselling with confidence. Secure your MBBS/BDS seat in top medical colleges across India.
+          Navigate MCC, State, and Deemed University counselling with
+          confidence. Secure your MBBS/BDS seat in top medical colleges across
+          India.
         </p>
         <Link
-         href="#pricing"
+          href="#pricing"
           className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-white hover:opacity-90 transition-colors text-sm"
           style={{ backgroundColor: AC }}
         >
@@ -292,7 +297,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               NEET UG Seat Matrix
             </h2>
@@ -328,7 +335,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Courses Through NEET
             </h2>
@@ -345,7 +354,9 @@ export default function NEETCounsellingPage() {
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                  }}
                 >
                   <Stethoscope className="w-6 h-6 text-white" />
                 </div>
@@ -370,7 +381,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Counselling Process Overview
             </h2>
@@ -389,7 +402,9 @@ export default function NEETCounsellingPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div
                     className="w-14 h-14 rounded-xl flex items-center justify-center"
-                    style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                    style={{
+                      backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                    }}
                   >
                     <type.icon className="w-7 h-7 text-white" />
                   </div>
@@ -433,7 +448,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Our NEET Counselling Services
             </h2>
@@ -492,14 +509,20 @@ export default function NEETCounsellingPage() {
                 <div
                   key={pkg._id}
                   className="relative p-6 rounded-2xl border bg-white dark:bg-gray-900 hover:shadow-xl transition-all"
-                  style={pkg.isFeatured ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` } : {}}
+                  style={
+                    pkg.isFeatured
+                      ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` }
+                      : {}
+                  }
                 >
                   {/* Featured Badge */}
                   {pkg.isFeatured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <div
                         className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
-                        style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+                        style={{
+                          backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                        }}
                       >
                         <Sparkles className="w-3.5 h-3.5" />
                         Most Popular
@@ -600,22 +623,27 @@ export default function NEETCounsellingPage() {
                     <button
                       onClick={() => {
                         // Redirect to test-portal-client counselling page with SSO
-                        const testPortalUrl = process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
+                        const testPortalUrl =
+                          process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                         if (!testPortalUrl) {
-                          console.error("NEXT_PUBLIC_TEST_PORTAL_URL is not configured");
+                          logger.error(
+                            "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
+                          );
                           return;
                         }
                         // Import tokenManager dynamically
-                        import("@/lib/utils/tokenManager").then(({ tokenManager }) => {
-                          const token = tokenManager.getAuthToken();
-                          const refreshToken = tokenManager.getRefreshToken();
-                          const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
-                            token || ""
-                          )}&refreshToken=${encodeURIComponent(
-                            refreshToken || ""
-                          )}&redirect=/counselling/enrollments`;
-                          window.location.href = ssoUrl;
-                        });
+                        import("@/lib/utils/tokenManager").then(
+                          ({ tokenManager }) => {
+                            const token = tokenManager.getAuthToken();
+                            const refreshToken = tokenManager.getRefreshToken();
+                            const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
+                              token || "",
+                            )}&refreshToken=${encodeURIComponent(
+                              refreshToken || "",
+                            )}&redirect=/counselling/enrollments`;
+                            window.location.href = ssoUrl;
+                          },
+                        );
                       }}
                       className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors ${
                         pkg.isFeatured
@@ -639,7 +667,13 @@ export default function NEETCounsellingPage() {
                           ? "text-white hover:opacity-90"
                           : "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20"
                       }`}
-                      style={pkg.isFeatured ? { backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` } : {}}
+                      style={
+                        pkg.isFeatured
+                          ? {
+                              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                            }
+                          : {}
+                      }
                     >
                       {isAuthenticated ? "Buy Now" : "Login to Buy"}
                       <ArrowRight className="w-4 h-4" />
@@ -683,7 +717,9 @@ export default function NEETCounsellingPage() {
                   <div className="flex items-start gap-4 mb-4">
                     <div
                       className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden"
-                      style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                      style={{
+                        backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                      }}
                     >
                       {counsellor.image ? (
                         <img
@@ -713,24 +749,38 @@ export default function NEETCounsellingPage() {
 
                   {/* Stats - Handle both direct API props and legacy stats object */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
-                    {(counsellor.studentsGuided || counsellor.stats?.studentsHelped) && (
+                    {(counsellor.studentsGuided ||
+                      counsellor.stats?.studentsHelped) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold" style={{ color: AC }}>
-                          {(counsellor.studentsGuided || counsellor.stats?.studentsHelped || 0).toLocaleString()}+
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
+                          {(
+                            counsellor.studentsGuided ||
+                            counsellor.stats?.studentsHelped ||
+                            0
+                          ).toLocaleString()}
+                          +
                         </div>
                         <div className="text-xs text-gray-500">
                           Students Helped
                         </div>
                       </div>
                     )}
-                    {(counsellor.experience || counsellor.stats?.experience) && (
+                    {(counsellor.experience ||
+                      counsellor.stats?.experience) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold" style={{ color: AC }}>
-                          {(counsellor.experience || counsellor.stats?.experience || 0)}+
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
+                          {counsellor.experience ||
+                            counsellor.stats?.experience ||
+                            0}
+                          +
                         </div>
-                        <div className="text-xs text-gray-500">
-                          Years Exp.
-                        </div>
+                        <div className="text-xs text-gray-500">Years Exp.</div>
                       </div>
                     )}
                   </div>
@@ -784,7 +834,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               NEET Counselling Timeline 2026
             </h2>
@@ -797,7 +849,9 @@ export default function NEETCounsellingPage() {
             {/* Timeline Line */}
             <div
               className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5"
-              style={{ backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})`,
+              }}
             />
 
             {/* Timeline Items */}
@@ -822,7 +876,10 @@ export default function NEETCounsellingPage() {
                     }`}
                   >
                     <div className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 inline-block">
-                      <div className="text-sm font-semibold mb-1" style={{ color: AC }}>
+                      <div
+                        className="text-sm font-semibold mb-1"
+                        style={{ color: AC }}
+                      >
                         {item.date}
                       </div>
                       <div className="font-medium text-gray-900 dark:text-white">
@@ -843,7 +900,9 @@ export default function NEETCounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Frequently Asked Questions
             </h2>

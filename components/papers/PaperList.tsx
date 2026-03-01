@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getPapers, Paper } from "@/services/papers";
+import { logger } from "@/lib/logger";
 import {
   ExternalLink,
   FileText,
@@ -56,7 +57,7 @@ export default function PaperList({ category, accentColor }: PaperListProps) {
         const data = await getPapers({ category });
         setPapers(data);
       } catch (error) {
-        console.error("Failed to load papers", error);
+        logger.error("Failed to load papers", error);
       } finally {
         setLoading(false);
       }

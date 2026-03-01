@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getPapers, Paper } from "@/services/papers";
+import { logger } from "@/lib/logger";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -59,10 +60,15 @@ export default function PyqNoSolutionPage({
   useEffect(() => {
     const fetchPapers = async () => {
       try {
-        const data = await getPapers({ category, type: "no-solution", page: 1, limit: 100 });
+        const data = await getPapers({
+          category,
+          type: "no-solution",
+          page: 1,
+          limit: 100,
+        });
         setPapers(data);
       } catch (error) {
-        console.error("Failed to load papers", error);
+        logger.error("Failed to load papers", error);
       } finally {
         setLoading(false);
       }

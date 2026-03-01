@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { X, CheckCircle, Send, GraduationCap } from "lucide-react";
 import apiClient from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 
 interface InternshipApplicationModalProps {
   isOpen: boolean;
@@ -10,7 +11,13 @@ interface InternshipApplicationModalProps {
   selectedInternship: string;
 }
 
-const yearOptions = ["1st Year", "2nd Year", "3rd Year", "4th Year", "Graduated"];
+const yearOptions = [
+  "1st Year",
+  "2nd Year",
+  "3rd Year",
+  "4th Year",
+  "Graduated",
+];
 const branchOptions = [
   "Computer Science & Engineering (CSE)",
   "Electronics & Communication (ECE)",
@@ -44,7 +51,7 @@ export default function InternshipApplicationModal({
   if (!isOpen) return null;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -62,8 +69,9 @@ export default function InternshipApplicationModal({
         location: formData.location,
         cgpa: formData.cgpa,
         year: formData.year,
-        branch: formData.branch === "Other" ? formData.otherBranch : formData.branch,
-        internshipType: selectedInternship
+        branch:
+          formData.branch === "Other" ? formData.otherBranch : formData.branch,
+        internshipType: selectedInternship,
       };
 
       await apiClient.post("/internship/apply", payload);
@@ -88,8 +96,11 @@ export default function InternshipApplicationModal({
         onClose();
       }, 2000);
     } catch (error: any) {
-      console.error("Failed to submit internship application:", error);
-      alert(error.response?.data?.message || "Failed to submit application. Please try again.");
+      logger.error("Failed to submit internship application:", error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to submit application. Please try again.",
+      );
       setIsSubmitting(false);
     }
   };

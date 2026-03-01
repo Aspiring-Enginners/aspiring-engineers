@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { X, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import apiClient from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 
 interface OTPModalProps {
   isOpen: boolean;
@@ -47,7 +48,7 @@ export default function OTPModal({
     if (resendCooldown > 0) {
       const timer = setTimeout(
         () => setResendCooldown(resendCooldown - 1),
-        1000
+        1000,
       );
       return () => clearTimeout(timer);
     }
@@ -86,7 +87,7 @@ export default function OTPModal({
         }
       }
     },
-    [otp]
+    [otp],
   );
 
   const handlePaste = useCallback((e: React.ClipboardEvent) => {
@@ -136,7 +137,7 @@ export default function OTPModal({
         setSuccess(true);
         setSuccessMessage(
           response.data.message ||
-            "Email verified successfully! Redirecting to login..."
+            "Email verified successfully! Redirecting to login...",
         );
 
         // Wait 2 seconds to show success message, then redirect
@@ -145,7 +146,7 @@ export default function OTPModal({
         }, 2000);
       }
     } catch (err: any) {
-      console.error("OTP verification error:", err);
+      logger.error("OTP verification error:", err);
 
       // Extract error message from various response formats
       let errorMessage = "Invalid OTP. Please try again.";
@@ -185,7 +186,7 @@ export default function OTPModal({
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
     } catch (err: any) {
-      console.error("Resend OTP error:", err);
+      logger.error("Resend OTP error:", err);
 
       let errorMessage = "Failed to resend OTP. Please try again.";
       if (err?.response?.data?.message) {
@@ -385,8 +386,8 @@ export default function OTPModal({
               {resendLoading
                 ? "Sending..."
                 : resendCooldown > 0
-                ? `Resend in ${resendCooldown}s`
-                : "Resend Code"}
+                  ? `Resend in ${resendCooldown}s`
+                  : "Resend Code"}
             </button>
           </div>
         )}

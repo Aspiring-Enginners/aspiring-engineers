@@ -3,9 +3,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { counsellingService } from "@/services/counselling.service";
+import { logger } from "@/lib/logger";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Calendar, Clock, Video, Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Video,
+  Loader2,
+  ArrowLeft,
+  CheckCircle2,
+} from "lucide-react";
 
 interface Enrollment {
   _id: string;
@@ -20,10 +28,22 @@ interface Enrollment {
 }
 
 const timeSlots = [
-  "09:00-09:30", "09:30-10:00", "10:00-10:30", "10:30-11:00",
-  "11:00-11:30", "11:30-12:00", "14:00-14:30", "14:30-15:00",
-  "15:00-15:30", "15:30-16:00", "16:00-16:30", "16:30-17:00",
-  "17:00-17:30", "17:30-18:00", "18:00-18:30", "18:30-19:00",
+  "09:00-09:30",
+  "09:30-10:00",
+  "10:00-10:30",
+  "10:30-11:00",
+  "11:00-11:30",
+  "11:30-12:00",
+  "14:00-14:30",
+  "14:30-15:00",
+  "15:00-15:30",
+  "15:30-16:00",
+  "16:00-16:30",
+  "16:30-17:00",
+  "17:00-17:30",
+  "17:30-18:00",
+  "18:00-18:30",
+  "18:30-19:00",
 ];
 
 const meetingPlatforms = [
@@ -54,12 +74,16 @@ export default function BookSessionPage() {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          router.push(`/login?redirect=/counselling/book-session/${enrollmentId}`);
+          router.push(
+            `/login?redirect=/counselling/book-session/${enrollmentId}`,
+          );
           return;
         }
 
         const enrollments = await counsellingService.getMyEnrollments();
-        const foundEnrollment = enrollments.find((e: any) => e._id === enrollmentId);
+        const foundEnrollment = enrollments.find(
+          (e: any) => e._id === enrollmentId,
+        );
 
         if (!foundEnrollment) {
           setError("Enrollment not found");
@@ -78,9 +102,11 @@ export default function BookSessionPage() {
 
         setEnrollment(foundEnrollment);
       } catch (error: any) {
-        console.error("Failed to fetch enrollment:", error);
+        logger.error("Failed to fetch enrollment:", error);
         if (error.message?.includes("Authentication")) {
-          router.push(`/login?redirect=/counselling/book-session/${enrollmentId}`);
+          router.push(
+            `/login?redirect=/counselling/book-session/${enrollmentId}`,
+          );
         } else {
           setError(error.message || "Failed to load enrollment details");
         }
@@ -94,7 +120,7 @@ export default function BookSessionPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!preferredDate || !preferredTimeSlot || !agenda.trim()) {
       setError("Please fill in all required fields");
       return;
@@ -117,7 +143,7 @@ export default function BookSessionPage() {
         router.push("/profile/my-enrollments");
       }, 2000);
     } catch (error: any) {
-      console.error("Failed to book session:", error);
+      logger.error("Failed to book session:", error);
       setError(error.message || "Failed to book session. Please try again.");
       setSubmitting(false);
     }
@@ -142,7 +168,9 @@ export default function BookSessionPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin text-[#2596be] mx-auto mb-4" />
-            <p className="text-gray-600 dark:text-gray-400">Loading enrollment details...</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              Loading enrollment details...
+            </p>
           </div>
         </div>
         <Footer />
@@ -159,7 +187,9 @@ export default function BookSessionPage() {
             <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">❌</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Unable to Book Session</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              Unable to Book Session
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
             <button
               onClick={() => router.push("/profile/my-enrollments")}
@@ -184,9 +214,12 @@ export default function BookSessionPage() {
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Session Booked Successfully!</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              Session Booked Successfully!
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Your counselling session request has been submitted. Our team will contact you shortly with the meeting link.
+              Your counselling session request has been submitted. Our team will
+              contact you shortly with the meeting link.
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500">
               Redirecting to your enrollments...
@@ -223,7 +256,10 @@ export default function BookSessionPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Form */}
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 space-y-6"
+              >
                 {/* Date Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -312,7 +348,9 @@ export default function BookSessionPage() {
                 {/* Error Display */}
                 {error && (
                   <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                    <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+                    <p className="text-red-700 dark:text-red-400 text-sm">
+                      {error}
+                    </p>
                   </div>
                 )}
 
@@ -345,27 +383,36 @@ export default function BookSessionPage() {
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">Package Name</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">
+                      Package Name
+                    </p>
                     <p className="font-semibold text-gray-900 dark:text-white">
                       {enrollment?.packageSnapshot.name}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">Exam Type</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">
+                      Exam Type
+                    </p>
                     <p className="font-semibold text-gray-900 dark:text-white uppercase">
                       {enrollment?.packageSnapshot.examType}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">Session Duration</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">
+                      Session Duration
+                    </p>
                     <p className="font-semibold text-gray-900 dark:text-white">
                       {enrollment?.packageSnapshot.sessionDuration} minutes
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">Sessions Remaining</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 mb-1">
+                      Sessions Remaining
+                    </p>
                     <p className="font-semibold text-[#2596be]">
-                      {enrollment?.sessionsRemaining} / {enrollment?.packageSnapshot.maxSessions}
+                      {enrollment?.sessionsRemaining} /{" "}
+                      {enrollment?.packageSnapshot.maxSessions}
                     </p>
                   </div>
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-800">

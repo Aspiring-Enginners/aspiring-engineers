@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import apiClient from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 import { PackageDetail, PackageDetailResponse } from "@/types";
 import { useAuth } from "@/contexts/AuthContext";
 import { tokenManager } from "@/lib/utils/tokenManager";
@@ -70,7 +71,7 @@ export default function PackageDetailPage() {
 
       try {
         const response = await apiClient.get<PackageDetailResponse>(
-          `/packages/id/${packageId}`
+          `/packages/id/${packageId}`,
         );
 
         if (response.data.success) {
@@ -80,7 +81,7 @@ export default function PackageDetailPage() {
           if (isAuthenticated) {
             setCheckingAccess(true);
             const access = await paymentService.checkAccess(
-              response.data.data._id
+              response.data.data._id,
             );
             setHasAccess(access);
             setCheckingAccess(false);
@@ -88,7 +89,7 @@ export default function PackageDetailPage() {
         }
       } catch (err: any) {
         setError("Failed to load package details. Please try again.");
-        console.error("Error fetching package:", err);
+        logger.error("Error fetching package:", err);
       } finally {
         setLoading(false);
       }
@@ -100,7 +101,11 @@ export default function PackageDetailPage() {
   // Re-check access when user returns to the page (e.g., after payment)
   useEffect(() => {
     const handleVisibilityChange = async () => {
-      if (document.visibilityState === 'visible' && isAuthenticated && packageData) {
+      if (
+        document.visibilityState === "visible" &&
+        isAuthenticated &&
+        packageData
+      ) {
         setCheckingAccess(true);
         const access = await paymentService.checkAccess(packageData._id);
         setHasAccess(access);
@@ -108,14 +113,15 @@ export default function PackageDetailPage() {
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, [isAuthenticated, packageData]);
 
   const discountPercent = packageData?.discountPrice
     ? Math.round(
         ((packageData.price - packageData.discountPrice) / packageData.price) *
-          100
+          100,
       )
     : 0;
 
@@ -141,7 +147,7 @@ export default function PackageDetailPage() {
       const orderResponse = await paymentService.createOrder({
         amount: packageData.discountPrice || packageData.price,
         packageId: packageData._id,
-        packageType: 'test_package',
+        packageType: "test_package",
         customerName: user.name,
         customerEmail: user.email,
         customerPhone: user.phone,
@@ -166,12 +172,12 @@ export default function PackageDetailPage() {
       // Open Cashfree checkout modal
       // User will be redirected to returnUrl after payment completion
       cashfree.checkout(checkoutOptions);
-      
+
       // Reset processing state
       // Verification will happen on the verify page (returnUrl)
       setPurchasing(false);
     } catch (err: any) {
-      console.error("❌ Payment error:", err);
+      logger.error("Payment error:", err);
       setPurchaseError(err.message || "Payment failed. Please try again.");
       setPurchasing(false);
     }
@@ -262,7 +268,11 @@ export default function PackageDetailPage() {
                 {/* Banner / Thumbnail */}
                 <div className="relative w-full aspect-video bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-white/10">
                   <Image
-                    src={packageData.banner || packageData.thumbnail || getFallbackBanner()}
+                    src={
+                      packageData.banner ||
+                      packageData.thumbnail ||
+                      getFallbackBanner()
+                    }
                     alt={packageData.title || "Test Series Banner"}
                     fill
                     unoptimized
@@ -274,105 +284,111 @@ export default function PackageDetailPage() {
                 {/* Content Area below banner */}
                 <div className="p-6">
                   {/* Badges */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {packageData.examTypes.map((exam, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-[#2596be]/10 text-[#2596be] text-sm font-medium rounded-full"
-                    >
-                      {exam.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </span>
-                  ))}
-                  {packageData.status === "active" && (
-                    <span className="px-3 py-1 bg-green-500/10 text-green-500 text-sm font-medium rounded-full">
-                      Active
-                    </span>
-                  )}
-                </div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {packageData.examTypes.map((exam, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 bg-[#2596be]/10 text-[#2596be] text-sm font-medium rounded-full"
+                      >
+                        {exam
+                          .replace(/_/g, " ")
+                          .replace(/\b\w/g, (l) => l.toUpperCase())}
+                      </span>
+                    ))}
+                    {packageData.status === "active" && (
+                      <span className="px-3 py-1 bg-green-500/10 text-green-500 text-sm font-medium rounded-full">
+                        Active
+                      </span>
+                    )}
+                  </div>
 
-                <h1
-                  className={`text-3xl font-bold mb-4 ${
-                    darkMode ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {packageData.title}
-                </h1>
+                  <h1
+                    className={`text-3xl font-bold mb-4 ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {packageData.title}
+                  </h1>
 
-                <p
-                  className={`text-base leading-relaxed ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  {packageData.description}
-                </p>
+                  <p
+                    className={`text-base leading-relaxed ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    {packageData.description}
+                  </p>
 
-                {/* Stats */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-dashed border-gray-200/20">
-                  <div className="text-center">
-                    <div
-                      className={`text-2xl font-bold ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {packageData.totalTests}
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-dashed border-gray-200/20">
+                    <div className="text-center">
+                      <div
+                        className={`text-2xl font-bold ${
+                          darkMode ? "text-white" : "text-gray-900"
+                        }`}
+                      >
+                        {packageData.totalTests}
+                      </div>
+                      <div
+                        className={`text-sm ${
+                          darkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        Tests
+                      </div>
                     </div>
-                    <div
-                      className={`text-sm ${
-                        darkMode ? "text-gray-500" : "text-gray-500"
-                      }`}
-                    >
-                      Tests
+                    <div className="text-center">
+                      <div
+                        className={`text-2xl font-bold ${
+                          darkMode ? "text-white" : "text-gray-900"
+                        }`}
+                      >
+                        {packageData.totalQuestions.toLocaleString()}
+                      </div>
+                      <div
+                        className={`text-sm ${
+                          darkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        Questions
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div
+                        className={`text-2xl font-bold ${
+                          darkMode ? "text-white" : "text-gray-900"
+                        }`}
+                      >
+                        {packageData.validityDays}
+                      </div>
+                      <div
+                        className={`text-sm ${
+                          darkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        Days Validity
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div
+                        className={`text-2xl font-bold ${
+                          darkMode ? "text-white" : "text-gray-900"
+                        }`}
+                      >
+                        {(
+                          packageData.enrollments ??
+                          packageData.metadata?.totalStudents ??
+                          0
+                        ).toLocaleString()}
+                      </div>
+                      <div
+                        className={`text-sm ${
+                          darkMode ? "text-gray-500" : "text-gray-500"
+                        }`}
+                      >
+                        Students
+                      </div>
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div
-                      className={`text-2xl font-bold ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {packageData.totalQuestions.toLocaleString()}
-                    </div>
-                    <div
-                      className={`text-sm ${
-                        darkMode ? "text-gray-500" : "text-gray-500"
-                      }`}
-                    >
-                      Questions
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div
-                      className={`text-2xl font-bold ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {packageData.validityDays}
-                    </div>
-                    <div
-                      className={`text-sm ${
-                        darkMode ? "text-gray-500" : "text-gray-500"
-                      }`}
-                    >
-                      Days Validity
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div
-                      className={`text-2xl font-bold ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      {(packageData.enrollments ?? packageData.metadata?.totalStudents ?? 0).toLocaleString()}
-                    </div>
-                    <div
-                      className={`text-sm ${
-                        darkMode ? "text-gray-500" : "text-gray-500"
-                      }`}
-                    >
-                      Students
-                    </div>
-                  </div>
-                </div>
                 </div>
               </div>
 
@@ -574,18 +590,18 @@ export default function PackageDetailPage() {
                           const testPortalUrl =
                             process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                           if (!testPortalUrl) {
-                            console.error(
-                              "NEXT_PUBLIC_TEST_PORTAL_URL is not configured"
+                            logger.error(
+                              "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
                             );
                             return;
                           }
                           // Redirect to test portal with SSO params
                           const ssoUrl = `${testPortalUrl}/auth/sso?token=${encodeURIComponent(
-                            token || ""
+                            token || "",
                           )}&refreshToken=${encodeURIComponent(
-                            refreshToken || ""
+                            refreshToken || "",
                           )}&packageId=${encodeURIComponent(
-                            packageData?._id || ""
+                            packageData?._id || "",
                           )}`;
                           window.location.href = ssoUrl;
                         }}
@@ -630,7 +646,6 @@ export default function PackageDetailPage() {
                       )}
                     </>
                   )}
-
                 </div>
 
                 {/* Additional Info */}
@@ -743,7 +758,7 @@ export default function PackageDetailPage() {
                                 {instructor}
                               </span>
                             </div>
-                          )
+                          ),
                         )}
                       </div>
                     </div>

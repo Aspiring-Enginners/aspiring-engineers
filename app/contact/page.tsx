@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
+import { logger } from "@/lib/logger";
 import apiClient from "@/lib/api-client";
 
 export default function ContactPage() {
@@ -36,7 +37,7 @@ export default function ContactPage() {
       alert("Message sent successfully!");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
     } catch (error: any) {
-      console.error("Failed to send message:", error);
+      logger.error("Failed to send message:", error);
       alert(
         error.response?.data?.message ||
           "Failed to send message. Please try again.",

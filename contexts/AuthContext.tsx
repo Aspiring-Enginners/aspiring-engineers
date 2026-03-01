@@ -12,11 +12,15 @@ import { storage, STORAGE_KEYS } from "@/lib/utils/storage";
 import { tokenManager } from "@/lib/utils/tokenManager";
 import authService, { RegisterResponse } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { logger } from "@/lib/logger";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (credentials: LoginCredentials, redirectPath?: string) => Promise<void>;
+  login: (
+    credentials: LoginCredentials,
+    redirectPath?: string,
+  ) => Promise<void>;
   register: (data: RegisterData) => Promise<RegisterResponse>;
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
@@ -43,7 +47,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
-  const login = async (credentials: LoginCredentials, redirectPath?: string) => {
+  const login = async (
+    credentials: LoginCredentials,
+    redirectPath?: string,
+  ) => {
     try {
       const response: AuthResponse = await authService.login(credentials);
 
@@ -65,7 +72,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // Don't store tokens or user - they need to verify email first
       // The OTP modal will handle the verification flow
-      console.log("✅ Registration successful, OTP sent to:", response.email);
 
       return response;
     } catch (error) {
@@ -107,7 +113,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await authService.logout();
     } catch (error) {
       // Continue with logout even if API fails
-      console.error("Logout error:", error);
+      logger.error("Logout error:", error);
     } finally {
       // Always clear tokens and local storage, then redirect
       tokenManager.clearTokens();

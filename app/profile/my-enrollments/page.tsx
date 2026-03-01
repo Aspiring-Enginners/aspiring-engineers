@@ -5,6 +5,7 @@ import { counsellingService } from "@/services/counselling.service";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
+import { logger } from "@/lib/logger";
 import { useRouter } from "next/navigation";
 import {
   Calendar,
@@ -57,14 +58,14 @@ export default function MyEnrollmentsPage() {
         const data = await counsellingService.getMyEnrollments();
         setEnrollments(data);
       } catch (error: any) {
-        console.error("Failed to fetch enrollments:", error);
-        
+        logger.error("Failed to fetch enrollments:", error);
+
         // Handle authentication errors
         if (error.response?.status === 401) {
           router.push("/login?redirect=/profile/my-enrollments");
           return;
         }
-        
+
         setError(error.message || "Failed to load enrollments");
       } finally {
         setLoading(false);
@@ -79,22 +80,26 @@ export default function MyEnrollmentsPage() {
       active: {
         icon: CheckCircle,
         text: "Active",
-        className: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+        className:
+          "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
       },
       expired: {
         icon: XCircle,
         text: "Expired",
-        className: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
+        className:
+          "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400",
       },
       cancelled: {
         icon: AlertCircle,
         text: "Cancelled",
-        className: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+        className:
+          "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
       },
       refunded: {
         icon: AlertCircle,
         text: "Refunded",
-        className: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
+        className:
+          "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400",
       },
     };
 
@@ -102,7 +107,9 @@ export default function MyEnrollmentsPage() {
     const Icon = badge.icon;
 
     return (
-      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${badge.className}`}>
+      <span
+        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${badge.className}`}
+      >
         <Icon className="w-4 h-4" />
         {badge.text}
       </span>
@@ -119,7 +126,8 @@ export default function MyEnrollmentsPage() {
 
   const getDaysUntilExpiry = (expiryDate: string) => {
     const days = Math.ceil(
-      (new Date(expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+      (new Date(expiryDate).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24),
     );
     return days;
   };
@@ -131,7 +139,9 @@ export default function MyEnrollmentsPage() {
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin text-[#2596be] mx-auto mb-4" />
-            <p className="text-gray-600 dark:text-gray-400">Loading your enrollments...</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              Loading your enrollments...
+            </p>
           </div>
         </div>
         <Footer />
@@ -217,7 +227,8 @@ export default function MyEnrollmentsPage() {
                             Sessions Used
                           </span>
                           <span className="text-sm font-bold text-gray-900 dark:text-white">
-                            {enrollment.sessionsUsed} / {enrollment.packageSnapshot.maxSessions}
+                            {enrollment.sessionsUsed} /{" "}
+                            {enrollment.packageSnapshot.maxSessions}
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -234,16 +245,21 @@ export default function MyEnrollmentsPage() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                           <Calendar className="w-4 h-4" />
-                          <span>Enrolled: {formatDate(enrollment.enrolledAt)}</span>
+                          <span>
+                            Enrolled: {formatDate(enrollment.enrolledAt)}
+                          </span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                           <Clock className="w-4 h-4" />
                           <span>
-                            {enrollment.packageSnapshot.sessionDuration || 30} min sessions
+                            {enrollment.packageSnapshot.sessionDuration || 30}{" "}
+                            min sessions
                           </span>
                         </div>
                         {isActive && (
-                          <div className={`flex items-center gap-2 text-sm ${isNearExpiry ? "text-orange-600 dark:text-orange-400" : "text-gray-600 dark:text-gray-400"}`}>
+                          <div
+                            className={`flex items-center gap-2 text-sm ${isNearExpiry ? "text-orange-600 dark:text-orange-400" : "text-gray-600 dark:text-gray-400"}`}
+                          >
                             <AlertCircle className="w-4 h-4" />
                             <span>
                               {daysRemaining > 0

@@ -1,3 +1,5 @@
+import { logger } from "@/lib/logger";
+
 export interface Paper {
   _id: string;
   category:
@@ -35,15 +37,19 @@ export interface PapersResponse {
 const buildQueryString = (params: Record<string, any>) => {
   const query = new URLSearchParams();
   Object.keys(params).forEach((key) => {
-    if (params[key] !== undefined && params[key] !== null && params[key] !== "") {
+    if (
+      params[key] !== undefined &&
+      params[key] !== null &&
+      params[key] !== ""
+    ) {
       query.append(key, String(params[key]));
     }
   });
   return query.toString();
 };
 
-export const getPapers = async (params?: { 
-  category?: string; 
+export const getPapers = async (params?: {
+  category?: string;
   type?: string;
   board?: string;
   subject?: string;
@@ -55,7 +61,7 @@ export const getPapers = async (params?: {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     if (!apiUrl) {
-      console.warn("NEXT_PUBLIC_API_URL is not defined");
+      logger.warn("NEXT_PUBLIC_API_URL is not defined");
       return [];
     }
 
@@ -65,16 +71,16 @@ export const getPapers = async (params?: {
     });
 
     if (!res.ok) {
-        // Fallback for development if API is not fully ready or returns 404
-       console.warn(`API call failed: ${res.status} ${res.statusText}`);
-       return [];
+      // Fallback for development if API is not fully ready or returns 404
+      logger.warn(`API call failed: ${res.status} ${res.statusText}`);
+      return [];
     }
 
     const response = await res.json();
     // Support both direct array response or paginated { data: [] }
-    return Array.isArray(response) ? response : (response.data || []);
+    return Array.isArray(response) ? response : response.data || [];
   } catch (error) {
-    console.error("Error fetching papers:", error);
+    logger.error("Error fetching papers:", error);
     return [];
   }
 };
@@ -100,24 +106,26 @@ export const getSamplePapers = async (
 };
 
 export const getPapersStats = async () => {
-    try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (!apiUrl) return null;
-        
-        const res = await fetch(`${apiUrl}/papers/stats`, { next: { revalidate: 60 } });
-        if (!res.ok) return null;
-        
-        return await res.json();
-    } catch (error) {
-        console.error("Error fetching stats:", error);
-        return null;
-    }
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) return null;
+
+    const res = await fetch(`${apiUrl}/papers/stats`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return null;
+
+    return await res.json();
+  } catch (error) {
+    logger.error("Error fetching stats:", error);
+    return null;
+  }
 };
 
 // Compatibility export for existing code if it uses default export (checked: it doesn't seem to, but good to have)
 export default {
-    getPapers,
-    getBoardsPyq,
-    getSamplePapers,
-    getPapersStats
+  getPapers,
+  getBoardsPyq,
+  getSamplePapers,
+  getPapersStats,
 };

@@ -30,6 +30,7 @@ import {
   X,
 } from "lucide-react";
 import { counsellingService } from "@/services/counselling.service";
+import { logger } from "@/lib/logger";
 import { useAuth } from "@/contexts/AuthContext";
 import type { CounsellingPackage, Counsellor } from "@/types/counselling";
 import { getExamTheme } from "@/lib/theme/examThemes";
@@ -202,7 +203,7 @@ export default function JEECounsellingPage() {
         const data = await counsellingService.getPackagesByExam("jee");
         setPackages(data);
       } catch (error: any) {
-        console.error("Failed to fetch packages:", error);
+        logger.error("Failed to fetch packages:", error);
         // Don't throw - just set empty array to avoid redirect
         setPackages([]);
       } finally {
@@ -215,7 +216,7 @@ export default function JEECounsellingPage() {
         const data = await counsellingService.getCounsellorsByExam("jee");
         setCounsellors(data);
       } catch (error: any) {
-        console.error("Failed to fetch counsellors:", error);
+        logger.error("Failed to fetch counsellors:", error);
         // Don't throw - just set empty array to avoid redirect
         setCounsellors([]);
       } finally {
@@ -231,7 +232,7 @@ export default function JEECounsellingPage() {
         const data = await counsellingService.getMyEnrollments();
         setEnrollments(data);
       } catch (error: any) {
-        console.error("Failed to fetch enrollments:", error);
+        logger.error("Failed to fetch enrollments:", error);
         setEnrollments([]);
       } finally {
         setLoadingEnrollments(false);
@@ -259,7 +260,9 @@ export default function JEECounsellingPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
           <span
             className="bg-clip-text text-transparent"
-            style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            style={{
+              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+            }}
           >
             JEE Counselling Guidance
           </span>
@@ -285,7 +288,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Colleges Through JEE Counselling
             </h2>
@@ -321,7 +326,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Counselling Process Overview
             </h2>
@@ -341,7 +348,9 @@ export default function JEECounsellingPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div
                     className="w-14 h-14 rounded-xl flex items-center justify-center"
-                    style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                    style={{
+                      backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                    }}
                   >
                     <round.icon className="w-7 h-7 text-white" />
                   </div>
@@ -385,7 +394,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Our JEE Counselling Services
             </h2>
@@ -427,7 +438,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Choose Your Counselling Plan
             </h2>
@@ -450,15 +463,21 @@ export default function JEECounsellingPage() {
                 <div
                   key={pkg._id}
                   className="relative p-6 rounded-2xl border bg-white dark:bg-gray-900 hover:shadow-xl transition-all"
-                  style={pkg.isFeatured ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` } : {}}
+                  style={
+                    pkg.isFeatured
+                      ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` }
+                      : {}
+                  }
                 >
                   {/* Featured Badge */}
                   {pkg.isFeatured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                       <div
-                      className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
-                      style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
-                    >
+                        className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
+                        style={{
+                          backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                        }}
+                      >
                         <Sparkles className="w-3.5 h-3.5" />
                         Most Popular
                       </div>
@@ -561,7 +580,7 @@ export default function JEECounsellingPage() {
                         const testPortalUrl =
                           process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                         if (!testPortalUrl) {
-                          console.error(
+                          logger.error(
                             "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
                           );
                           return;
@@ -602,7 +621,13 @@ export default function JEECounsellingPage() {
                           ? "text-white hover:opacity-90"
                           : "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20"
                       }`}
-                      style={pkg.isFeatured ? { backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` } : {}}
+                      style={
+                        pkg.isFeatured
+                          ? {
+                              backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+                            }
+                          : {}
+                      }
                     >
                       {isAuthenticated ? "Buy Now" : "Login to Buy"}
                       <ArrowRight className="w-4 h-4" />
@@ -621,7 +646,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Meet Our JEE Expert Counsellors
             </h2>
@@ -649,7 +676,9 @@ export default function JEECounsellingPage() {
                   <div className="flex items-start gap-4 mb-4">
                     <div
                       className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden"
-                      style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                      style={{
+                        backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+                      }}
                     >
                       {counsellor.image ? (
                         <img
@@ -682,7 +711,10 @@ export default function JEECounsellingPage() {
                     {(counsellor.studentsGuided ||
                       counsellor.stats?.studentsHelped) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold" style={{ color: AC }}>
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
                           {(
                             counsellor.studentsGuided ||
                             counsellor.stats?.studentsHelped ||
@@ -698,7 +730,10 @@ export default function JEECounsellingPage() {
                     {(counsellor.experience ||
                       counsellor.stats?.experience) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold" style={{ color: AC }}>
+                        <div
+                          className="text-lg font-bold"
+                          style={{ color: AC }}
+                        >
                           {counsellor.experience ||
                             counsellor.stats?.experience ||
                             0}
@@ -758,7 +793,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               JEE Counselling Timeline 2026
             </h2>
@@ -771,7 +808,9 @@ export default function JEECounsellingPage() {
             {/* Timeline Line */}
             <div
               className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5"
-              style={{ backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})`,
+              }}
             />
 
             {/* Timeline Items */}
@@ -796,7 +835,10 @@ export default function JEECounsellingPage() {
                     }`}
                   >
                     <div className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 inline-block">
-                      <div className="text-sm font-semibold mb-1" style={{ color: AC }}>
+                      <div
+                        className="text-sm font-semibold mb-1"
+                        style={{ color: AC }}
+                      >
                         {item.date}
                       </div>
                       <div className="font-medium text-gray-900 dark:text-white">
@@ -817,7 +859,9 @@ export default function JEECounsellingPage() {
           <div className="text-center mb-8">
             <h2
               className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
-              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+              style={{
+                backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})`,
+              }}
             >
               Frequently Asked Questions
             </h2>
@@ -859,15 +903,18 @@ export default function JEECounsellingPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div
             className="p-8 md:p-12 rounded-3xl text-white"
-            style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+            style={{
+              backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})`,
+            }}
           >
             <GraduationCap className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-2">
               Start Your JEE Counselling Journey
             </h2>
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Don&apos;t miss out on your dream IIT/NIT seat. Get expert guidance
-              from our experienced counsellors who have helped 1,000+ students.
+              Don&apos;t miss out on your dream IIT/NIT seat. Get expert
+              guidance from our experienced counsellors who have helped 1,000+
+              students.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

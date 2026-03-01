@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { tokenManager } from "@/lib/utils/tokenManager";
+import { logger } from "@/lib/logger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -198,26 +199,28 @@ export default function Navbar(): JSX.Element {
           // Assuming API structure matches MenuItem closely enough or we map it
           // API NavbarLink: { label, url, order, isActive, children }
           // UI MenuItem: { id, label, href, children }
-          
+
           const mapToMenuItem = (links: any[]): MenuItem[] => {
             return links
-              .filter(link => link.isActive)
+              .filter((link) => link.isActive)
               .sort((a, b) => a.order - b.order)
               .map((link, index) => ({
                 id: link._id || `nav-${index}-${link.label}`,
                 label: link.label,
                 href: link.url,
-                children: link.children ? mapToMenuItem(link.children) : undefined
+                children: link.children
+                  ? mapToMenuItem(link.children)
+                  : undefined,
               }));
           };
-          
+
           setMenuItems(mapToMenuItem(settings.navbarLinks));
         }
       } catch (error) {
-        console.error("Failed to load site settings", error);
+        logger.error("Failed to load site settings", error);
       }
     };
-    
+
     fetchSettings();
   }, []);
 
@@ -519,7 +522,7 @@ export default function Navbar(): JSX.Element {
               </span>
               <ChevronDown className="ml-1" size={14} />
             </Link>
-            ) : (
+          ) : (
             <button
               className={`flex items-center gap-2 px-2 py-1 rounded-md text-text-secondary whitespace-nowrap`}
               aria-haspopup="true"
@@ -693,7 +696,7 @@ export default function Navbar(): JSX.Element {
                   const testPortalUrl =
                     process.env.NEXT_PUBLIC_TEST_PORTAL_URL || "";
                   if (!testPortalUrl) {
-                    console.error(
+                    logger.error(
                       "NEXT_PUBLIC_TEST_PORTAL_URL is not configured",
                     );
                     return;

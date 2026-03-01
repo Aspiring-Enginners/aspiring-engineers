@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getPapers, Paper } from "@/services/papers";
+import { logger } from "@/lib/logger";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -65,7 +66,7 @@ export default function PyqPage({
         const data = await getPapers({ category, limit: 100 });
         setPapers(data.filter((p) => p.type === "with-solution"));
       } catch (error) {
-        console.error("Failed to load papers", error);
+        logger.error("Failed to load papers", error);
       } finally {
         setLoading(false);
       }

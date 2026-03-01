@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import ContentCard from "@/components/ui/ContentCard";
+import { logger } from "@/lib/logger";
 import {
   BookOpen,
   Target,
@@ -62,7 +63,7 @@ export default function JEEPage() {
         const sortedPapers = data.sort((a, b) => b.year - a.year).slice(0, 4);
         setPapers(sortedPapers);
       } catch (error) {
-        console.error("Failed to load papers", error);
+        logger.error("Failed to load papers", error);
       } finally {
         setLoading(false);
       }
@@ -166,9 +167,11 @@ export default function JEEPage() {
 
                     <h3
                       className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 transition-colors"
-                      style={{
-                        // hover color applied via CSS custom property — fallback to current color
-                      }}
+                      style={
+                        {
+                          // hover color applied via CSS custom property — fallback to current color
+                        }
+                      }
                     >
                       {paper.title}
                     </h3>

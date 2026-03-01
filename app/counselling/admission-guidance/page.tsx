@@ -20,6 +20,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { counsellingService } from "@/services/counselling.service";
+import { logger } from "@/lib/logger";
 
 const guidanceServices = [
   {
@@ -143,43 +144,54 @@ export default function AdmissionGuidancePage() {
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        exam: formData.exam as "jee-main" | "jee-advanced" | "neet-ug" | "wbjee" | "other-state-exam",
+        exam: formData.exam as
+          | "jee-main"
+          | "jee-advanced"
+          | "neet-ug"
+          | "wbjee"
+          | "other-state-exam",
         rankScore: formData.rankScore || undefined,
-        category: formData.category as "general" | "obc-ncl" | "sc" | "st" | "ews" | "pwd",
+        category: formData.category as
+          | "general"
+          | "obc-ncl"
+          | "sc"
+          | "st"
+          | "ews"
+          | "pwd",
         homeState: formData.homeState,
         class12Status: formData.class12Status as "appearing" | "passed",
         tenthPercentage: formData.tenthPercentage,
-        twelfthPercentageExpected: formData.twelfthPercentageExpected || undefined,
+        twelfthPercentageExpected:
+          formData.twelfthPercentageExpected || undefined,
         collegeChoice: formData.collegeChoice,
         additionalMessage: formData.additionalMessage || undefined,
       });
 
-      console.log("Admission guidance submitted successfully:", result);
       setSubmitted(true);
 
-    // Reset form after showing success
-    setTimeout(() => {
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        exam: "",
-        rankScore: "",
-        category: "",
-        class12Status: "appearing",
-        tenthPercentage: "",
-        twelfthPercentageExpected: "",
-        homeState: "",
-        collegeChoice: "",
-        additionalMessage: "",
-      });
-      setSubmitted(false);
-    }, 5000);
+      // Reset form after showing success
+      setTimeout(() => {
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          exam: "",
+          rankScore: "",
+          category: "",
+          class12Status: "appearing",
+          tenthPercentage: "",
+          twelfthPercentageExpected: "",
+          homeState: "",
+          collegeChoice: "",
+          additionalMessage: "",
+        });
+        setSubmitted(false);
+      }, 5000);
     } catch (error: any) {
-      console.error("Failed to submit admission guidance:", error);
+      logger.error("Failed to submit admission guidance:", error);
       alert(
         error.response?.data?.message ||
-          "Failed to submit form. Please try again later."
+          "Failed to submit form. Please try again later.",
       );
     } finally {
       setIsSubmitting(false);
@@ -210,7 +222,9 @@ export default function AdmissionGuidancePage() {
           </span>
         </h1>
         <p className="text-base text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-          Get personalized guidance for college admissions. Our expert counsellors help you navigate the complex admission process and secure your dream seat.
+          Get personalized guidance for college admissions. Our expert
+          counsellors help you navigate the complex admission process and secure
+          your dream seat.
         </p>
       </div>
 
@@ -530,7 +544,10 @@ export default function AdmissionGuidancePage() {
                           htmlFor="twelfthPercentageExpected"
                           className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                         >
-                          12th Percentage {formData.class12Status === "appearing" ? "(Expected)" : "*"}
+                          12th Percentage{" "}
+                          {formData.class12Status === "appearing"
+                            ? "(Expected)"
+                            : "*"}
                         </label>
                         <input
                           type="text"
@@ -550,7 +567,8 @@ export default function AdmissionGuidancePage() {
                         htmlFor="collegeChoice"
                         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                       >
-                        Preferred College / Institute <span className="text-red-500">*</span>
+                        Preferred College / Institute{" "}
+                        <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"

@@ -1,4 +1,5 @@
 import apiClient from "@/lib/api-client";
+import { logger } from "@/lib/logger";
 import {
   CounsellingPackage,
   CounsellingPackagesResponse,
@@ -28,7 +29,7 @@ export const counsellingService = {
     params?: GetPackagesParams,
   ): Promise<CounsellingPackage[]> => {
     try {
-      console.log("🚀 [counsellingService] GET /counselling/packages", params);
+      logger.log("[counsellingService] GET /counselling/packages", params);
       const response = await apiClient.get<
         CounsellingPackagesResponse | CounsellingPackage[]
       >("/counselling/packages", {
@@ -38,7 +39,7 @@ export const counsellingService = {
           sort: "displayOrder",
         },
       });
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
 
       // Handle both { success, data } and direct array responses
       if (Array.isArray(response.data)) {
@@ -46,7 +47,7 @@ export const counsellingService = {
       }
       return response.data.data || [];
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to fetch packages:", error);
+      logger.error("[counsellingService] Failed to fetch packages:", error);
       throw error;
     }
   },
@@ -66,19 +67,17 @@ export const counsellingService = {
    */
   getPackageBySlug: async (slug: string): Promise<CounsellingPackage> => {
     try {
-      console.log(
-        `🚀 [counsellingService] GET /counselling/packages/slug/${slug}`,
-      );
+      logger.log(`[counsellingService] GET /counselling/packages/slug/${slug}`);
       const response = await apiClient.get<{
         success: boolean;
         data: CounsellingPackage;
       }>(`/counselling/packages/slug/${slug}`);
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return (
         response.data.data || (response.data as unknown as CounsellingPackage)
       );
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to fetch package:", error);
+      logger.error("[counsellingService] Failed to fetch package:", error);
       throw error;
     }
   },
@@ -91,7 +90,7 @@ export const counsellingService = {
     params?: GetCounsellorsParams,
   ): Promise<Counsellor[]> => {
     try {
-      console.log("🚀 [counsellingService] GET /counselling/counsellors", params);
+      logger.log("[counsellingService] GET /counselling/counsellors", params);
       const response = await apiClient.get<CounsellorsResponse | Counsellor[]>(
         "/counselling/counsellors",
         {
@@ -102,7 +101,7 @@ export const counsellingService = {
           },
         },
       );
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
 
       // Handle both { success, data } and direct array responses
       if (Array.isArray(response.data)) {
@@ -110,10 +109,7 @@ export const counsellingService = {
       }
       return response.data.data || [];
     } catch (error) {
-      console.error(
-        "❌ [counsellingService] Failed to fetch counsellors:",
-        error,
-      );
+      logger.error("[counsellingService] Failed to fetch counsellors:", error);
       throw error;
     }
   },
@@ -140,19 +136,16 @@ export const counsellingService = {
     payload: CounsellingInquiryPayload,
   ): Promise<{ ticketNumber: string }> => {
     try {
-      console.log(
-        "🚀 [counsellingService] POST /counselling/inquiries",
-        payload,
-      );
+      logger.log("[counsellingService] POST /counselling/inquiries", payload);
       const response = await apiClient.post<{
         success: boolean;
         message: string;
         data: { ticketNumber: string };
       }>("/counselling/inquiries", payload);
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return response.data.data;
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to submit inquiry:", error);
+      logger.error("[counsellingService] Failed to submit inquiry:", error);
       throw error;
     }
   },
@@ -165,18 +158,18 @@ export const counsellingService = {
     payload: AdmissionGuidancePayload,
   ): Promise<{ success: boolean; message: string }> => {
     try {
-      console.log(
-        "🚀 [counsellingService] POST /admission-guidance",
-        payload,
-      );
+      logger.log("[counsellingService] POST /admission-guidance", payload);
       const response = await apiClient.post<{
         success: boolean;
         message: string;
       }>("/admission-guidance", payload);
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return response.data;
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to submit admission guidance:", error);
+      logger.error(
+        "[counsellingService] Failed to submit admission guidance:",
+        error,
+      );
       throw error;
     }
   },
@@ -187,15 +180,15 @@ export const counsellingService = {
    */
   getMyEnrollments: async (): Promise<any[]> => {
     try {
-      console.log("🚀 [counsellingService] GET /counselling/enrollments/my");
+      logger.log("[counsellingService] GET /counselling/enrollments/my");
       const response = await apiClient.get<{
         success: boolean;
         data: any[];
       }>("/counselling/enrollments/my");
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return response.data.data || response.data;
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to fetch enrollments:", error);
+      logger.error("[counsellingService] Failed to fetch enrollments:", error);
       throw error;
     }
   },
@@ -212,15 +205,15 @@ export const counsellingService = {
     meetingPreference: string;
   }): Promise<any> => {
     try {
-      console.log("🚀 [counsellingService] POST /counselling/sessions", payload);
+      logger.log("[counsellingService] POST /counselling/sessions", payload);
       const response = await apiClient.post<{
         success: boolean;
         data: any;
       }>("/counselling/sessions", payload);
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return response.data.data || response.data;
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to book session:", error);
+      logger.error("[counsellingService] Failed to book session:", error);
       throw error;
     }
   },
@@ -234,15 +227,15 @@ export const counsellingService = {
     upcoming?: boolean;
   }): Promise<any[]> => {
     try {
-      console.log("🚀 [counsellingService] GET /counselling/sessions/my", params);
+      logger.log("[counsellingService] GET /counselling/sessions/my", params);
       const response = await apiClient.get<{
         success: boolean;
         data: any[];
       }>("/counselling/sessions/my", { params });
-      console.log("✅ [counsellingService] Response:", response.data);
+      logger.log("[counsellingService] Response:", response.data);
       return response.data.data || response.data;
     } catch (error) {
-      console.error("❌ [counsellingService] Failed to fetch sessions:", error);
+      logger.error("[counsellingService] Failed to fetch sessions:", error);
       throw error;
     }
   },

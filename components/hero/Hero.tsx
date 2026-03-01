@@ -7,6 +7,7 @@ import HeroStats from "./HeroStats";
 import HeroBadge from "./HeroBadge";
 import HeroCarousel, { BannerItem } from "./HeroCarousel";
 import { getSiteSettings } from "@/services/siteSettings";
+import { logger } from "@/lib/logger";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,7 @@ export default function Hero() {
           setItems(apiBanners);
         }
       } catch (error) {
-        console.error("Failed to fetch hero banners", error);
+        logger.error("Failed to fetch hero banners", error);
       }
     };
     fetchSettings();
@@ -139,11 +140,9 @@ export default function Hero() {
                 transition
               "
             >
-              Start Exploring  <ChevronRight className="w-5 h-5" />
+              Start Exploring <ChevronRight className="w-5 h-5" />
             </Button>
           </Link>
-
-          
         </div>
 
         {/* HERO CAROUSEL */}
