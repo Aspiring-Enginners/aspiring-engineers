@@ -1,6 +1,9 @@
 "use client";
 
 import PyqPage from "@/components/papers/PyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("wbjee");
 
 export default function WbjeePyqPage() {
   return (
@@ -8,7 +11,7 @@ export default function WbjeePyqPage() {
       title="WBJEE"
       subtitle="Previous Year Questions with Solutions"
       description="Prepare for West Bengal Joint Entrance Examination with our curated collection of previous year papers. Complete with solutions and video explanations."
-      accentColor="#059669"
+      accentColor={theme.accentColor}
       category="wbjee"
       breadcrumbs={[
         { label: "Home", href: "/" },

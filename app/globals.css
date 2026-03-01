@@ -149,3 +149,16 @@
     transform: translateX(-50%);
   }
 }
+
+/* ── JEE Main exam theme scope ───────────────────────────────────────────
+   Apply class="jee-main-theme" to a wrapper element to activate CSS-var
+   based accent theming for JEE Main sections (no global override).
+   These vars mirror lib/theme/examThemes.ts and must stay in sync.
+   ──────────────────────────────────────────────────────────────────────── */
+.jee-main-theme {
+  --exam-accent: #3e8a4f;
+  --exam-accent-end: #55b56a;
+  --exam-accent-bg: #3e8a4f1a; /* ~10% tint */
+  --exam-accent-border: #3e8a4f33; /* ~20% for borders */
+}
+

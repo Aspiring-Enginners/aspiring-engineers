@@ -1,4 +1,7 @@
 import BoardsPyqPage from "@/components/papers/BoardsPyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("class-10-sample");
 
 export default function Class10SamplePapersPage() {
   return (
@@ -6,7 +9,7 @@ export default function Class10SamplePapersPage() {
       title="Class 10 Sample Papers"
       subtitle="Official & Practice Papers"
       description="Download official CBSE sample papers and practice papers for Class 10. Prepare effectively with the latest pattern and marking scheme."
-      accentColor="#22C55E"
+      accentColor={theme.accentColor}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Boards", href: "/boards" },

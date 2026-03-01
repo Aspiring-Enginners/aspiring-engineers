@@ -1,6 +1,9 @@
 "use client";
 
 import PyqPage from "@/components/papers/PyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("jee-main");
 
 export default function JeeMainsPyqPage() {
   return (
@@ -8,7 +11,7 @@ export default function JeeMainsPyqPage() {
       title="JEE Main"
       subtitle="Previous Year Questions with Solutions"
       description="Master JEE Main with comprehensive previous year papers. Each paper includes detailed solutions and video explanations to help you understand every concept."
-      accentColor="#2596be"
+      accentColor={theme.accentColor}
       category="jee-main"
       breadcrumbs={[
         { label: "Home", href: "/" },

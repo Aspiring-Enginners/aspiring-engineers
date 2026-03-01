@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { getPapers, Paper } from "@/services/papers";
 import Link from "next/link";
+import { getExamTheme } from "@/lib/theme/examThemes";
 
 const jeeFeatures = [
   {
@@ -45,6 +46,9 @@ const jeeFeatures = [
     metadata: [{ label: "Success Rate", value: "95%" }],
   },
 ];
+
+const theme = getExamTheme("jee-main");
+const { accentColor, accentColorEnd } = theme;
 
 export default function JEEPage() {
   const [papers, setPapers] = useState<Paper[]>([]);
@@ -85,7 +89,12 @@ export default function JEEPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-3xl sm:text-4xl font-bold mb-4 bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(to right, ${accentColor}, ${accentColorEnd})`,
+              }}
+            >
               Everything You Need for JEE
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -105,7 +114,12 @@ export default function JEEPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-3xl sm:text-4xl font-bold mb-4 bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(to right, ${accentColor}, ${accentColorEnd})`,
+              }}
+            >
               Start Practicing Now
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -130,18 +144,32 @@ export default function JEEPage() {
                   className="group relative rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
                   {/* Year Badge */}
-                  <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-[#2596be] text-white text-sm font-bold flex items-center gap-1.5">
+                  <div
+                    className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full text-white text-sm font-bold flex items-center gap-1.5"
+                    style={{ backgroundColor: accentColor }}
+                  >
                     <Calendar className="w-3.5 h-3.5" />
                     {paper.year}
                   </div>
 
                   {/* Card Content */}
                   <div className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-[#2596be]/10 flex items-center justify-center mb-4">
-                      <FileText className="w-6 h-6 text-[#2596be]" />
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: `${accentColor}1A` }}
+                    >
+                      <FileText
+                        className="w-6 h-6"
+                        style={{ color: accentColor }}
+                      />
                     </div>
 
-                    <h3 className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-[#2596be] transition-colors">
+                    <h3
+                      className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 transition-colors"
+                      style={{
+                        // hover color applied via CSS custom property — fallback to current color
+                      }}
+                    >
                       {paper.title}
                     </h3>
 
@@ -157,7 +185,11 @@ export default function JEEPage() {
                         <Link
                           href={paper.paperDriveLink}
                           target="_blank"
-                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-[#2596be]/10 text-[#2596be] hover:bg-[#2596be]/20 transition-colors"
+                          className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+                          style={{
+                            backgroundColor: `${accentColor}1A`,
+                            color: accentColor,
+                          }}
                         >
                           <ExternalLink className="w-4 h-4" />
                           View Paper
@@ -189,7 +221,8 @@ export default function JEEPage() {
             <div className="text-center mt-8">
               <Link
                 href="/exams/jee/mains/pyq/with-solutions"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold bg-[#2596be] text-white hover:bg-[#2596be]/90 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-colors hover:opacity-90"
+                style={{ backgroundColor: accentColor }}
               >
                 View All Papers
                 <ExternalLink className="w-4 h-4" />

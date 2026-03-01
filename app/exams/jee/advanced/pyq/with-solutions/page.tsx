@@ -1,6 +1,9 @@
 "use client";
 
 import PyqPage from "@/components/papers/PyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("jee-advanced");
 
 export default function JeeAdvancedPyqPage() {
   return (
@@ -8,7 +11,7 @@ export default function JeeAdvancedPyqPage() {
       title="JEE Advanced"
       subtitle="Previous Year Questions with Solutions"
       description="Tackle the toughest JEE Advanced problems with our comprehensive collection. Each paper features step-by-step solutions and expert video explanations."
-      accentColor="#9333ea"
+      accentColor={theme.accentColor}
       category="jee-advanced"
       breadcrumbs={[
         { label: "Home", href: "/" },

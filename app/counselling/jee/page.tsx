@@ -32,6 +32,13 @@ import {
 import { counsellingService } from "@/services/counselling.service";
 import { useAuth } from "@/contexts/AuthContext";
 import type { CounsellingPackage, Counsellor } from "@/types/counselling";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+// JEE Main accent — sourced from central theme config, not hardcoded
+const { accentColor: AC, accentColorEnd: ACE } = getExamTheme("jee-main");
+/** Tailwind-incompatible dynamic colors: use as inline style values only */
+const accentBg10 = `${AC}1A`; // ~10 % opacity tint
+const accentBg15 = `${AC}26`; // ~15 % opacity tint
 
 const counsellingRounds = [
   {
@@ -242,12 +249,18 @@ export default function JEECounsellingPage() {
 
       {/* Compact Hero Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-medium mb-3">
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium mb-3"
+          style={{ backgroundColor: accentBg10, color: AC }}
+        >
           <GraduationCap className="w-4 h-4" />
           JoSAA | CSAB | State Counselling
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-          <span className="bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+          >
             JEE Counselling Guidance
           </span>
         </h1>
@@ -258,7 +271,8 @@ export default function JEECounsellingPage() {
         </p>
         <Link
           href="#pricing"
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold bg-[#2596be] text-white hover:bg-[#1e7ca0] transition-colors text-sm"
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-white transition-colors text-sm hover:opacity-90"
+          style={{ backgroundColor: AC }}
         >
           View Pricing Plans
           <ArrowRight className="w-4 h-4" />
@@ -269,7 +283,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Colleges Through JEE Counselling
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -283,7 +300,7 @@ export default function JEECounsellingPage() {
                 key={idx}
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl text-center hover:shadow-lg transition-shadow"
               >
-                <div className="text-3xl font-bold text-[#2596be] mb-1">
+                <div className="text-3xl font-bold mb-1" style={{ color: AC }}>
                   {category.count}
                 </div>
                 <div className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
@@ -302,7 +319,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Counselling Process Overview
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -319,10 +339,16 @@ export default function JEECounsellingPage() {
               >
                 {/* Icon & Timeline Badge */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-14 h-14 rounded-xl bg-linear-to-br from-[#2596be] to-[#4EA8DE] flex items-center justify-center">
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center"
+                    style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                  >
                     <round.icon className="w-7 h-7 text-white" />
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2596be]/10 text-[#2596be] text-sm font-medium">
+                  <div
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium"
+                    style={{ backgroundColor: accentBg10, color: AC }}
+                  >
                     <Calendar className="w-3.5 h-3.5" />
                     {round.timeline}
                   </div>
@@ -357,7 +383,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Our JEE Counselling Services
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -371,8 +400,11 @@ export default function JEECounsellingPage() {
                 key={idx}
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl hover:shadow-lg hover:-translate-y-1 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#2596be]/10 flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-[#2596be]" />
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: accentBg10 }}
+                >
+                  <service.icon className="w-6 h-6" style={{ color: AC }} />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                   {service.title}
@@ -393,7 +425,10 @@ export default function JEECounsellingPage() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Choose Your Counselling Plan
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -403,7 +438,7 @@ export default function JEECounsellingPage() {
 
           {loadingPackages ? (
             <div className="flex justify-center items-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-[#2596be]" />
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: AC }} />
             </div>
           ) : packages.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
@@ -414,16 +449,16 @@ export default function JEECounsellingPage() {
               {packages.map((pkg) => (
                 <div
                   key={pkg._id}
-                  className={`relative p-6 rounded-2xl border ${
-                    pkg.isFeatured
-                      ? "border-[#2596be] ring-2 ring-[#2596be]/20"
-                      : "border-gray-200 dark:border-white/10"
-                  } bg-white dark:bg-gray-900 hover:shadow-xl transition-all`}
+                  className="relative p-6 rounded-2xl border bg-white dark:bg-gray-900 hover:shadow-xl transition-all"
+                  style={pkg.isFeatured ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` } : {}}
                 >
                   {/* Featured Badge */}
                   {pkg.isFeatured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <div className="px-4 py-1 rounded-full bg-linear-to-r from-[#2596be] to-[#60DFFF] text-white text-sm font-semibold flex items-center gap-1">
+                      <div
+                      className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
+                      style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+                    >
                         <Sparkles className="w-3.5 h-3.5" />
                         Most Popular
                       </div>
@@ -487,7 +522,8 @@ export default function JEECounsellingPage() {
                       {pkg.highlights.map((highlight, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 rounded-full bg-[#2596be]/10 text-[#2596be] text-xs font-medium"
+                          className="px-3 py-1 rounded-full text-xs font-medium"
+                          style={{ backgroundColor: accentBg10, color: AC }}
                         >
                           {highlight}
                         </span>
@@ -563,9 +599,10 @@ export default function JEECounsellingPage() {
                       }
                       className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-colors ${
                         pkg.isFeatured
-                          ? "bg-linear-to-r from-[#2596be] to-[#4EA8DE] text-white hover:opacity-90"
+                          ? "text-white hover:opacity-90"
                           : "bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20"
                       }`}
+                      style={pkg.isFeatured ? { backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` } : {}}
                     >
                       {isAuthenticated ? "Buy Now" : "Login to Buy"}
                       <ArrowRight className="w-4 h-4" />
@@ -582,7 +619,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Meet Our JEE Expert Counsellors
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -592,7 +632,7 @@ export default function JEECounsellingPage() {
 
           {loadingCounsellors ? (
             <div className="flex justify-center items-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-[#2596be]" />
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: AC }} />
             </div>
           ) : counsellors.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
@@ -607,7 +647,10 @@ export default function JEECounsellingPage() {
                 >
                   {/* Counsellor Image & Info */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-16 h-16 rounded-full bg-linear-to-br from-[#2596be] to-[#4EA8DE] flex items-center justify-center text-white text-xl font-bold overflow-hidden">
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold overflow-hidden"
+                      style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                    >
                       {counsellor.image ? (
                         <img
                           src={counsellor.image}
@@ -621,9 +664,9 @@ export default function JEECounsellingPage() {
                     <div>
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         {counsellor.name}
-                        <BadgeCheck className="w-5 h-5 text-[#2596be]" />
+                        <BadgeCheck className="w-5 h-5" style={{ color: AC }} />
                       </h3>
-                      <p className="text-sm text-[#2596be] font-medium">
+                      <p className="text-sm font-medium" style={{ color: AC }}>
                         {counsellor.title}
                       </p>
                     </div>
@@ -639,7 +682,7 @@ export default function JEECounsellingPage() {
                     {(counsellor.studentsGuided ||
                       counsellor.stats?.studentsHelped) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold text-[#2596be]">
+                        <div className="text-lg font-bold" style={{ color: AC }}>
                           {(
                             counsellor.studentsGuided ||
                             counsellor.stats?.studentsHelped ||
@@ -655,7 +698,7 @@ export default function JEECounsellingPage() {
                     {(counsellor.experience ||
                       counsellor.stats?.experience) && (
                       <div className="p-2 rounded-lg bg-gray-50 dark:bg-white/5 text-center">
-                        <div className="text-lg font-bold text-[#2596be]">
+                        <div className="text-lg font-bold" style={{ color: AC }}>
                           {counsellor.experience ||
                             counsellor.stats?.experience ||
                             0}
@@ -694,7 +737,8 @@ export default function JEECounsellingPage() {
                           .map((spec, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-1 rounded-full bg-[#2596be]/10 text-[#2596be] text-xs font-medium"
+                              className="px-2 py-1 rounded-full text-xs font-medium"
+                              style={{ backgroundColor: accentBg10, color: AC }}
                             >
                               {spec}
                             </span>
@@ -712,7 +756,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               JEE Counselling Timeline 2026
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -722,7 +769,10 @@ export default function JEECounsellingPage() {
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-[#2596be] to-[#60DFFF]" />
+            <div
+              className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5"
+              style={{ backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})` }}
+            />
 
             {/* Timeline Items */}
             <div className="space-y-8">
@@ -734,7 +784,10 @@ export default function JEECounsellingPage() {
                   }`}
                 >
                   {/* Dot */}
-                  <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-[#2596be] border-4 border-white dark:border-gray-900 transform -translate-x-1/2 z-10" />
+                  <div
+                    className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 z-10"
+                    style={{ backgroundColor: AC }}
+                  />
 
                   {/* Content */}
                   <div
@@ -743,7 +796,7 @@ export default function JEECounsellingPage() {
                     }`}
                   >
                     <div className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 inline-block">
-                      <div className="text-sm font-semibold text-[#2596be] mb-1">
+                      <div className="text-sm font-semibold mb-1" style={{ color: AC }}>
                         {item.date}
                       </div>
                       <div className="font-medium text-gray-900 dark:text-white">
@@ -762,7 +815,10 @@ export default function JEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent">
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -777,8 +833,11 @@ export default function JEECounsellingPage() {
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#2596be]/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <HelpCircle className="w-4 h-4 text-[#2596be]" />
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                    style={{ backgroundColor: accentBg10 }}
+                  >
+                    <HelpCircle className="w-4 h-4" style={{ color: AC }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-2">
@@ -798,19 +857,23 @@ export default function JEECounsellingPage() {
       {/* CTA Section */}
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-8 md:p-12 rounded-3xl bg-linear-to-br from-[#2596be] to-[#4EA8DE] text-white">
+          <div
+            className="p-8 md:p-12 rounded-3xl text-white"
+            style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+          >
             <GraduationCap className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-2">
               Start Your JEE Counselling Journey
             </h2>
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Don't miss out on your dream IIT/NIT seat. Get expert guidance
+              Don&apos;t miss out on your dream IIT/NIT seat. Get expert guidance
               from our experienced counsellors who have helped 1,000+ students.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="#pricing"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold bg-white text-[#2596be] hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold bg-white hover:bg-gray-100 transition-colors"
+                style={{ color: AC }}
               >
                 <Star className="w-5 h-5" />
                 View Pricing Plans

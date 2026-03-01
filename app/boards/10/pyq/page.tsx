@@ -1,4 +1,7 @@
 import BoardsPyqPage from "@/components/papers/BoardsPyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("class-10");
 
 export default function Class10PyqPage() {
   return (
@@ -6,7 +9,7 @@ export default function Class10PyqPage() {
       title="Class 10 Board PYQ"
       subtitle="Previous Year Questions"
       description="Access previous year question papers from CBSE, ICSE, and other boards for Class 10. Practice with real exam papers to ace your board exams."
-      accentColor="#2596be"
+      accentColor={theme.accentColor}
       breadcrumbs={[
         { label: "Home", href: "/" },
         { label: "Boards", href: "/boards" },

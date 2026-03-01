@@ -31,20 +31,11 @@ import {
 import { counsellingService } from "@/services/counselling.service";
 import { useAuth } from "@/contexts/AuthContext";
 import type { CounsellingPackage, Counsellor } from "@/types/counselling";
+import { getExamTheme } from "@/lib/theme/examThemes";
 
-// Define Blue Theme Colors (Consistent with JEE)
-const THEME = {
-  primary: "text-[#2596be]",
-  primaryBg: "bg-[#2596be]",
-  lightBg: "bg-[#2596be]/10",
-  darkBg: "dark:bg-[#2596be]/20",
-  gradientText: "bg-linear-to-r from-[#2596be] to-[#60DFFF] bg-clip-text text-transparent",
-  gradientBg: "bg-linear-to-r from-[#2596be] to-[#60DFFF]",
-  heroGradient: "bg-linear-to-br from-[#2596be] to-[#4EA8DE]",
-  iconBg: "bg-[#2596be]/10",
-  border: "border-gray-200 dark:border-white/10",
-  darkBorder: "dark:border-white/10",
-};
+const { accentColor: AC, accentColorEnd: ACE } = getExamTheme("wbjee");
+const accentBg10 = `${AC}1A`;
+const accentBg5 = `${AC}0D`;
 
 const counsellingPhases = [
   {
@@ -262,12 +253,18 @@ export default function WBJEECounsellingPage() {
 
       {/* Compact Hero Header - Matches JEE Style */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2596be]/10 text-[#2596be] dark:text-[#60DFFF] text-sm font-medium mb-3">
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium mb-3"
+          style={{ backgroundColor: accentBg10, color: AC }}
+        >
           <GraduationCap className="w-4 h-4" />
           WBJEEB | Jadavpur | Decentralized
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-          <span className={THEME.gradientText}>
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+          >
             WBJEE Counselling Guidance
           </span>
         </h1>
@@ -276,7 +273,8 @@ export default function WBJEECounsellingPage() {
         </p>
         <Link
           href="#pricing"
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold bg-[#2596be] text-white hover:bg-[#1e7ca0] transition-colors text-sm"
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold text-white hover:opacity-90 transition-colors text-sm"
+          style={{ backgroundColor: AC }}
         >
           View Pricing Plans
           <ArrowRight className="w-4 h-4" />
@@ -287,7 +285,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               West Bengal Engineering Ecosystem
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -301,7 +302,7 @@ export default function WBJEECounsellingPage() {
                 key={idx}
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl text-center hover:shadow-lg transition-shadow"
               >
-                <div className="text-3xl font-bold text-[#2596be] mb-1">
+                <div className="text-3xl font-bold mb-1" style={{ color: AC }}>
                   {stat.count}
                 </div>
                 <div className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
@@ -320,7 +321,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Counselling Process Overview
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -336,10 +340,16 @@ export default function WBJEECounsellingPage() {
               >
                 {/* Icon & Timeline Badge */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`w-14 h-14 rounded-xl ${THEME.heroGradient} flex items-center justify-center`}>
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center"
+                    style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                  >
                     <phase.icon className="w-7 h-7 text-white" />
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2596be]/10 text-[#2596be] text-sm font-medium">
+                  <div
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium"
+                    style={{ backgroundColor: accentBg10, color: AC }}
+                  >
                     <Calendar className="w-3.5 h-3.5" />
                     {phase.timeline}
                   </div>
@@ -374,7 +384,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Our WBJEE Counselling Services
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -388,8 +401,11 @@ export default function WBJEECounsellingPage() {
                 key={idx}
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl hover:shadow-lg hover:-translate-y-1 transition-all"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#2596be]/10 flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-[#2596be]" />
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: accentBg10 }}
+                >
+                  <service.icon className="w-6 h-6" style={{ color: AC }} />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                   {service.title}
@@ -410,7 +426,10 @@ export default function WBJEECounsellingPage() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Choose Your Counselling Plan
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -420,7 +439,7 @@ export default function WBJEECounsellingPage() {
 
           {loadingPackages ? (
             <div className="flex justify-center items-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-[#2596be]" />
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: AC }} />
             </div>
           ) : packages.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
@@ -431,16 +450,16 @@ export default function WBJEECounsellingPage() {
               {packages.map((pkg) => (
                 <div
                   key={pkg._id}
-                  className={`relative p-6 rounded-2xl border ${
-                    pkg.isFeatured
-                      ? "border-[#2596be] ring-2 ring-[#2596be]/20"
-                      : "border-gray-200 dark:border-white/10"
-                  } bg-white dark:bg-gray-900 hover:shadow-xl transition-all`}
+                  className="relative p-6 rounded-2xl border bg-white dark:bg-gray-900 hover:shadow-xl transition-all"
+                  style={pkg.isFeatured ? { borderColor: AC, boxShadow: `0 0 0 2px ${AC}33` } : {}}
                 >
                   {/* Featured Badge */}
                   {pkg.isFeatured && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <div className="px-4 py-1 rounded-full bg-linear-to-r from-[#2596be] to-[#60DFFF] text-white text-sm font-semibold flex items-center gap-1">
+                      <div
+                        className="px-4 py-1 rounded-full text-white text-sm font-semibold flex items-center gap-1"
+                        style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+                      >
                         <Sparkles className="w-3.5 h-3.5" />
                         Most Popular
                       </div>
@@ -473,7 +492,7 @@ export default function WBJEECounsellingPage() {
                   <div className="mb-6">
                     {pkg.discountPrice ? (
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-[#2596be] dark:text-[#60DFFF]">
+                        <span className="text-3xl font-bold" style={{ color: AC }}>
                           ₹{pkg.discountPrice.toLocaleString()}
                         </span>
                         <span className="text-lg text-gray-500 line-through decoration-red-500/50">
@@ -487,7 +506,7 @@ export default function WBJEECounsellingPage() {
                         </span>
                       </div>
                     ) : (
-                      <span className="text-3xl font-bold text-[#2596be] dark:text-[#60DFFF]">
+                      <span className="text-3xl font-bold" style={{ color: AC }}>
                         ₹{pkg.price.toLocaleString()}
                       </span>
                     )}
@@ -496,7 +515,7 @@ export default function WBJEECounsellingPage() {
                     <div className="mt-2 text-sm text-gray-700 dark:text-gray-300 space-y-1">
                        {pkg.maxSessions && (
                         <div className="flex items-center gap-2 font-medium">
-                          <Users className="w-4 h-4 text-[#2596be]" />
+                           <Users className="w-4 h-4" style={{ color: AC }} />
                           <span>
                             {pkg.maxSessions} Live Session{pkg.maxSessions > 1 ? 's' : ''} 
                             {pkg.sessionDuration && ` (${pkg.sessionDuration} mins each)`}
@@ -505,7 +524,7 @@ export default function WBJEECounsellingPage() {
                        )}
                        {pkg.duration && (
                         <div className="flex items-center gap-2 font-medium">
-                          <Calendar className="w-4 h-4 text-[#2596be]" />
+                           <Calendar className="w-4 h-4" style={{ color: AC }} />
                           <span>Duration: {pkg.duration}</span>
                         </div>
                        )}
@@ -518,7 +537,8 @@ export default function WBJEECounsellingPage() {
                       {pkg.highlights.map((highlight, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 rounded-full bg-[#2596be]/10 border border-[#2596be]/20 text-[#2596be] dark:text-[#60DFFF] text-xs font-bold"
+                          className="px-3 py-1 rounded-full text-xs font-bold"
+                          style={{ backgroundColor: accentBg10, borderColor: `${AC}33`, color: AC }}
                         >
                           {highlight}
                         </span>
@@ -591,9 +611,10 @@ export default function WBJEECounsellingPage() {
                       }
                       className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg ${
                         pkg.isFeatured
-                          ? "bg-linear-to-r from-[#2596be] to-[#4EA8DE] text-white hover:opacity-90"
+                          ? "text-white hover:opacity-90"
                           : "bg-white dark:bg-white/10 text-gray-900 dark:text-white border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/20"
                       }`}
+                      style={pkg.isFeatured ? { backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` } : {}}
                     >
                       {isAuthenticated ? "Buy Now" : "Login to Buy"}
                       <ArrowRight className="w-4 h-4" />
@@ -610,7 +631,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Meet Our WBJEE Expert Counsellors
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -620,7 +644,7 @@ export default function WBJEECounsellingPage() {
 
           {loadingCounsellors ? (
             <div className="flex justify-center items-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-[#2596be]" />
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: AC }} />
             </div>
           ) : counsellors.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
@@ -635,7 +659,10 @@ export default function WBJEECounsellingPage() {
                 >
                   {/* Counsellor Image & Info */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className={`w-16 h-16 rounded-full shrink-0 ${THEME.heroGradient} flex items-center justify-center text-white text-xl font-bold overflow-hidden shadow-md ring-2 ring-white dark:ring-gray-800`}>
+                    <div
+                      className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center text-white text-xl font-bold overflow-hidden shadow-md ring-2 ring-white dark:ring-gray-800"
+                      style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+                    >
                       {counsellor.image ? (
                         <img
                           src={counsellor.image}
@@ -650,10 +677,10 @@ export default function WBJEECounsellingPage() {
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         {counsellor.name}
                         {counsellor.isFeatured && (
-                          <BadgeCheck className="w-5 h-5 text-[#2596be] fill-[#2596be]/10" />
+                          <BadgeCheck className="w-5 h-5" style={{ color: AC }} />
                         )}
                       </h3>
-                      <p className="text-sm text-[#2596be] dark:text-[#60DFFF] font-bold">
+                      <p className="text-sm font-bold" style={{ color: AC }}>
                         {counsellor.title}
                       </p>
                       {counsellor.stats?.rating && (
@@ -681,7 +708,7 @@ export default function WBJEECounsellingPage() {
                        <div className="flex flex-wrap gap-2">
                          {counsellor.qualifications.slice(0, 2).map((qual, idx) => (
                            <div key={idx} className="flex items-center gap-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md">
-                             <GraduationCap className="w-3 h-3 text-[#2596be]" />
+                             <GraduationCap className="w-3 h-3" style={{ color: AC }} />
                              {qual}
                            </div>
                          ))}
@@ -692,8 +719,11 @@ export default function WBJEECounsellingPage() {
                   {/* Stats - Handle both direct API props and legacy stats object */}
                   <div className="grid grid-cols-2 gap-3 mb-4 mt-auto">
                     {(counsellor.studentsGuided || counsellor.stats?.studentsHelped) && (
-                      <div className="p-2.5 rounded-lg bg-[#2596be]/5 border border-[#2596be]/10 dark:bg-[#60DFFF]/5 dark:border-[#60DFFF]/10 text-center">
-                        <div className="text-lg font-bold text-[#2596be] dark:text-[#60DFFF]">
+                      <div
+                        className="p-2.5 rounded-lg text-center"
+                        style={{ backgroundColor: accentBg5, borderColor: `${AC}1A` }}
+                      >
+                        <div className="text-lg font-bold" style={{ color: AC }}>
                           {(counsellor.studentsGuided || counsellor.stats?.studentsHelped || 0).toLocaleString()}+
                         </div>
                         <div className="text-xs font-bold text-gray-600 dark:text-gray-400">
@@ -702,8 +732,11 @@ export default function WBJEECounsellingPage() {
                       </div>
                     )}
                     {(counsellor.experience || counsellor.stats?.experience) && (
-                      <div className="p-2.5 rounded-lg bg-[#2596be]/5 border border-[#2596be]/10 dark:bg-[#60DFFF]/5 dark:border-[#60DFFF]/10 text-center">
-                        <div className="text-lg font-bold text-[#2596be] dark:text-[#60DFFF]">
+                      <div
+                        className="p-2.5 rounded-lg text-center"
+                        style={{ backgroundColor: accentBg5, borderColor: `${AC}1A` }}
+                      >
+                        <div className="text-lg font-bold" style={{ color: AC }}>
                           {(counsellor.experience || counsellor.stats?.experience || 0)}+
                         </div>
                         <div className="text-xs font-bold text-gray-600 dark:text-gray-400">
@@ -750,7 +783,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               WBJEE Counselling Timeline 2026
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -760,7 +796,10 @@ export default function WBJEECounsellingPage() {
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-[#2596be] to-[#60DFFF]" />
+            <div
+              className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5"
+              style={{ backgroundImage: `linear-gradient(to bottom, ${AC}, ${ACE})` }}
+            />
 
             {/* Timeline Items */}
             <div className="space-y-8">
@@ -772,7 +811,10 @@ export default function WBJEECounsellingPage() {
                   }`}
                 >
                   {/* Dot */}
-                  <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-[#2596be] border-4 border-white dark:border-gray-900 transform -translate-x-1/2 z-10" />
+                  <div
+                    className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-4 border-white dark:border-gray-900 transform -translate-x-1/2 z-10"
+                    style={{ backgroundColor: AC }}
+                  />
 
                   {/* Content */}
                   <div
@@ -781,7 +823,7 @@ export default function WBJEECounsellingPage() {
                     }`}
                   >
                     <div className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 inline-block">
-                      <div className="text-sm font-semibold text-[#2596be] mb-1">
+                      <div className="text-sm font-semibold mb-1" style={{ color: AC }}>
                         {item.date}
                       </div>
                       <div className="font-medium text-gray-900 dark:text-white">
@@ -800,7 +842,10 @@ export default function WBJEECounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${THEME.gradientText}`}>
+            <h2
+              className="text-2xl sm:text-3xl font-bold mb-2 bg-clip-text text-transparent"
+              style={{ backgroundImage: `linear-gradient(to right, ${AC}, ${ACE})` }}
+            >
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
@@ -815,8 +860,11 @@ export default function WBJEECounsellingPage() {
                 className="p-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#2596be]/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <HelpCircle className="w-4 h-4 text-[#2596be]" />
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                    style={{ backgroundColor: accentBg10 }}
+                  >
+                    <HelpCircle className="w-4 h-4" style={{ color: AC }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-2">
@@ -836,7 +884,10 @@ export default function WBJEECounsellingPage() {
       {/* CTA Section - Blue Theme */}
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className={`p-8 md:p-12 rounded-3xl ${THEME.heroGradient} text-white`}>
+          <div
+            className="p-8 md:p-12 rounded-3xl text-white"
+            style={{ backgroundImage: `linear-gradient(to bottom right, ${AC}, ${ACE})` }}
+          >
             <GraduationCap className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-2">
               Start Your WBJEE Counselling Journey
@@ -848,7 +899,8 @@ export default function WBJEECounsellingPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="#pricing"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold bg-white text-[#2596be] hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold bg-white hover:bg-gray-100 transition-colors"
+                style={{ color: AC }}
               >
                 <Star className="w-5 h-5" />
                 View Pricing Plans

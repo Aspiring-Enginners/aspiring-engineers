@@ -1,6 +1,9 @@
 "use client";
 
 import PyqNoSolutionPage from "@/components/papers/PyqNoSolutionPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("jee-main");
 
 export default function JeeMainsPyqNoSolutionPage() {
   return (
@@ -8,7 +11,7 @@ export default function JeeMainsPyqNoSolutionPage() {
       title="JEE Main"
       subtitle="Previous Year Questions (Practice)"
       description="Practice with JEE Main previous year papers. Test your preparation without solutions - perfect for self-assessment and exam simulation."
-      accentColor="#2596be"
+      accentColor={theme.accentColor}
       category="jee-main"
       breadcrumbs={[
         { label: "Home", href: "/" },

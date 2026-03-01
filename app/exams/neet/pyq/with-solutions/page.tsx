@@ -1,6 +1,9 @@
 "use client";
 
 import PyqPage from "@/components/papers/PyqPage";
+import { getExamTheme } from "@/lib/theme/examThemes";
+
+const theme = getExamTheme("neet");
 
 export default function NeetPyqPage() {
   return (
@@ -8,7 +11,7 @@ export default function NeetPyqPage() {
       title="NEET"
       subtitle="Previous Year Questions with Solutions"
       description="Ace NEET with our extensive collection of previous year papers. Practice Physics, Chemistry, and Biology with detailed solutions and expert guidance."
-      accentColor="#dc2626"
+      accentColor={theme.accentColor}
       category="neet"
       breadcrumbs={[
         { label: "Home", href: "/" },
