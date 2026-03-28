@@ -541,7 +541,7 @@ export default function Navbar(): JSX.Element {
             ref={(el) => {
               desktopDropdownRefs.current[item.id] = el;
             }}
-            className={`absolute left-0 top-full mt-3 z-50 origin-top-left rounded-lg border border-bg-700 bg-white dark:bg-[var(--color-dark-bg)] p-4 shadow-2xl backdrop-blur-xl ${
+            className={`absolute left-0 top-full mt-3 z-50 origin-top-left rounded-lg border border-bg-700 bg-white dark:bg-(--color-dark-bg) p-4 shadow-2xl backdrop-blur-xl ${
               hasFlatChildren ? "w-56" : "w-136"
             }`}
             style={{ display: "none" }}
@@ -553,7 +553,7 @@ export default function Navbar(): JSX.Element {
                   <li key={child.id}>
                     <Link
                       href={child.href || "#"}
-                      className="block hover:underline py-1 hover:text-[var(--color-brand)] transition-colors"
+                      className="block hover:underline py-1 hover:text-(--color-brand) transition-colors"
                     >
                       {child.label}
                     </Link>
@@ -727,7 +727,7 @@ export default function Navbar(): JSX.Element {
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-bg-700 bg-backdrop/70 backdrop-blur-md text-sm font-medium cursor-pointer"
               >
                 <User size={16} />
-                <span className="truncate max-w-[100px]">
+                <span className="truncate max-w-25">
                   {user?.name?.split(" ")[0] || "Profile"}
                 </span>
               </button>
@@ -748,7 +748,7 @@ export default function Navbar(): JSX.Element {
               </Link>
               <Link
                 href="/register"
-                className="px-4 py-2 rounded-full bg-[var(--color-brand)] text-white text-sm font-semibold hover:bg-[var(--color-brand-hover)] transition-colors whitespace-nowrap"
+                className="px-4 py-2 rounded-full bg-(--color-brand) text-white text-sm font-semibold hover:bg-(--color-brand-hover) transition-colors whitespace-nowrap"
               >
                 Sign Up
               </Link>
@@ -886,7 +886,7 @@ export default function Navbar(): JSX.Element {
                 <Link
                   href="/register"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full px-4 py-3 rounded-xl bg-[var(--color-brand)] text-center text-white text-sm font-semibold hover:bg-[var(--color-brand-hover)] transition-colors"
+                  className="w-full px-4 py-3 rounded-xl bg-(--color-brand) text-center text-white text-sm font-semibold hover:bg-(--color-brand-hover) transition-colors"
                 >
                   Sign Up
                 </Link>
