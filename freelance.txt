@@ -1,0 +1,273 @@
+You are implementing Freelance Module integration in my existing frontend app.
+
+Project context:
+- Backend base URL: http://localhost:8080/api/v1
+- Auth: JWT Bearer token required for all freelance endpoints
+- Module path: /freelance
+- User role uses user endpoints
+- Admin role uses /freelance/admin/* endpoints
+
+Build requirement:
+- Create full frontend integration for freelance profile submission and admin management.
+- Use clean API service layer + UI forms + validation + loading/error/success states.
+- For CV upload: user selects PDF file, frontend converts it to Base64 string and sends in cvFileBase64.
+
+====================================================
+1) ENUMS AND OPTIONS
+====================================================
+
+Freelance domains (exact enum values):
+- frontend
+- backend
+- full-stack
+- technical-writer
+- graphic-designer
+- social-media-manager
+- video-editor
+- ui-ux-designer
+- app-developer
+- devops
+- data-scientist
+- qa-engineer
+
+Freelance statuses (admin):
+- submitted
+- under-review
+- verified
+- rejected
+- contacted
+- archived
+
+====================================================
+2) REQUEST BODY SHAPES
+====================================================
+
+A) CreateFreelanceProfileDto (used in create and update)
+Method: POST /freelance/create
+Method: PATCH /freelance/update
+
+Body:
+{
+  "fullName": "John Doe",
+  "email": "john@example.com",
+  "phoneNumber": "+919876543210",
+  "bio": "Experienced full-stack developer with 5 years of expertise...",
+  "domain": "full-stack",
+  "portfolioUrl": "https://portfolio.example.com",        // optional
+  "githubUrl": "https://github.com/johndoe",              // optional
+  "linkedinUrl": "https://linkedin.com/in/johndoe",       // optional
+  "cvFileBase64": "<BASE64_PDF_STRING>",
+  "yearsOfExperience": 5,                                   // optional
+  "skills": ["React", "Node.js", "MongoDB"]            // optional
+}
+
+Validation notes:
+- fullName: required, 2-100 chars
+- email: required, valid email
+- phoneNumber: required string
+- bio: required, 20-1000 chars
+- domain: required enum value
+- cvFileBase64: required string
+- portfolioUrl/githubUrl/linkedinUrl: optional valid URL
+- yearsOfExperience: optional number <= 70
+- skills: optional array of strings
+
+B) UpdateFreelanceProfileStatusDto
+Method: PATCH /freelance/admin/:id/status
+
+Body:
+{
+  "status": "verified",
+  "adminNotes": "Strong profile and portfolio",   // optional
+  "rejectionReason": "Missing required samples"    // optional, required if status is rejected
+}
+
+C) ContactFreelancerDto
+Method: POST /freelance/admin/:id/contact
+
+Body:
+{
+  "contactMessage": "We want to discuss a project with you",
+  "internalNotes": "Contacted for React project"   // optional
+}
+
+====================================================
+3) ENDPOINTS TO IMPLEMENT
+====================================================
+
+USER ENDPOINTS (JWT required)
+
+1. Create profile
+- Method: POST
+- URL: /freelance/create
+- Body: CreateFreelanceProfileDto
+- Success: 201
+
+2. Get my profile
+- Method: GET
+- URL: /freelance/my-profile
+- Body: none
+- Success: 200
+
+3. Update my profile
+- Method: PATCH
+- URL: /freelance/update
+- Body: CreateFreelanceProfileDto
+- Success: 200
+
+ADMIN ENDPOINTS (JWT + admin role required)
+
+4. Get all profiles (with filters)
+- Method: GET
+- URL: /freelance/admin/all
+- Query params (optional):
+  - status
+  - domain
+  - search
+  - page
+  - limit
+  - sortBy
+  - sortOrder (asc | desc)
+- Body: none
+- Success: 200
+
+5. Get single profile by id
+- Method: GET
+- URL: /freelance/admin/:id
+- Body: none
+- Success: 200
+
+6. Update profile status
+- Method: PATCH
+- URL: /freelance/admin/:id/status
+- Body: UpdateFreelanceProfileStatusDto
+- Success: 200
+
+7. Contact freelancer
+- Method: POST
+- URL: /freelance/admin/:id/contact
+- Body: ContactFreelancerDto
+- Success: 200
+
+8. Archive/delete profile
+- Method: DELETE
+- URL: /freelance/admin/:id
+- Body: none
+- Success: 204
+
+9. Get freelance statistics
+- Method: GET
+- URL: /freelance/admin/statistics
+- Body: none
+- Success: 200
+
+====================================================
+4) RESPONSE SHAPE
+====================================================
+
+Most endpoints return:
+{
+  "success": true,
+  "data": { ... },
+  "message": "..."
+}
+
+Paginated admin list returns:
+{
+  "success": true,
+  "data": [ ...profiles ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 100,
+    "totalPages": 10
+  },
+  "message": "Profiles retrieved successfully"
+}
+
+Delete endpoint returns 204 No Content.
+
+====================================================
+5) FRONTEND IMPLEMENTATION TASKS
+====================================================
+
+Implement these screens/components:
+
+User side:
+- Freelance Application Form page
+  - Fields: fullName, email, phoneNumber, bio, domain, portfolioUrl, githubUrl, linkedinUrl, CV PDF upload, yearsOfExperience, skills
+  - Domain dropdown from enum list
+  - CV uploader (PDF only) with Base64 conversion
+  - Client-side validation mapped to backend constraints
+  - Submit to POST /freelance/create
+
+- My Freelance Profile page
+  - Fetch from GET /freelance/my-profile
+  - Show all profile details + current status badge
+
+- Edit Freelance Profile page
+  - Prefill existing data
+  - Update using PATCH /freelance/update
+
+Admin side:
+- Freelance Profiles List page
+  - Table/cards showing name, email, domain, status, createdAt
+  - Filters: status, domain, search
+  - Pagination controls (page, limit)
+  - Sorting support
+  - Data source: GET /freelance/admin/all
+
+- Admin Profile Detail page
+  - Full profile details with CV link
+  - Actions:
+    - Update status (PATCH /freelance/admin/:id/status)
+    - Contact freelancer (POST /freelance/admin/:id/contact)
+    - Archive profile (DELETE /freelance/admin/:id)
+
+- Admin Statistics panel
+  - Data from GET /freelance/admin/statistics
+  - Show totalProfiles, byStatus, byDomain
+
+====================================================
+6) API SERVICE CONTRACT SUGGESTION
+====================================================
+
+Create service functions:
+- createFreelanceProfile(payload)
+- getMyFreelanceProfile()
+- updateFreelanceProfile(payload)
+- getAdminFreelanceProfiles(query)
+- getAdminFreelanceProfileById(id)
+- updateAdminFreelanceStatus(id, payload)
+- contactFreelancer(id, payload)
+- archiveFreelanceProfile(id)
+- getFreelanceStatistics()
+
+All functions must:
+- Attach Authorization: Bearer <token>
+- Handle 401 and 403 globally
+- Parse backend response shape
+- Return consistent typed data
+
+====================================================
+7) ERROR CASES TO HANDLE IN UI
+====================================================
+
+- 400: Invalid form/body values (show validation summary)
+- 401: Unauthenticated (redirect to login)
+- 403: Forbidden (admin-only routes)
+- 404: Profile not found
+- 409: User already has freelance profile (on create)
+- Network/API failures: retry option + toast/error banner
+
+====================================================
+8) IMPORTANT NOTES
+====================================================
+
+- Send enum values exactly as defined (lowercase + hyphen format).
+- cvFileBase64 is required in create and update payloads for current backend DTO.
+- Keep request/response typing strict to avoid runtime mistakes.
+- Use optimistic UI where appropriate for admin status updates.
+- Keep UX clear for role-based access (user vs admin routes).
+
+Now implement the frontend changes end-to-end using the above endpoints and payload contracts.

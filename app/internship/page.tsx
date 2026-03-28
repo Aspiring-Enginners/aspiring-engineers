@@ -11,7 +11,8 @@ import {
   Database,
   Container,
 } from "lucide-react";
-import Link from "next/link";
+import InternshipApplicationModal from "@/components/internship/InternshipApplicationModal";
+import FreelanceSection from "@/components/freelance/FreelanceSection";
 
 const internships = [
   {
@@ -52,9 +53,7 @@ const internships = [
   },
 ];
 
-import InternshipApplicationModal from "@/components/internship/InternshipApplicationModal";
-
-export default function InternshipPage() {
+export default function InternshipAndFreelancePage() {
   const [darkMode, setDarkMode] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState<string | null>(
     null,
@@ -96,7 +95,7 @@ export default function InternshipPage() {
                 bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand-accent)]
               `}
             >
-              Industry Ready Internships
+              Internships & Freelance Opportunities
             </h1>
 
             <p
@@ -106,8 +105,7 @@ export default function InternshipPage() {
               `}
             >
               Bridge the gap between academic learning and industry
-              requirements. Get hands-on experience by working on real-world
-              projects.
+              requirements with internship projects and freelance opportunities.
             </p>
           </div>
 
@@ -190,6 +188,8 @@ export default function InternshipPage() {
             })}
           </div>
         </section>
+
+        <FreelanceSection />
       </main>
       <Footer />
 

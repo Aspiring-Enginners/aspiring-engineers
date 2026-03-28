@@ -167,7 +167,11 @@ const MENU: MenuItem[] = [
       },
     ],
   },
-  { id: "internship", label: "Internships", href: "/internship" },
+  {
+    id: "internship",
+    label: "Internships & Freelance",
+    href: "/internship",
+  },
   { id: "contact", label: "Contact", href: "/contact" },
 ];
 

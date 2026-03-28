@@ -264,3 +264,5 @@ export interface TeamMember {
   updatedAt: string;
   __v?: number;
 }
+
+export * from "./freelance";

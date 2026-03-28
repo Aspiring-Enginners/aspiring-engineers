@@ -54,8 +54,8 @@ export default function Footer() {
       { label: "Contact Us", href: "/contact" },
     ],
     internships: [
-      { label: "Engineering Internships", href: "/internship" },
-      { label: "See All Internships", href: "/internship" },
+      { label: "Internships & Freelance", href: "/internship" },
+      { label: "Explore Opportunities", href: "/internship" },
     ],
     legal: [
       { label: "Privacy Policy", href: "/privacy-policy" },
@@ -307,7 +307,7 @@ export default function Footer() {
                 darkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              Internships
+              Internships & Freelance
             </h3>
             <ul className="space-y-3">
               {footerLinks.internships.map((link, idx) => (
