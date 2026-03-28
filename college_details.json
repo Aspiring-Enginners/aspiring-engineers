@@ -1,0 +1,299 @@
+{
+  "hit-haldia": {
+    "about": "Haldia Institute of Technology (HIT) is an institute of higher education situated in Haldia, West Bengal. Established in 1996, it is the first private and accredited academic institution catering to engineering in West Bengal. Spread over a sprawling 37-acre fully residential campus, HIT offers modern infrastructural facilities and a highly disciplined academic environment.",
+    "pros": [
+      "Excellent campus infrastructure spread over 37 acres",
+      "Very strong alumni network working in top MNCs",
+      "High placement rate, especially for CSE, IT, and Chemical Engineering",
+      "Relatively affordable fee structure",
+      "Dedicated training and placement cell"
+    ],
+    "cons": [
+      "Located far from the main city of Kolkata",
+      "Strict hostel rules and restricted campus timings",
+      "Heavy reliance on mass recruiters for placements"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "40 LPA", "average": "5.5 LPA", "topRecruiters": "Amazon, TCS, Cognizant, Haldia Petrochemicals" },
+      { "year": "2023", "highest": "33 LPA", "average": "5.2 LPA", "topRecruiters": "Capgemini, Wipro, Infosys, IBM" },
+      { "year": "2022", "highest": "24 LPA", "average": "4.8 LPA", "topRecruiters": "TCS Ninja, Mindtree, Tech Mahindra" }
+    ],
+    "campusFacilities": ["Separate Boys & Girls Hostels", "Aryabhatta Central Library", "Multi-purpose Sports Complex", "Gymnasium", "24/7 Medical Center", "Campus Wi-Fi"]
+  },
+  "iem-kolkata": {
+    "about": "Institute of Engineering and Management (IEM), Kolkata is the oldest private engineering college in West Bengal, established in 1989. Located in Salt Lake, Kolkata, it is widely acclaimed for its rigorous academic curriculum and exceptional placement records, consistently ranking as the best private engineering college in the state.",
+    "pros": [
+      "Unmatched placement records in West Bengal among private institutes",
+      "Prime location in Salt Lake (IT Hub of Kolkata)",
+      "Highly experienced faculty and strict academic discipline",
+      "Strong coding culture and ACM chapters",
+      "Excellent industry connection and internships"
+    ],
+    "cons": [
+      "Very small campus size compared to other top colleges",
+      "Extremely strict attendance and uniform rules (often likened to a school)",
+      "High academic pressure with frequent examinations"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "72 LPA", "average": "6.5 LPA", "topRecruiters": "Oracle, Adobe, TCS Digital, Cognizant" },
+      { "year": "2023", "highest": "51 LPA", "average": "6.0 LPA", "topRecruiters": "Amazon, PWC, Capgemini, SAP Labs" },
+      { "year": "2022", "highest": "40 LPA", "average": "5.5 LPA", "topRecruiters": "Wipro, Infosys, IBM, LTI" }
+    ],
+    "campusFacilities": ["AC Classrooms", "Advanced Computing Labs", "Innovation Cell", "Library", "Cafeteria"]
+  },
+  "kiit-bhubaneswar": {
+    "about": "Kalinga Institute of Industrial Technology (KIIT) is a highly esteemed private deemed-to-be university in Bhubaneswar, Odisha. Known for its world-class infrastructure and massive global exposure, KIIT offers a vibrant campus life alongside excellent academic and placement opportunities. It holds a top-tier NIRF ranking.",
+    "pros": [
+      "World-class, massive campus with state-of-the-art facilities",
+      "Incredible placement opportunities with 300+ companies visiting annually",
+      "High degree of global exposure and student exchange programs",
+      "Amazing sports and extracurricular facilities",
+      "Diverse student community from all over India and abroad"
+    ],
+    "cons": [
+      "High tuition and hostel fees",
+      "Large intake can make competition for top packages fierce",
+      "Strict grading system"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "63 LPA", "average": "8.5 LPA", "topRecruiters": "Yugabyte, Amazon, Atlassian, HighRadius" },
+      { "year": "2023", "highest": "53 LPA", "average": "8.2 LPA", "topRecruiters": "TCS, Wipro, Cognizant, Accenture, Dell" },
+      { "year": "2022", "highest": "30 LPA", "average": "7.5 LPA", "topRecruiters": "Capgemini, IBM, Ericsson, Bosch" }
+    ],
+    "campusFacilities": ["Olympic-size Swimming Pool", "Multiple AC Hostels", "Central Library", "Food Courts", "Gymnasium", "Indoor Stadium"]
+  },
+  "narula-it": {
+    "about": "Narula Institute of Technology (NIT Agarpara) is a leading autonomous engineering college in Kolkata under the JIS Group. Established in 2001, it is known for its green campus, quality education, and strong placement assistance. The institute is autonomous under MAKAUT and boasts NAAC 'A' accreditation.",
+    "pros": [
+      "Autonomous status allows for updated syllabus out of MAKAUT constraints",
+      "Good placements with top IT service companies",
+      "Active entrepreneurship and innovation cells",
+      "Well-maintained, green campus",
+      "Accessible location in Agarpara, Kolkata"
+    ],
+    "cons": [
+      "Fewer product-based company visits compared to IEM",
+      "Campus is moderately sized",
+      "Average packages are standard for tier-3 colleges"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "27 LPA", "average": "5.2 LPA", "topRecruiters": "TCS, Cognizant, Wipro, LTI" },
+      { "year": "2023", "highest": "18 LPA", "average": "4.8 LPA", "topRecruiters": "Accenture, Capgemini, IBM" },
+      { "year": "2022", "highest": "12 LPA", "average": "4.5 LPA", "topRecruiters": "Ericsson, Tech Mahindra, ITC Infotech" }
+    ],
+    "campusFacilities": ["Hostel", "Library", "Smart Classrooms", "Language Lab", "Sports Facilities"]
+  },
+  "dyp-vidyapeeth-pune": {
+    "about": "Dr. D. Y. Patil Vidyapeeth (DPU), Pune, is a prestigious deemed-to-be-university offering top-tier engineering and medical courses. Located in the education hub of Pune, it provides a perfect blend of high-quality academics and industry interaction, backed by modern infrastructure and highly qualified faculty.",
+    "pros": [
+      "Located in Pune, offering immense IT industry exposure",
+      "Excellent campus infrastructure and laboratories",
+      "Good placement record in tech and core companies",
+      "Active student clubs and hackathon culture",
+      "Highly experienced faculty"
+    ],
+    "cons": [
+      "Fees are on the higher side",
+      "Campus life is highly focused on academics",
+      "High competition due to large applicant pools"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "84 LPA", "average": "5.4 LPA", "topRecruiters": "TCS, Atos, Capgemini, Tech Mahindra" },
+      { "year": "2023", "highest": "45 LPA", "average": "5.0 LPA", "topRecruiters": "Wipro, Infosys, Cognizant" },
+      { "year": "2022", "highest": "33 LPA", "average": "4.6 LPA", "topRecruiters": "Amazon, IBM, L&T" }
+    ],
+    "campusFacilities": ["Hostels", "Library", "Hi-Tech Labs", "Cafeteria", "Sports Complex"]
+  },
+  "vit-vellore": {
+    "about": "Vellore Institute of Technology (VIT) is consistently ranked among the top private engineering colleges in India. Known for its FFCS (Fully Flexible Credit System) and massive corporate networking, VIT Vellore is a dream destination for students seeking highly competitive peer groups and top-notch placements.",
+    "pros": [
+      "Exceptional placements including premium product-based companies",
+      "Fully Flexible Credit System (FFCS) giving students control over course planning",
+      "Vibrant campus life with grand fests like Riviera",
+      "Massive diverse student population",
+      "State-of-the-art research facilities"
+    ],
+    "cons": [
+      "Very high student intake makes competition intense",
+      "Strict rules regarding hostel curfews and campus discipline",
+      "High cost of living and tuition fees based on categories"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "1.02 Cr", "average": "9.9 LPA", "topRecruiters": "Microsoft, Amazon, PayPal, DE Shaw" },
+      { "year": "2023", "highest": "1.02 Cr", "average": "9.2 LPA", "topRecruiters": "AppDynamics, Intel, TCS, Cisco" },
+      { "year": "2022", "highest": "75 LPA", "average": "8.1 LPA", "topRecruiters": "Wipro, Cognizant, Bank of America" }
+    ],
+    "campusFacilities": ["Modern AC Hostels", "Central Library", "Innovation Labs", "Multiplex", "Multi-cuisine Food Courts"]
+  },
+  "vit-vellore-campus": {
+    "alias": "vit-vellore"
+  },
+  "bits-pilani": {
+    "about": "Birla Institute of Technology and Science (BITS) Pilani is recognized as the ultimate private engineering institute in India, offering education comparable with top IITs. Its 'Zero Attendance' policy and practice school system create independent, industry-ready graduates and highly successful entrepreneurs.",
+    "pros": [
+      "Zero Attendance policy enabling self-paced learning and entrepreneurship",
+      "Practice School (PS) system ensuring guarantees industry internship",
+      "Phenomenal placements and highest average packages",
+      "Unparalleled alumni network comprising founders of top unicorns",
+      "Culturally rich campus festivals (Oasis)"
+    ],
+    "cons": [
+      "Extremely rigorous entrance examination (BITSAT)",
+      "Fee structure is among the highest in the country",
+      "Pilani campus is geographically isolated"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "60 LPA", "average": "30.3 LPA", "topRecruiters": "Google, Microsoft, Meta, Sprinklr" },
+      { "year": "2023", "highest": "60 LPA", "average": "28.9 LPA", "topRecruiters": "Uber, Amazon, DE Shaw, Swiggy" },
+      { "year": "2022", "highest": "45 LPA", "average": "25.5 LPA", "topRecruiters": "Flipkart, Tower Research, Salesforce" }
+    ],
+    "campusFacilities": ["Hostels", "Advanced Library", "Student Activity Center", "MakerSpace", "Innovation Center"]
+  },
+  "manipal-it": {
+    "about": "Manipal Institute of Technology (MIT) offers an outstanding blend of academic excellence and campus life. Situated in the university town of Manipal, MIT provides exposure to diverse cultures, excellent modern infrastructure, and robust placement opportunities across globally reputed companies.",
+    "pros": [
+      "Fantastic campus life and highly active student technical clubs",
+      "Major tech giants recruit consistently with high packages",
+      "Located in a safe, student-friendly coastal town",
+      "Great focus on innovation, racing cars, and satellite projects",
+      "High global alumni presence"
+    ],
+    "cons": [
+      "High overall fee structure",
+      "Weather can be humid and rainy for a long part of the year",
+      "Tiff competition due to large batch size"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "54 LPA", "average": "12.5 LPA", "topRecruiters": "Microsoft, Flipkart, Amazon, Goldman Sachs" },
+      { "year": "2023", "highest": "54 LPA", "average": "11.2 LPA", "topRecruiters": "Cisco, Oracle, BlackRock, Adobe" },
+      { "year": "2022", "highest": "43 LPA", "average": "10.4 LPA", "topRecruiters": "SAP Labs, Deloitte, TCS" }
+    ],
+    "campusFacilities": ["Innovation Centre", "Marena Sports Complex", "KMC Hospital Access", "Hostels", "Food Courts"]
+  },
+  "srm-chennai": {
+    "about": "SRM Institute of Science and Technology (Kattankulathur Campus) is a premier institute offering engineering, medicine, and management. Known for its massive infrastructure, diverse student base, and proactive placement cell, it ensures a large number of students secure jobs in marquee tech companies.",
+    "pros": [
+      "State-of-the-art infrastructure spread over 250 acres",
+      "Semester abroad program (SAP) with foreign universities",
+      "Huge placement drives with massive offers from top IT firms",
+      "Highly diverse student population",
+      "Excellent research facilities"
+    ],
+    "cons": [
+      "Very high student intake leading to heavy competition",
+      "Strict campus rules",
+      "High fee structure for management quota seats"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "45 LPA", "average": "8.5 LPA", "topRecruiters": "Amazon, PayPal, Barclays, TCS" },
+      { "year": "2023", "highest": "57 LPA", "average": "7.5 LPA", "topRecruiters": "Cognizant, Wipro, Infosys, IBM" },
+      { "year": "2022", "highest": "42 LPA", "average": "7.0 LPA", "topRecruiters": "TCS Ninja, Capgemini, L&T" }
+    ],
+    "campusFacilities": ["Hostels", "Library", "Hi-Tech Labs", "Hospital", "Sports Complex", "Auditorium"]
+  },
+  "thapar-patiala": {
+    "about": "Thapar Institute of Engineering and Technology (TIET) in Patiala is one of India's oldest and finest private educational institutions. With deep industrial connections and a globally recognized academic curriculum, TIET produces engineers who consistently secure premier roles in the corporate sector.",
+    "pros": [
+      "Excellent reputation in north India with a strong alumni network",
+      "Tremendous placement records with excellent average packages",
+      "State-of-the-art infrastructure and modern laboratories",
+      "Beautiful green campus in Patiala",
+      "Good research opportunities and tie-ups with foreign universities (Trinity College Dublin)"
+    ],
+    "cons": [
+      "Exorbitant fee structure and annual fee hikes",
+      "Strict grading patterns",
+      "High intake in specific branches like CSE"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "50 LPA", "average": "11.5 LPA", "topRecruiters": "JP Morgan, DE Shaw, Amazon, Microsoft" },
+      { "year": "2023", "highest": "55 LPA", "average": "10.9 LPA", "topRecruiters": "Apple, Oyo, Arcesium, Optum" },
+      { "year": "2022", "highest": "40 LPA", "average": "9.5 LPA", "topRecruiters": "Zomato, Deloitte, IBM, TCS" }
+    ],
+    "campusFacilities": ["AC Hostels", "Central Library", "Sports Complex", "Dispensary", "Student Activity Center"]
+  },
+  "amity-noida": {
+    "about": "Amity University Noida is a prestigious private university known for its sprawling campus, global standards of education, and diverse program offerings. Located in the heart of Delhi NCR, it provides exceptional industry exposure and modern world-class facilities to students.",
+    "pros": [
+      "World-class, luxurious campus infrastructure",
+      "Prime location in Delhi NCR ensuring incredible industry exposure",
+      "Highly active extra-curricular and global networking",
+      "Decent placements through centralized placement cell",
+      "Foreign exchange programs and global campuses"
+    ],
+    "cons": [
+      "Very high tuition and residential fees",
+      "Considered slightly relaxed on academic discipline",
+      "Brand dilution due to multiple campuses across the country"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "35 LPA", "average": "7.5 LPA", "topRecruiters": "Amazon, Cisco, TCS, Wipro" },
+      { "year": "2023", "highest": "61 LPA", "average": "6.5 LPA", "topRecruiters": "Goldman Sachs, Cognizant, IBM" },
+      { "year": "2022", "highest": "30 LPA", "average": "6.0 LPA", "topRecruiters": "Capgemini, Accenture, EXL" }
+    ],
+    "campusFacilities": ["Central Library", "Olympic Pool", "AC Hostels", "Gym", "Food Courts", "Bank & ATM"]
+  },
+  "heritage-it": {
+    "about": "Heritage Institute of Technology is a highly reputed autonomous engineering college in Kolkata. It offers a balanced mix of rigorous academics, a clean disciplined campus, and excellent placement support, making it a top choice for WBJEE aspirants.",
+    "pros": [
+      "High placement percentage with good companies",
+      "Excellent, well-maintained infrastructure and campus",
+      "Autonomous curriculum resulting in updated syllabus",
+      "Supportive faculty and administration",
+      "Good reputation among core engineering companies"
+    ],
+    "cons": [
+      "Strict discipline and dress code rules",
+      "Campus is moderately sized",
+      "Location is somewhat secluded from main transport hubs"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "44 LPA", "average": "6.2 LPA", "topRecruiters": "TCS, Wipro, Infosys, Cognizant, LTI" },
+      { "year": "2023", "highest": "30 LPA", "average": "5.5 LPA", "topRecruiters": "Capgemini, IBM, Tech Mahindra" },
+      { "year": "2022", "highest": "16 LPA", "average": "5.0 LPA", "topRecruiters": "TCS Ninja, Mindtree, Ericsson" }
+    ],
+    "campusFacilities": ["Hostels", "Library", "Cafeteria", "Sports Ground", "Wi-Fi Campus"]
+  },
+  "techno-main-salt-lake": {
+    "about": "Techno Main Salt Lake (TMSL) is the flagship college of the Techno India Group. Located centrally in Kolkata's IT hub, it leverages its location to secure excellent placements and industry interactions for its students.",
+    "pros": [
+      "Strategic location right in Salt Lake Sector V (Kolkata IT Hub)",
+      "Excellent placement numbers due to location advantage",
+      "Strong coding culture and senior-junior interaction",
+      "Relatively relaxed campus rules compared to other private colleges",
+      "Large and established alumni network"
+    ],
+    "cons": [
+      "Zero campus life (consists mostly of just a few buildings)",
+      "Infrastructure is old and congested",
+      "High student intake limits resources per student"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "32 LPA", "average": "5.8 LPA", "topRecruiters": "TCS, Cognizant, Wipro, Intel, Microsoft" },
+      { "year": "2023", "highest": "24 LPA", "average": "5.2 LPA", "topRecruiters": "Accenture, Capgemini, SAP Labs" },
+      { "year": "2022", "highest": "14 LPA", "average": "4.8 LPA", "topRecruiters": "IBM, LTI, Mindtree" }
+    ],
+    "campusFacilities": ["Library", "AC Computer Labs", "Auditorium", "Canteen", "Common Rooms"]
+  },
+  "bp-poddar": {
+    "about": "B.P. Poddar Institute of Management and Technology is located near the Kolkata airport. It is a well-established private engineering institute that is deeply trusted for quality education and solid IT placements.",
+    "pros": [
+      "Prime location near VIP Road, perfectly accessible",
+      "Decent infrastructure for computer-related branches",
+      "Consistent placement records in top IT service firms",
+      "Good academic faculty",
+      "Affordable fees compared to emerging private colleges"
+    ],
+    "cons": [
+      "Very small campus size",
+      "Absence of massive sports facilities or huge cultural fests",
+      "Almost entirely focused on IT jobs with limited core company visits"
+    ],
+    "placementTrends": [
+      { "year": "2024", "highest": "22 LPA", "average": "5.0 LPA", "topRecruiters": "TCS, Infosys, Cognizant" },
+      { "year": "2023", "highest": "12 LPA", "average": "4.5 LPA", "topRecruiters": "Capgemini, Wipro, Tech Mahindra" },
+      { "year": "2022", "highest": "9 LPA", "average": "4.0 LPA", "topRecruiters": "Mindtree, LTI, IBM" }
+    ],
+    "campusFacilities": ["Library", "Laboratories", "Seminar Hall", "Wi-Fi enabled campus"]
+  }
+}

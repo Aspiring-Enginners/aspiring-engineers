@@ -49,19 +49,6 @@ export default function CollegeListPage() {
           <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
             Discover the best institutions across West Bengal and India, helping you make the right choice for your future career.
           </p>
-
-          <div className="max-w-xl mx-auto relative group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-[var(--color-brand)] transition-colors" />
-            </div>
-            <input
-              type="text"
-              className="block w-full pl-11 pr-4 py-3 border border-gray-200 dark:border-gray-800 rounded-xl leading-5 bg-white/70 dark:bg-gray-900/60 backdrop-blur-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)] focus:border-[var(--color-brand)] sm:text-sm transition-all shadow-sm"
-              placeholder="Search colleges by name or location..."
-              value={searchQuery}
-              onChange={handleSearch}
-            />
-          </div>
         </section>
 
         {/* Carousel Section -> Larger Hero-style Cards */}
@@ -79,10 +66,7 @@ export default function CollegeListPage() {
                   className="shrink-0 w-[300px] md:w-[400px] rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative group block"
                 >
                   <Link
-                    href={{
-                      pathname: "/counselling/admission-guidance",
-                      query: { collegeChoice: college.name, source: "college-list-featured" },
-                    }}
+                    href={`/counselling/college/${college.id}`}
                     className="block relative h-[180px] md:h-[220px] w-full"
                   >
                     {college.image && (
@@ -148,10 +132,7 @@ export default function CollegeListPage() {
                 {filteredWB.map((college) => (
                   <Link
                     key={college.id}
-                    href={{
-                      pathname: "/counselling/admission-guidance",
-                      query: { collegeChoice: college.name, source: "college-list-wb" },
-                    }}
+                    href={`/counselling/college/${college.id}`}
                     className="group relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-[320px]"
                   >
                     <div className="h-40 bg-gray-200 dark:bg-gray-800 relative overflow-hidden">
@@ -214,10 +195,7 @@ export default function CollegeListPage() {
                 {filteredIndia.map((college) => (
                   <Link
                     key={college.id}
-                    href={{
-                      pathname: "/counselling/admission-guidance",
-                      query: { collegeChoice: college.name, source: "college-list-india" },
-                    }}
+                    href={`/counselling/college/${college.id}`}
                     className="group relative rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-[320px]"
                   >
                     <div className="h-40 bg-gray-200 dark:bg-gray-800 relative overflow-hidden">
