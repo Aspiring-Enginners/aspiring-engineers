@@ -13,6 +13,8 @@ import {
   Coins,
   Gift,
   Users,
+  Copy,
+  Check,
 } from "lucide-react";
 
 interface ReferralSummary {
@@ -75,6 +77,7 @@ export default function ProfileDashboard() {
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -157,6 +160,19 @@ export default function ProfileDashboard() {
     return null;
   }
 
+  const handleCopyReferralCode = async () => {
+    const code = referralSummary?.referralCode;
+    if (!code) return;
+
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch (err) {
+      logger.error("[ProfileDashboard] Failed to copy referral code:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-b from-bg-900 to-bg-800">
       <Navbar />
@@ -203,6 +219,16 @@ export default function ProfileDashboard() {
                     referralSummary?.referralCode || "-"
                   )}
                 </p>
+                {!loading && referralSummary?.referralCode ? (
+                  <button
+                    onClick={handleCopyReferralCode}
+                    className="mt-2 inline-flex items-center gap-1 rounded-md border border-bg-700 px-2 py-1 text-xs text-text-secondary hover:text-text-primary transition-colors"
+                    aria-label="Copy referral code"
+                  >
+                    {copied ? <Check size={12} /> : <Copy size={12} />}
+                    <span>{copied ? "Copied" : "Copy"}</span>
+                  </button>
+                ) : null}
               </div>
               <Gift className="text-brand opacity-0.5" size={32} />
             </div>
