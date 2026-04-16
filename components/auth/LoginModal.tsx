@@ -129,7 +129,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath }: LoginModal
                   darkMode ? "text-gray-300" : "text-gray-700"
                 }`}
               >
-                Email Address
+                Email Address <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"

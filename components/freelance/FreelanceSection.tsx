@@ -598,28 +598,46 @@ export default function FreelanceSection() {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  name="fullName"
-                  value={applyForm.fullName}
-                  onChange={onApplyInputChange}
-                  placeholder="Full Name"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
-                <input
-                  name="email"
-                  type="email"
-                  value={applyForm.email}
-                  onChange={onApplyInputChange}
-                  placeholder="Email"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
-                <input
-                  name="phoneNumber"
-                  value={applyForm.phoneNumber}
-                  onChange={onApplyInputChange}
-                  placeholder="Phone Number"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="fullName"
+                    value={applyForm.fullName}
+                    onChange={onApplyInputChange}
+                    required
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="email"
+                    type="email"
+                    value={applyForm.email}
+                    onChange={onApplyInputChange}
+                    required
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="phoneNumber"
+                    required
+                    value={applyForm.phoneNumber}
+                    onChange={onApplyInputChange}
+                    placeholder="Enter your phone no"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
                 <select
                   name="domain"
                   value={applyForm.domain}
@@ -938,28 +956,46 @@ export default function FreelanceSection() {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  name="fullName"
-                  value={editForm.fullName}
-                  onChange={onEditInputChange}
-                  placeholder="Full Name"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
-                <input
-                  name="email"
-                  type="email"
-                  value={editForm.email}
-                  onChange={onEditInputChange}
-                  placeholder="Email"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
-                <input
-                  name="phoneNumber"
-                  value={editForm.phoneNumber}
-                  onChange={onEditInputChange}
-                  placeholder="Phone Number"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-                />
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="fullName"
+                    value={editForm.fullName}
+                    onChange={onEditInputChange}
+                    required
+                    placeholder="Enter your full name"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="email"
+                    type="email"
+                    value={editForm.email}
+                    onChange={onEditInputChange}
+                    required
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    name="phoneNumber"
+                    value={editForm.phoneNumber}
+                    onChange={onEditInputChange}
+                    required
+                    placeholder="Enter your phone no"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+                  />
+                </div>
                 <select
                   name="domain"
                   value={editForm.domain}

@@ -156,7 +156,7 @@ export default function ForgotPasswordPage() {
                     darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Email Address
+                  Email Address <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <Mail

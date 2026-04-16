@@ -425,7 +425,7 @@ export default function RegisterPage() {
                       ? "bg-white/5 border-white/10 text-white placeholder-gray-500 focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)]"
                       : "bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)]"
                   }`}
-                  placeholder="9876543210"
+                  placeholder="Enter your phone no"
                 />
               </div>
               {formData.phone && (
