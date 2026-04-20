@@ -2,7 +2,15 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ExternalLink, FileText, Loader2, Pencil, Search, Upload, UserCircle } from "lucide-react";
+import {
+  ExternalLink,
+  FileText,
+  Loader2,
+  Pencil,
+  Search,
+  Upload,
+  UserCircle,
+} from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import freelanceService from "@/services/freelance.service";
 import {
@@ -28,11 +36,12 @@ const FREELANCE_DOMAINS: Array<{ value: FreelanceDomain; label: string }> = [
   { value: "qa-engineer", label: "QA Engineer" },
 ];
 
-const FREELANCE_WORK_MODES: Array<{ value: FreelanceWorkMode; label: string }> = [
-  { value: "remote", label: "Remote" },
-  { value: "hybrid", label: "Hybrid" },
-  { value: "onsite", label: "On-site" },
-];
+const FREELANCE_WORK_MODES: Array<{ value: FreelanceWorkMode; label: string }> =
+  [
+    { value: "remote", label: "Remote" },
+    { value: "hybrid", label: "Hybrid" },
+    { value: "onsite", label: "On-site" },
+  ];
 
 type TabKey = "apply" | "my-profile" | "edit";
 
@@ -109,7 +118,10 @@ const buildValidationErrors = (
 ): string[] => {
   const errors: string[] = [];
 
-  if (payload.fullName.trim().length < 2 || payload.fullName.trim().length > 100) {
+  if (
+    payload.fullName.trim().length < 2 ||
+    payload.fullName.trim().length > 100
+  ) {
     errors.push("Full name must be between 2 and 100 characters.");
   }
 
@@ -129,11 +141,17 @@ const buildValidationErrors = (
     errors.push("CV PDF upload is required.");
   }
 
-  if (payload.yearsOfExperience !== undefined && payload.yearsOfExperience > 70) {
+  if (
+    payload.yearsOfExperience !== undefined &&
+    payload.yearsOfExperience > 70
+  ) {
     errors.push("Years of experience must be 70 or less.");
   }
 
-  if (payload.expectedHourlyRate !== undefined && payload.expectedHourlyRate <= 0) {
+  if (
+    payload.expectedHourlyRate !== undefined &&
+    payload.expectedHourlyRate <= 0
+  ) {
     errors.push("Expected hourly rate must be greater than 0.");
   }
 
@@ -210,9 +228,8 @@ export default function FreelanceSection() {
   const [myProfileLoading, setMyProfileLoading] = useState(false);
   const [myProfileError, setMyProfileError] = useState("");
 
-  const [editForm, setEditForm] = useState<CreateFreelanceProfilePayload>(
-    emptyForm,
-  );
+  const [editForm, setEditForm] =
+    useState<CreateFreelanceProfilePayload>(emptyForm);
   const [editSkillsInput, setEditSkillsInput] = useState("");
   const [editCvName, setEditCvName] = useState("");
   const [editCvPreviewUrl, setEditCvPreviewUrl] = useState("");
@@ -455,9 +472,14 @@ export default function FreelanceSection() {
     setApplyValidationErrors(validationErrors);
 
     if (validationErrors.length > 0) {
-      setApplyError("Please fix the highlighted validation errors and try again.");
+      setApplyError(
+        "Please fix the highlighted validation errors and try again.",
+      );
       requestAnimationFrame(() => {
-        applyMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        applyMessageRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       });
       setApplyLoading(false);
       return;
@@ -506,9 +528,14 @@ export default function FreelanceSection() {
     setEditValidationErrors(validationErrors);
 
     if (validationErrors.length > 0) {
-      setEditError("Please fix the highlighted validation errors and try again.");
+      setEditError(
+        "Please fix the highlighted validation errors and try again.",
+      );
       requestAnimationFrame(() => {
-        editMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        editMessageRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       });
       setEditLoading(false);
       return;
@@ -533,7 +560,11 @@ export default function FreelanceSection() {
         ? "bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-300"
         : "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-300";
 
-    return <div className={`rounded-lg border p-3 text-sm ${baseClass}`}>{message}</div>;
+    return (
+      <div className={`rounded-lg border p-3 text-sm ${baseClass}`}>
+        {message}
+      </div>
+    );
   };
 
   return (
@@ -550,7 +581,9 @@ export default function FreelanceSection() {
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-(--color-brand) to-(--color-brand-accent)">
               Freelance Opportunities
             </h2>
-            <p className={`mt-3 text-base ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+            <p
+              className={`mt-3 text-base ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
               Submit your freelance profile, track your application status, and
               keep your profile updated.
             </p>
@@ -876,10 +909,20 @@ export default function FreelanceSection() {
                     <div>Email: {myProfile.email}</div>
                     <div>Phone: {myProfile.phoneNumber}</div>
                     <div>Domain: {myProfile.domain}</div>
-                    <div>Experience: {myProfile.yearsOfExperience ?? "-"} years</div>
-                    <div>Expected Rate: {myProfile.expectedHourlyRate ?? "-"} INR/hr</div>
-                    <div>Availability: {myProfile.availableHoursPerDay ?? "-"} hrs/day</div>
-                    <div>Days/Week: {myProfile.availableDaysPerWeek ?? "-"}</div>
+                    <div>
+                      Experience: {myProfile.yearsOfExperience ?? "-"} years
+                    </div>
+                    <div>
+                      Expected Rate: {myProfile.expectedHourlyRate ?? "-"}{" "}
+                      INR/hr
+                    </div>
+                    <div>
+                      Availability: {myProfile.availableHoursPerDay ?? "-"}{" "}
+                      hrs/day
+                    </div>
+                    <div>
+                      Days/Week: {myProfile.availableDaysPerWeek ?? "-"}
+                    </div>
                     <div>Work Mode: {myProfile.preferredWorkMode ?? "-"}</div>
                     <div>Created: {formatDate(myProfile.createdAt)}</div>
                     <div>Updated: {formatDate(myProfile.updatedAt)}</div>
@@ -887,29 +930,34 @@ export default function FreelanceSection() {
 
                   <div className="text-sm">
                     <p className="font-semibold mb-1">Bio</p>
-                    <p className={darkMode ? "text-gray-300" : "text-gray-700"}>{myProfile.bio}</p>
+                    <p className={darkMode ? "text-gray-300" : "text-gray-700"}>
+                      {myProfile.bio}
+                    </p>
                   </div>
 
-                  {Array.isArray(myProfile.skills) && myProfile.skills.length > 0 && (
-                    <div className="text-sm">
-                      <p className="font-semibold mb-2">Skills</p>
-                      <div className="flex flex-wrap gap-2">
-                        {myProfile.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-2 py-1 rounded-md text-xs bg-gray-100 dark:bg-gray-800"
-                          >
-                            {skill}
-                          </span>
-                        ))}
+                  {Array.isArray(myProfile.skills) &&
+                    myProfile.skills.length > 0 && (
+                      <div className="text-sm">
+                        <p className="font-semibold mb-2">Skills</p>
+                        <div className="flex flex-wrap gap-2">
+                          {myProfile.skills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-2 py-1 rounded-md text-xs bg-gray-100 dark:bg-gray-800"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {myProfile.availabilityNotes && (
                     <div className="text-sm">
                       <p className="font-semibold mb-1">Availability Notes</p>
-                      <p className={darkMode ? "text-gray-300" : "text-gray-700"}>
+                      <p
+                        className={darkMode ? "text-gray-300" : "text-gray-700"}
+                      >
                         {myProfile.availabilityNotes}
                       </p>
                     </div>
@@ -951,7 +999,8 @@ export default function FreelanceSection() {
 
               {!myProfile && (
                 <div className="rounded-lg border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 p-3 text-sm text-amber-700 dark:text-amber-300">
-                  Load your profile first from My Profile tab or refresh this tab.
+                  Load your profile first from My Profile tab or refresh this
+                  tab.
                 </div>
               )}
 

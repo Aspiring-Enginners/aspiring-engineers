@@ -12,7 +12,11 @@ interface LoginModalProps {
   redirectPath?: string;
 }
 
-export default function LoginModal({ isOpen, onClose, redirectPath }: LoginModalProps) {
+export default function LoginModal({
+  isOpen,
+  onClose,
+  redirectPath,
+}: LoginModalProps) {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,14 +69,14 @@ export default function LoginModal({ isOpen, onClose, redirectPath }: LoginModal
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
       {/* Modal Content */}
       <div
         className={`relative w-full max-w-md rounded-2xl shadow-2xl transform transition-all ${
-          darkMode ? "bg-[var(--color-dark-bg)] border border-white/10" : "bg-white"
+          darkMode
+            ? "bg-[var(--color-dark-bg)] border border-white/10"
+            : "bg-white"
         }`}
       >
         {/* Close Button */}
