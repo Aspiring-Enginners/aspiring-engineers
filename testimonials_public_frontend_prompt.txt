@@ -1,0 +1,441 @@
+================================================================================
+  FRONTEND IMPLEMENTATION PROMPT: TESTIMONIALS — PUBLIC WEBSITE
+  Aspiring Engineers Platform
+================================================================================
+
+OVERVIEW
+--------
+Implement the public-facing "Success Stories" / "What Our Students Say"
+testimonials section on the main marketing website. This section fetches only
+APPROVED testimonials from the backend and renders them as clean, visually
+appealing cards. No authentication is needed for this feature.
+
+BASE URL
+--------
+Use the environment variable your project already uses, e.g.:
+  VITE_API_BASE_URL  or  NEXT_PUBLIC_API_BASE_URL
+
+All endpoints below are relative to that base.
+
+
+================================================================================
+  ENDPOINT REFERENCE
+================================================================================
+
+─────────────────────────────────────────────────────────────────────────────
+GET APPROVED TESTIMONIALS  (the ONLY public endpoint)
+─────────────────────────────────────────────────────────────────────────────
+Method       : GET
+URL          : /testimonials
+Auth         : None — fully public, no token needed
+Content-Type : N/A (GET request)
+
+Query Parameters:
+  limit  (optional, number) — maximum number of testimonials to return.
+                              Default: 20.
+                              Recommended for the homepage hero section: 6–10.
+                              For a dedicated "All Reviews" page, use a higher
+                              value or omit the param to get the full list.
+
+Example requests:
+  GET /testimonials               → returns up to 20 approved testimonials
+  GET /testimonials?limit=6       → returns up to 6 (for a compact section)
+  GET /testimonials?limit=100     → returns up to 100
+
+Success Response — 200 OK:
+{
+  "success": true,
+  "message": "Testimonials retrieved successfully",
+  "data": [
+    {
+      "id": "60d5ec49c1234567890abcde",
+      "studentName": "Rahul Sharma",
+      "quote": "The counselling team helped me understand the choice filling process. I got CSE at NIT Trichy with their guidance!",
+      "achievementLine": "JEE Main AIR 5,432",
+      "institutionLine": "NIT Trichy - CSE",
+      "rating": 5,
+      "avatarUrl": "https://storage.example.com/testimonials/avatar-1.png"
+    },
+    {
+      "id": "60d5ec49c1234567890abcdf",
+      "studentName": "Priya Menon",
+      "quote": "I was confused after my results but Aspiring Engineers gave me a clear roadmap. Got into AIIMS Delhi!",
+      "achievementLine": "NEET AIR 312",
+      "institutionLine": "AIIMS Delhi - MBBS",
+      "rating": 5,
+      "avatarUrl": null
+    }
+  ]
+}
+
+IMPORTANT NOTES:
+  - The response contains ONLY approved testimonials. Pending and rejected ones
+    are never returned by this endpoint.
+  - Testimonials are sorted by displayOrder (ascending) — the admin controls
+    the display order from the backend. The frontend must NOT re-sort them.
+  - avatarUrl can be null/undefined. Always render a fallback avatar (initials
+    or a default placeholder image) when avatarUrl is absent.
+  - rating is always a number between 1 and 5 (inclusive).
+  - There is no pagination on this public endpoint. It returns a flat array.
+
+
+================================================================================
+  FRONTEND DATA MODEL (TypeScript interface)
+================================================================================
+
+// Exactly matches each object inside the "data" array of the API response
+export interface PublicTestimonial {
+  id: string;
+  studentName: string;
+  quote: string;
+  achievementLine: string;   // e.g. "JEE Main AIR 5,432" or "NEET AIR 312"
+  institutionLine: string;   // e.g. "NIT Trichy - CSE" or "AIIMS Delhi - MBBS"
+  rating: number;            // 1 to 5
+  avatarUrl?: string | null; // CDN URL or null/undefined — always handle fallback
+}
+
+export interface TestimonialsPublicResponse {
+  success: boolean;
+  message: string;
+  data: PublicTestimonial[];
+}
+
+
+================================================================================
+  UI / COMPONENT REQUIREMENTS
+================================================================================
+
+─────────────────────────────────────────────────────────────────────────────
+SECTION STRUCTURE
+─────────────────────────────────────────────────────────────────────────────
+Build a "Success Stories" section that can be embedded on:
+  1. The Homepage (show a limited set, e.g. limit=6, with a "See All" button)
+  2. A dedicated Testimonials / Reviews page (show full set, limit=50 or more)
+
+─────────────────────────────────────────────────────────────────────────────
+TESTIMONIAL CARD  (one card per item in data[])
+─────────────────────────────────────────────────────────────────────────────
+Each card must display:
+
+  [Avatar Image or Initials Fallback]
+  [Student Name]
+  [Star Rating  ★★★★★]
+  [Quote — the main testimonial text in italics or blockquote style]
+  [Achievement Line — e.g. "JEE Main AIR 5,432"]
+  [Institution Line — e.g. "NIT Trichy - CSE"]
+
+Avatar rules:
+  - If avatarUrl is present     → show <img src={avatarUrl} alt={studentName} />
+  - If avatarUrl is null/absent → show a circle with the student's initials
+      Example: "Rahul Sharma" → "RS"  (pick first letter of each word, max 2)
+      Use a consistent color derived from the name (e.g. hash the name to a
+      hue in HSL space) so each student gets a unique but stable color.
+
+Star Rating:
+  - Render `rating` number of filled stars (★) and `5 - rating` empty stars (☆).
+  - Use SVG stars or a library like react-stars / vue-star-rating.
+  - Color: gold / amber (#FBBF24 or similar).
+
+Quote text:
+  - Wrap in quotation marks or use a large decorative quote icon (").
+  - Clamp to 3–4 lines with a "Read more" toggle if the quote is long
+    (more than ~180 characters).
+
+Achievement & Institution lines:
+  - These are short metadata lines shown below the quote.
+  - Style suggestion: small badge / pill with a subtle background color
+    (e.g. light blue for achievementLine, light green for institutionLine).
+  - Example visual:
+      [ 🏆 JEE Main AIR 5,432 ]  [ 🎓 NIT Trichy - CSE ]
+
+─────────────────────────────────────────────────────────────────────────────
+LAYOUT OPTIONS (pick whichever fits your design system)
+─────────────────────────────────────────────────────────────────────────────
+Option A — Horizontal Carousel / Slider:
+  - Show 1–3 cards at a time with left / right navigation arrows.
+  - Auto-play every 4–5 seconds. Pause on hover.
+  - Show dot indicators at the bottom.
+  - Recommended library: Swiper.js (framework-agnostic) or Embla Carousel.
+
+Option B — Masonry / CSS Grid:
+  - Responsive grid: 1 col on mobile, 2 cols on tablet, 3 cols on desktop.
+  - Cards have equal width but variable height (masonry).
+  - Good for a dedicated reviews page.
+
+Option C — Infinite Horizontal Scroll (marquee style):
+  - Two rows of cards scrolling in opposite directions at a slow, continuous
+    speed. Pure CSS animation (animation: scroll linear infinite).
+  - No user interaction needed.
+  - Visually impressive for homepage hero sections.
+
+─────────────────────────────────────────────────────────────────────────────
+LOADING STATE
+─────────────────────────────────────────────────────────────────────────────
+While the API request is in flight, render skeleton cards:
+  - Match the same card dimensions as the real cards.
+  - Use a shimmer / pulse animation (CSS or a library like react-loading-skeleton).
+  - Show 3–6 skeleton cards so the layout doesn't shift on load.
+
+─────────────────────────────────────────────────────────────────────────────
+EMPTY STATE
+─────────────────────────────────────────────────────────────────────────────
+If the API returns data: [] (no approved testimonials yet):
+  - Do NOT render the section at all, OR
+  - Show a friendly placeholder: "Our students' stories are coming soon! 🚀"
+
+─────────────────────────────────────────────────────────────────────────────
+ERROR STATE
+─────────────────────────────────────────────────────────────────────────────
+If the API call fails (network error, 500, etc.):
+  - Silently hide the section — testimonials are non-critical content.
+  - Optionally log the error to the console for debugging.
+  - Do NOT show an ugly error message to the public user.
+
+
+================================================================================
+  IMPLEMENTATION GUIDE
+================================================================================
+
+─────────────────────────────────────────────────────────────────────────────
+Recommended fetch pattern (framework-agnostic pseudocode)
+─────────────────────────────────────────────────────────────────────────────
+
+async function fetchTestimonials(limit = 20): Promise<PublicTestimonial[]> {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/testimonials?limit=${limit}`
+    );
+    if (!response.ok) return [];
+    const json: TestimonialsPublicResponse = await response.json();
+    return json.success ? json.data : [];
+  } catch {
+    return [];   // silently fail — non-critical section
+  }
+}
+
+─────────────────────────────────────────────────────────────────────────────
+React example (with useEffect + useState)
+─────────────────────────────────────────────────────────────────────────────
+
+import { useEffect, useState } from "react";
+
+export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<PublicTestimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTestimonials(6).then((data) => {
+      setTestimonials(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (!loading && testimonials.length === 0) return null;
+
+  return (
+    <section id="testimonials">
+      <h2>What Our Students Say</h2>
+      {loading
+        ? <SkeletonCards count={6} />
+        : testimonials.map((t) => <TestimonialCard key={t.id} testimonial={t} />)
+      }
+    </section>
+  );
+}
+
+─────────────────────────────────────────────────────────────────────────────
+Next.js 13+ (App Router) — Server Component pattern
+─────────────────────────────────────────────────────────────────────────────
+
+// app/components/TestimonialsSection.tsx  (Server Component)
+export async function TestimonialsSection() {
+  let testimonials: PublicTestimonial[] = [];
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/testimonials?limit=6`,
+      { next: { revalidate: 3600 } }  // ISR: revalidate every 1 hour
+    );
+    const json = await res.json();
+    testimonials = json.success ? json.data : [];
+  } catch {
+    return null;  // silently hide on error
+  }
+
+  if (testimonials.length === 0) return null;
+
+  return (
+    <section id="testimonials">
+      <h2>What Our Students Say</h2>
+      {testimonials.map((t) => (
+        <TestimonialCard key={t.id} testimonial={t} />
+      ))}
+    </section>
+  );
+}
+
+─────────────────────────────────────────────────────────────────────────────
+Avatar initials fallback helper
+─────────────────────────────────────────────────────────────────────────────
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+// Generate a consistent hue from a string (for avatar background color)
+function nameToHue(name: string): number {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash) % 360;
+}
+
+// Usage in JSX
+const hue = nameToHue(testimonial.studentName);
+const avatarStyle = { backgroundColor: `hsl(${hue}, 60%, 55%)`, color: "#fff" };
+
+<div className="avatar-fallback" style={avatarStyle}>
+  {getInitials(testimonial.studentName)}
+</div>
+
+
+================================================================================
+  DESIGN TOKENS / STYLING SUGGESTIONS
+================================================================================
+
+Card:
+  background     : white (light mode) / #1E1E2E (dark mode)
+  border-radius  : 16px
+  padding        : 24px
+  box-shadow     : 0 4px 24px rgba(0,0,0,0.08)
+  max-width      : 380px
+
+Avatar circle (fallback):
+  width / height : 56px
+  border-radius  : 50%
+  font-size      : 20px
+  font-weight    : 700
+
+Quote text:
+  font-size      : 0.95rem
+  line-height    : 1.6
+  color          : #374151 (light) / #D1D5DB (dark)
+  font-style     : italic
+
+Achievement badge:
+  background     : #EFF6FF  (light blue)
+  color          : #1D4ED8
+  padding        : 4px 10px
+  border-radius  : 999px
+  font-size      : 0.75rem
+  font-weight    : 600
+
+Institution badge:
+  background     : #F0FDF4  (light green)
+  color          : #15803D
+  padding        : 4px 10px
+  border-radius  : 999px
+  font-size      : 0.75rem
+  font-weight    : 600
+
+Star color       : #FBBF24  (amber-400)
+
+Section heading:
+  font-size      : 2rem – 2.5rem
+  font-weight    : 700
+  text-align     : center
+  margin-bottom  : 48px
+
+
+================================================================================
+  SEO & ACCESSIBILITY
+================================================================================
+
+- Wrap the section in <section aria-labelledby="testimonials-heading">.
+- Use <h2 id="testimonials-heading">What Our Students Say</h2>.
+- Each card quote should use <blockquote> or <p role="article">.
+- Avatar images: always set alt={testimonial.studentName}.
+- Fallback avatar divs: add aria-label={`Avatar for ${testimonial.studentName}`}.
+- Stars: add aria-label={`Rating: ${rating} out of 5`} on the star container.
+- If using a carousel, add aria-live="polite" on the active slide viewport.
+- The section is purely decorative/social proof — it does not need to be
+  present in the page's primary navigation.
+
+For structured data (optional but recommended for SEO):
+  Add a JSON-LD <script> block with @type "Review" or "AggregateRating" using
+  the testimonial data to help search engines display star ratings in results.
+
+Example JSON-LD snippet:
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aspiring Engineers",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "45"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Rahul Sharma" },
+      "reviewBody": "The counselling team helped me...",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5" }
+    }
+  ]
+}
+</script>
+
+
+================================================================================
+  PERFORMANCE TIPS
+================================================================================
+
+1. Lazy-load the testimonials section using Intersection Observer so the API
+   call is only made when the section scrolls into the viewport.
+
+2. For Next.js / Nuxt / SvelteKit — use SSR or ISR to fetch testimonials at
+   build/request time and send them pre-rendered to the browser. Use
+   revalidate: 3600 (1 hour) or revalidate: 86400 (24 hours) — testimonials
+   do not change frequently.
+
+3. Cache the API response in-memory on the client for the session duration so
+   re-renders (e.g. navigating back to the homepage) don't re-fetch.
+
+4. Compress and lazy-load avatar images:
+     <img src={avatarUrl} alt={studentName} loading="lazy" decoding="async" />
+
+5. Avoid fetching more than you need. Use limit=6 for homepage, limit=20–50
+   for a full reviews page.
+
+
+================================================================================
+  SUMMARY OF API CONTRACT (quick reference)
+================================================================================
+
+  Endpoint  : GET /testimonials
+  Auth      : None
+  Params    : ?limit=<number>  (optional, default 20)
+  Response  : { success, message, data: PublicTestimonial[] }
+
+  Fields per testimonial:
+    id              string
+    studentName     string
+    quote           string
+    achievementLine string
+    institutionLine string
+    rating          number (1–5)
+    avatarUrl       string | null | undefined
+
+  Sort order: by displayOrder ascending (controlled by admin, do not re-sort)
+  Filter    : only "approved" testimonials are ever returned
+
+
+================================================================================
+  END OF PROMPT
+================================================================================

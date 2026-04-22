@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
@@ -19,8 +19,13 @@ import {
   Star,
   ArrowRight,
 } from "lucide-react";
+import { FaGraduationCap, FaTrophy } from "react-icons/fa";
 import { counsellingService } from "@/services/counselling.service";
 import { logger } from "@/lib/logger";
+import {
+  PublicTestimonial,
+  testimonialsService,
+} from "@/services/testimonials.service";
 
 const guidanceServices = [
   {
@@ -73,29 +78,22 @@ const processSteps = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Rahul Sharma",
-    rank: "JEE Main AIR 5,432",
-    college: "NIT Trichy - CSE",
-    quote:
-      "The counselling team helped me understand the choice filling process. I got CSE at NIT Trichy with their guidance!",
-  },
-  {
-    name: "Priya Patel",
-    rank: "NEET Score 650",
-    college: "GMC Mumbai",
-    quote:
-      "I was confused between multiple medical colleges. Their expert advice helped me make the right decision.",
-  },
-  {
-    name: "Amit Das",
-    rank: "WBJEE Rank 1,200",
-    college: "Jadavpur University - EE",
-    quote:
-      "Thanks to their WBJEE counselling, I secured a seat in my dream college. Highly recommended!",
-  },
-];
+const getInitials = (name: string): string => {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+};
+
+const nameToHue = (name: string): number => {
+  let hash = 0;
+  for (let i = 0; i < name.length; i += 1) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return Math.abs(hash) % 360;
+};
 
 const examOptions = [
   { value: "", label: "Select Exam" },
@@ -134,6 +132,25 @@ export default function AdmissionGuidancePage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [testimonials, setTestimonials] = useState<PublicTestimonial[]>([]);
+  const [isTestimonialsLoading, setIsTestimonialsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadTestimonials = async () => {
+      const data = await testimonialsService.getApprovedTestimonials(6);
+      if (!isMounted) return;
+      setTestimonials(data);
+      setIsTestimonialsLoading(false);
+    };
+
+    loadTestimonials();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,7 +208,7 @@ export default function AdmissionGuidancePage() {
       logger.error("Failed to submit admission guidance:", error);
       alert(
         error.response?.data?.message ||
-          "Failed to submit form. Please try again later.",
+        "Failed to submit form. Please try again later.",
       );
     } finally {
       setIsSubmitting(false);
@@ -672,51 +689,118 @@ export default function AdmissionGuidancePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">
-              Success Stories
-            </h2>
-            <p className="text-base text-gray-600 dark:text-gray-400">
-              Hear from students who secured their dream colleges with our
-              guidance
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl"
+      {(isTestimonialsLoading || testimonials.length > 0) && (
+        <section
+          className="py-8 px-4 sm:px-6 lg:px-8"
+          aria-labelledby="testimonials-heading"
+        >
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-8">
+              <h2
+                id="testimonials-heading"
+                className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent"
               >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                    />
-                  ))}
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 italic">
-                  "{testimonial.quote}"
-                </p>
-                <div className="border-t border-gray-200 dark:border-white/10 pt-4">
-                  <div className="font-semibold text-gray-900 dark:text-white">
-                    {testimonial.name}
+                Success Stories
+              </h2>
+              <p className="text-base text-gray-600 dark:text-gray-400">
+                Hear from students who secured their dream colleges with our
+                guidance
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {isTestimonialsLoading
+                ? Array.from({ length: 3 }).map((_, idx) => (
+                  <div
+                    key={`testimonial-skeleton-${idx}`}
+                    className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl animate-pulse"
+                  >
+                    <div className="h-5 w-28 bg-gray-200 dark:bg-gray-700 rounded mb-4" />
+                    <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                    <div className="h-4 w-11/12 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                    <div className="h-4 w-9/12 bg-gray-200 dark:bg-gray-700 rounded mb-4" />
+                    <div className="border-t border-gray-200 dark:border-white/10 pt-4">
+                      <div className="h-4 w-40 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                      <div className="h-3 w-28 bg-gray-200 dark:bg-gray-700 rounded mb-2" />
+                      <div className="h-3 w-32 bg-gray-200 dark:bg-gray-700 rounded" />
+                    </div>
                   </div>
-                  <div className="text-sm text-[var(--color-brand)]">
-                    {testimonial.rank}
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {testimonial.college}
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))
+                : testimonials.map((testimonial) => {
+                  const hue = nameToHue(testimonial.studentName);
+                  const hasAvatar = Boolean(testimonial.avatarUrl);
+
+                  return (
+                    <div
+                      key={testimonial.id}
+                      className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl"
+                    >
+                      <div className="flex items-center justify-between gap-4 mb-4">
+                        <div className="flex items-center gap-3 min-w-0">
+                          {hasAvatar ? (
+                            <img
+                              src={testimonial.avatarUrl ?? undefined}
+                              alt={testimonial.studentName}
+                              loading="lazy"
+                              decoding="async"
+                              className="w-11 h-11 rounded-full object-cover border border-gray-200 dark:border-white/15"
+                            />
+                          ) : (
+                            <div
+                              aria-label={`Avatar for ${testimonial.studentName}`}
+                              className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                              style={{
+                                backgroundColor: `hsl(${hue}, 62%, 46%)`,
+                              }}
+                            >
+                              {getInitials(testimonial.studentName)}
+                            </div>
+                          )}
+
+                          <div className="min-w-0">
+                            <div className="font-semibold text-gray-900 dark:text-white truncate">
+                              {testimonial.studentName}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className="flex items-center gap-1"
+                          aria-label={`Rating: ${testimonial.rating} out of 5`}
+                        >
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star
+                              key={`${testimonial.id}-star-${i}`}
+                              className={`w-4 h-4 ${i < testimonial.rating
+                                  ? "fill-yellow-400 text-yellow-400"
+                                  : "text-gray-300 dark:text-gray-600"
+                                }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <blockquote className="text-gray-600 dark:text-gray-400 mb-4 italic line-clamp-4">
+                        "{testimonial.quote}"
+                      </blockquote>
+
+                      <div className="border-t border-gray-200 dark:border-white/10 pt-4 flex flex-wrap gap-2">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-500/20 dark:text-blue-200">
+                          <FaTrophy className="w-3 h-3" aria-hidden="true" />
+                          {testimonial.achievementLine}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-200">
+                          <FaGraduationCap className="w-3 h-3" aria-hidden="true" />
+                          {testimonial.institutionLine}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
