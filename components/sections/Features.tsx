@@ -35,12 +35,7 @@ const journeyStages = [
     subtitle: "Competitive edge for JEE, NEET, WBJEE",
     description:
       "Move from board success into focused entrance preparation with exam-wise PYQs, mock practice, and strategic guidance for JEE, NEET, and WBJEE.",
-    features: [
-      "JEE Prep",
-      "NEET Prep",
-      "WBJEE Prep",
-      "Mock Test Series",
-    ],
+    features: ["JEE Prep", "NEET Prep", "WBJEE Prep", "Mock Test Series"],
     icon: Trophy,
     color: "from-purple-500 to-pink-500",
     bgGradient: "from-purple-500/10 to-pink-500/10",
@@ -136,7 +131,11 @@ function SmoothWordReveal({
       }`}
     >
       {words.map((word, index) => (
-        <motion.span key={index} variants={child} style={{ display: "inline-block" }}>
+        <motion.span
+          key={index}
+          variants={child}
+          style={{ display: "inline-block" }}
+        >
           {word}
         </motion.span>
       ))}
@@ -266,7 +265,6 @@ export default function Features() {
                 </p>
 
                 {/* Description */}
-               
 
                 {/* Features Grid */}
                 <div className="grid grid-cols-2 gap-3 mb-8">

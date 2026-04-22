@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
@@ -12,7 +13,9 @@ import {
   ArrowRight,
   CheckCircle,
   Star,
+  MessageCircleQuestion,
 } from "lucide-react";
+import CounsellingEnquiryModal from "@/components/forms/CounsellingEnquiryModal";
 
 const counsellingTypes = [
   {
@@ -96,6 +99,8 @@ const whyChooseUs = [
 ];
 
 export default function CounsellingPage() {
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
+
   return (
     <>
       <Navbar />
@@ -107,7 +112,7 @@ export default function CounsellingPage() {
           Trusted by 1000+ Students
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-          <span className="bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-(--color-brand) to-(--color-brand-light) bg-clip-text text-transparent">
             Expert College Counselling
           </span>
         </h1>
@@ -118,7 +123,7 @@ export default function CounsellingPage() {
         </p>
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand-hover)] transition-colors text-sm"
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-semibold bg-(--color-brand) text-white hover:bg-(--color-brand-hover) transition-colors text-sm"
         >
           Book Free Consultation
           <ArrowRight className="w-4 h-4" />
@@ -129,7 +134,7 @@ export default function CounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-(--color-brand) to-(--color-brand-light) bg-clip-text text-transparent">
               Choose Your Counselling Path
             </h2>
             <p className="text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -143,24 +148,24 @@ export default function CounsellingPage() {
               <Link
                 key={type.id}
                 href={type.href}
-                className="group relative rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 hover:shadow-2xl hover:shadow-[var(--color-brand)]/20 transition-all duration-300 hover:-translate-y-2"
+                className="group relative rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-gray-900 hover:shadow-2xl hover:shadow-(--color-brand)/20 transition-all duration-300 hover:-translate-y-2"
               >
                 {/* Gradient Header */}
-                <div className={`h-2 bg-gradient-to-r ${type.color}`} />
+                <div className={`h-2 bg-linear-to-r ${type.color}`} />
 
                 <div className="p-5">
                   {/* Icon */}
                   <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${type.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
+                    className={`w-12 h-12 rounded-xl bg-linear-to-br ${type.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
                   >
                     <type.icon className="w-6 h-6 text-white" />
                   </div>
 
                   {/* Title & Subtitle */}
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-[var(--color-brand)] transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-(--color-brand) transition-colors">
                     {type.title}
                   </h3>
-                  <p className="text-sm text-[var(--color-brand)] font-medium mb-2">
+                  <p className="text-sm text-(--color-brand) font-medium mb-2">
                     {type.subtitle}
                   </p>
 
@@ -173,7 +178,7 @@ export default function CounsellingPage() {
                   <div className="space-y-1.5 mb-4">
                     {type.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0" />
                         <span className="text-sm text-gray-600 dark:text-gray-400">
                           {feature}
                         </span>
@@ -182,13 +187,42 @@ export default function CounsellingPage() {
                   </div>
 
                   {/* CTA */}
-                  <div className="flex items-center gap-2 text-[var(--color-brand)] font-semibold group-hover:gap-3 transition-all">
+                  <div className="flex items-center gap-2 text-(--color-brand) font-semibold group-hover:gap-3 transition-all">
                     <span>Learn More</span>
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-8">
+            <div className="rounded-3xl border border-gray-200 dark:border-white/10 bg-linear-to-br from-(--color-brand)/10 via-white to-(--color-brand-accent)/10 dark:from-white/5 dark:via-white/0 dark:to-white/5 p-6 sm:p-8 shadow-lg">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-white/10 px-3 py-1.5 text-sm font-medium text-(--color-brand) mb-3">
+                    <MessageCircleQuestion className="w-4 h-4" />
+                    Need something else?
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Don't see your counselling listed?
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
+                    Tell us which counselling you need and our team will help
+                    you with the right guidance.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsEnquiryModalOpen(true)}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-(--color-brand) px-6 py-3 font-semibold text-white transition-colors hover:bg-(--color-brand-hover)"
+                >
+                  Enquire Now
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -199,7 +233,7 @@ export default function CounsellingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, idx) => (
               <div key={idx} className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent mb-2">
+                <div className="text-4xl sm:text-5xl font-bold bg-linear-to-r from-(--color-brand) to-(--color-brand-light) bg-clip-text text-transparent mb-2">
                   {stat.value}
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 font-medium">
@@ -215,7 +249,7 @@ export default function CounsellingPage() {
       <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-[var(--color-brand)] to-[var(--color-brand-light)] bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-linear-to-r from-(--color-brand) to-(--color-brand-light) bg-clip-text text-transparent">
               Why Choose Our Counselling?
             </h2>
             <p className="text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -231,8 +265,8 @@ export default function CounsellingPage() {
                 className="p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-xl"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[var(--color-brand)]/10 flex items-center justify-center flex-shrink-0">
-                    <Star className="w-4 h-4 text-[var(--color-brand)]" />
+                  <div className="w-8 h-8 rounded-full bg-(--color-brand)/10 flex items-center justify-center shrink-0">
+                    <Star className="w-4 h-4 text-(--color-brand)" />
                   </div>
                   <div>
                     <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">
@@ -252,7 +286,7 @@ export default function CounsellingPage() {
       {/* CTA Section */}
       <section className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-900/20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-[var(--color-brand)] to-[var(--color-brand-accent)] text-white">
+          <div className="p-6 md:p-8 rounded-2xl bg-linear-to-br from-(--color-brand) to-(--color-brand-accent) text-white">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               Ready to Secure Your Dream College?
             </h2>
@@ -263,7 +297,7 @@ export default function CounsellingPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold bg-white text-[var(--color-brand)] hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold bg-white text-(--color-brand) hover:bg-gray-100 transition-colors"
               >
                 <Users className="w-5 h-5" />
                 Book Free Consultation
@@ -278,6 +312,11 @@ export default function CounsellingPage() {
           </div>
         </div>
       </section>
+
+      <CounsellingEnquiryModal
+        isOpen={isEnquiryModalOpen}
+        onClose={() => setIsEnquiryModalOpen(false)}
+      />
 
       <Footer />
     </>
