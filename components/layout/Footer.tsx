@@ -13,19 +13,26 @@ import {
   Youtube,
   ArrowRight,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 export default function Footer() {
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const { settings, isLoading } = useSiteSettings();
 
   useEffect(() => {
     setMounted(true);
+    const update = () => {
+      setDarkMode(document.documentElement.classList.contains("dark"));
+    };
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
   }, []);
-
-  const darkMode = mounted && resolvedTheme === "dark";
 
   const defaultFooterLinks = {
     jee: [

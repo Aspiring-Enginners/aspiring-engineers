@@ -8,6 +8,8 @@ import {
   ChevronRight,
   BookOpen,
   Award,
+  Compass,
+  Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
@@ -43,6 +45,25 @@ const CLASSES = [
         count: "40+",
       },
     ],
+  },
+];
+
+const CAREER_OPTIONS_10 = [
+  {
+    id: "science",
+    title: "Career Options after 10th",
+    description: "Explore subject streams and future pathways",
+    icon: GraduationCap,
+    color: "#10B981",
+    href: "/careers/Intermediate",
+  },
+  {
+    id: "commerce",
+    title: "Career Options after 12th",
+    description: "Courses and careers aligned with your goals",
+    icon: Briefcase,
+    color: "#3B82F6",
+    href: "/careers/Matriculation",
   },
 ];
 
@@ -242,6 +263,76 @@ export default function BoardsPage() {
                   ))}
                 </div>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Career Options after 10th */}
+      <section className="py-12 border-t" style={{ borderColor: "rgba(107, 114, 128, 0.2)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            {CAREER_OPTIONS_10.map((career, index) => (
+              <Link key={career.id} href={career.href}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className={`relative rounded-2xl overflow-hidden border transition-all hover:scale-105 hover:shadow-lg cursor-pointer h-full ${
+                    darkMode
+                      ? "bg-gray-900/50 border-gray-800 hover:border-gray-700"
+                      : "bg-white border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  {/* Header */}
+                  <div
+                    className="p-6 pb-4"
+                    style={{
+                      background: `linear-gradient(135deg, ${career.color}20, transparent)`,
+                    }}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: `${career.color}20` }}
+                      >
+                        <career.icon
+                          className="w-7 h-7"
+                          style={{ color: career.color }}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h2
+                          className={`text-2xl font-bold mb-2 ${
+                            darkMode ? "text-white" : "text-gray-900"
+                          }`}
+                          style={{ color: career.color }}
+                        >
+                          {career.title}
+                        </h2>
+                        <p
+                          className={`text-sm ${
+                            darkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
+                        >
+                          {career.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA Text */}
+                  <div className="p-6 flex items-center justify-between border-t" style={{ borderColor: "rgba(107, 114, 128, 0.2)" }}>
+                    <span
+                      className="text-sm font-semibold transition-all flex items-center gap-2"
+                      style={{ color: career.color }}
+                    >
+                      Explore All Options
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
