@@ -14,31 +14,31 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 const journeyStages = [
   {
     stage: "01",
-    title: "Class 10th Foundation",
-    subtitle: "Building Strong Fundamentals",
+    title: "Class 10th & 12th Boards",
+    subtitle: "One roadmap for school success",
     description:
-      "Start your journey with comprehensive Class 10th board preparation. Master the core concepts that form the foundation for competitive exams.",
+      "Prepare for Class 10th and Class 12th board exams with structured revision, PYQs, sample papers, and concept-driven support built for long-term success.",
     features: [
-      "CBSE/State Board Prep",
-      "Concept Clarity",
-      "Strong Foundation",
-      "Time Management",
+      "Class 10 Support",
+      "Class 12 Support",
+      "Board PYQs",
+      "Sample Papers",
     ],
     icon: BookOpen,
     color: "from-blue-500 to-cyan-500",
     bgGradient: "from-blue-500/10 to-cyan-500/10",
-    href: "/boards/10/pyq",
+    href: "/boards",
   },
   {
     stage: "02",
-    title: "Class 12th & Entrance Prep",
-    subtitle: "Competitive Edge Development",
+    title: "Entrance Prep",
+    subtitle: "Competitive edge for JEE, NEET, WBJEE",
     description:
-      "Parallel preparation for Class 12th boards and entrance exams. Master JEE, NEET, WBJEE with targeted practice and expert guidance.",
+      "Move from board success into focused entrance preparation with exam-wise PYQs, mock practice, and strategic guidance for JEE, NEET, and WBJEE.",
     features: [
-      "Board Exam Mastery",
-      "JEE/NEET/WBJEE",
-      "12 Years PYQs",
+      "JEE Prep",
+      "NEET Prep",
+      "WBJEE Prep",
       "Mock Test Series",
     ],
     icon: Trophy,
@@ -131,7 +131,7 @@ function SmoothWordReveal({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className={`text-sm md:text-base leading-relaxed min-h-[4.5rem] ${
+      className={`text-sm md:text-base leading-relaxed min-h-18 ${
         darkMode ? "text-gray-300" : "text-gray-600"
       }`}
     >
@@ -177,7 +177,7 @@ export default function Features() {
       <div
         className="
           absolute inset-0 pointer-events-none 
-          bg-linear-to-br from-[var(--color-brand)]/10 to-[var(--color-brand-accent)]/15 
+          bg-linear-to-br from-(--color-brand)/10 to-(--color-brand-accent)/15
           blur-3xl opacity-70
         "
       ></div>
@@ -193,7 +193,7 @@ export default function Features() {
         <h2
           className={`
             text-4xl md:text-5xl font-bold mb-4 tracking-tight
-            ${darkMode ? "text-white" : "text-[var(--color-brand)]"}
+            ${darkMode ? "text-white" : "text-(--color-brand)"}
           `}
         >
           Your Complete Journey to Success
@@ -244,7 +244,9 @@ export default function Features() {
                   >
                     {stage.stage}
                   </span>
-                  <div className="h-1 flex-1 bg-linear-to-r ${stage.color} opacity-30 rounded-full" />
+                  <div
+                    className={`h-1 flex-1 bg-linear-to-r ${stage.color} opacity-30 rounded-full`}
+                  />
                 </div>
 
                 {/* Title */}
@@ -362,7 +364,7 @@ export default function Features() {
 
               {/* Connecting Line for Desktop */}
               {index < journeyStages.length - 1 && (
-                <div className="hidden lg:block absolute left-1/2 bottom-0 w-0.5 h-32 bg-linear-to-b from-[var(--color-brand)]/50 to-transparent transform translate-y-full -translate-x-1/2" />
+                <div className="hidden lg:block absolute left-1/2 bottom-0 w-0.5 h-32 bg-linear-to-b from-(--color-brand)/50 to-transparent transform translate-y-full -translate-x-1/2" />
               )}
             </motion.div>
           );

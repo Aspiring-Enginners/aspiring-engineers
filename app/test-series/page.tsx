@@ -23,7 +23,7 @@ const EXAM_FILTERS = [
   { value: "JEE_ADVANCED", label: "JEE Advanced" },
   { value: "NEET", label: "NEET" },
   { value: "WBJEE", label: "WBJEE" },
-  { value: "COMEDK", label: "COMEDK" },
+  { value: "COMEDK", label: "Others" },
 ];
 
 export default function TestSeriesPage() {
@@ -98,7 +98,7 @@ export default function TestSeriesPage() {
   return (
     <div
       className={`min-h-screen ${
-        darkMode ? "bg-[var(--color-dark-bg)]" : "bg-gray-50"
+        darkMode ? "bg-(--color-dark-bg)" : "bg-gray-50"
       }`}
     >
       <Navbar />
@@ -146,7 +146,7 @@ export default function TestSeriesPage() {
               />
             </div>
 
-            <button className="px-6 py-3 bg-[var(--color-brand)] text-white rounded-xl cursor-pointer">
+            <button className="px-6 py-3 bg-(--color-brand) text-white rounded-xl cursor-pointer">
               Search
             </button>
           </form>
@@ -163,7 +163,7 @@ export default function TestSeriesPage() {
                 }}
                 className={`px-4 py-2 rounded-full text-sm font-medium cursor-pointer ${
                   selectedExam === exam.value
-                    ? "bg-[var(--color-brand)] text-white"
+                    ? "bg-(--color-brand) text-white"
                     : darkMode
                       ? "bg-white/5 text-gray-400"
                       : "bg-gray-100 text-gray-600"
@@ -178,7 +178,7 @@ export default function TestSeriesPage() {
         {/* LOADING */}
         {loading && (
           <div className="flex justify-center py-20">
-            <div className="animate-spin h-12 w-12 border-4 border-[var(--color-brand)] border-t-transparent rounded-full"></div>
+            <div className="animate-spin h-12 w-12 border-4 border-(--color-brand) border-t-transparent rounded-full"></div>
           </div>
         )}
 
@@ -208,7 +208,7 @@ function formatExamType(exam: string): string {
     NEET: "NEET",
     WBJEE: "WBJEE",
     BITSAT: "BITSAT",
-    COMEDK: "COMEDK",
+    COMEDK: "Others",
   };
 
   if (examMap[normalized]) {
@@ -300,7 +300,7 @@ function TestSeriesCard({
 
           <Link
             href={`/test-series/${pkg._id}`}
-            className="flex items-center gap-1 px-4 py-2 bg-[var(--color-brand)] text-white rounded-lg"
+            className="flex items-center gap-1 px-4 py-2 bg-(--color-brand) text-white rounded-lg"
           >
             View <ChevronRight className="w-4 h-4" />
           </Link>

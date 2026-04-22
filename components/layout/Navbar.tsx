@@ -45,6 +45,7 @@ const MENU: MenuItem[] = [
   {
     id: "exams",
     label: "PYQs",
+    href: "/exams",
     children: [
       {
         id: "jee",
