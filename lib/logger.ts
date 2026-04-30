@@ -11,6 +11,51 @@
 
 const isDev = process.env.NODE_ENV === "development";
 
+const normalizeLogArg = (value: unknown): unknown => {
+  if (value instanceof Error) {
+    return {
+      name: value.name,
+      message: value.message,
+      stack: value.stack,
+    };
+  }
+
+  if (
+    value &&
+    typeof value === "object" &&
+    "isAxiosError" in value &&
+    (value as { isAxiosError?: boolean }).isAxiosError
+  ) {
+    const axiosError = value as {
+      message?: string;
+      name?: string;
+      stack?: string;
+      code?: string;
+      response?: {
+        status?: number;
+        data?: unknown;
+      };
+      config?: {
+        url?: string;
+        method?: string;
+      };
+    };
+
+    return {
+      name: axiosError.name,
+      message: axiosError.message,
+      code: axiosError.code,
+      status: axiosError.response?.status,
+      data: axiosError.response?.data,
+      url: axiosError.config?.url,
+      method: axiosError.config?.method,
+      stack: axiosError.stack,
+    };
+  }
+
+  return value;
+};
+
 /* eslint-disable no-console */
 export const logger = {
   /**
@@ -40,7 +85,7 @@ export const logger = {
    * Do NOT include PII (emails, tokens, user-identifiers) in messages or objects.
    */
   error: (...args: unknown[]): void => {
-    console.error(...args);
+    console.error(...args.map(normalizeLogArg));
   },
 } as const;
 /* eslint-enable no-console */
