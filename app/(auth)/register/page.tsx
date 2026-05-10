@@ -92,10 +92,6 @@ export default function RegisterPage() {
       return;
     }
 
-    if (examTargets.length === 0) {
-      setError("Please select at least one exam target");
-      return;
-    }
 
     try {
       setLoading(true);
@@ -470,7 +466,7 @@ export default function RegisterPage() {
                     darkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Target Year *
+                  Target Year
                 </label>
                 <input
                   type="number"
@@ -481,7 +477,6 @@ export default function RegisterPage() {
                       targetYear: parseInt(e.target.value),
                     })
                   }
-                  required
                   min={new Date().getFullYear()}
                   max={new Date().getFullYear() + 5}
                   className={`w-full px-4 py-3 rounded-lg border transition-colors ${
@@ -527,7 +522,7 @@ export default function RegisterPage() {
                   darkMode ? "text-gray-300" : "text-gray-700"
                 }`}
               >
-                Target Exams *
+                Target Exams
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {[
