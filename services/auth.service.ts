@@ -238,7 +238,7 @@ export const authService = {
     try {
       await apiClient.post<{ success: boolean; message: string }>(
         "/auth/reset-password",
-        { token, newPassword },
+        { resetToken: token, newPassword },
       );
     } catch (error) {
       throw new Error(handleApiError(error));
